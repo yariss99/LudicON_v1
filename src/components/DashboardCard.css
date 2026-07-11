@@ -1,0 +1,44 @@
+.dashboard-card{
+    width:280px;
+    height:90px;
+
+    border:none;
+    border-radius:20px;
+
+    background:white;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+
+    display:flex;
+    align-items:center;
+    gap:18px;
+
+    padding:24px;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.dashboard-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 20px 40px rgba(37,99,235,.18);
+
+}
+
+.icon{
+
+    font-size:34px;
+
+}
+.dashboard-link{
+    text-decoration:none;
+    color:inherit;
+    display:block;
+}
+
+.dashboard-link:hover{
+    color:inherit;
+}

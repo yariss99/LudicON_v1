@@ -1,0 +1,18 @@
+@import "./styles/variables.css";
+@import "./styles/buttons.css";
+@import "./styles/cards.css";
+@import "./styles/forms.css";
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    background:var(--background);
+
+    font-family:Arial, Helvetica, sans-serif;
+
+}
