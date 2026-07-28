@@ -1,0 +1,195 @@
+{
+  "id": "adapt-lesson",
+  "kind": "adapt-lesson",
+  "displayName": "Adapt Lesson",
+  "version": "1.0.0",
+  "purpose": "Adapt lesson resources and pathways for inclusion — never label or diagnose learners.",
+  "entryConditions": [
+    "Source lesson exists",
+    "Teacher has adapt permission"
+  ],
+  "requiredContext": [
+    {
+      "key": "teacher.teacherId",
+      "required": true,
+      "description": "Teacher identity"
+    },
+    {
+      "key": "lessonId",
+      "required": true,
+      "description": "Source lesson"
+    },
+    {
+      "key": "projectId",
+      "required": true,
+      "description": "Project"
+    },
+    {
+      "key": "temporaryMemory.adaptationGoals",
+      "required": true,
+      "description": "Access / scaffold / extension goals (resource-focused)"
+    }
+  ],
+  "requiredPermissions": [
+    "workflow:start",
+    "workflow:generate",
+    "workflow:review",
+    "resource:write"
+  ],
+  "initialState": "Idle",
+  "allowedStates": [
+    "Idle",
+    "Initializing",
+    "LoadingContext",
+    "Planning",
+    "Generating",
+    "Validating",
+    "Editing",
+    "Reviewing",
+    "Ready",
+    "Publishing",
+    "Completed",
+    "Failed",
+    "Cancelled"
+  ],
+  "allowedEvents": [
+    "CreateWorkflow",
+    "LoadContext",
+    "PlanningCompleted",
+    "Generate",
+    "GenerationCompleted",
+    "ValidationPassed",
+    "ValidationFailed",
+    "Edit",
+    "SaveDraft",
+    "Publish",
+    "Retry",
+    "Cancel",
+    "Restore",
+    "Complete"
+  ],
+  "happyPathEvents": [
+    "CreateWorkflow",
+    "LoadContext",
+    "PlanningCompleted",
+    "Generate",
+    "GenerationCompleted",
+    "ValidationPassed",
+    "ValidationPassed",
+    "Publish",
+    "Complete"
+  ],
+  "phases": [
+    {
+      "phaseId": "start",
+      "title": "Start",
+      "description": "Open Adapted Lesson workflow.",
+      "engineState": "Initializing",
+      "enterEvent": "CreateWorkflow",
+      "requiredContextKeys": [
+        "teacher.teacherId"
+      ],
+      "actor": "teacher"
+    },
+    {
+      "phaseId": "load-context",
+      "title": "Load Context",
+      "description": "Load project, subject, grade, and source references.",
+      "engineState": "LoadingContext",
+      "enterEvent": "LoadContext",
+      "requiredContextKeys": [
+        "projectId"
+      ],
+      "actor": "either"
+    },
+    {
+      "phaseId": "plan",
+      "title": "Plan",
+      "description": "Declare adaptation of resources/pathways only — no learner deficit labels.",
+      "engineState": "Planning",
+      "enterEvent": "PlanningCompleted",
+      "requiredContextKeys": [
+        "temporaryMemory.plan"
+      ],
+      "actor": "teacher"
+    },
+    {
+      "phaseId": "generate",
+      "title": "Generate Adapted Lesson",
+      "description": "AI Orchestrator produces a draft; teacher remains author.",
+      "engineState": "Generating",
+      "enterEvent": "Generate",
+      "requiredContextKeys": [],
+      "actor": "system"
+    },
+    {
+      "phaseId": "validate",
+      "title": "Validate",
+      "description": "Validate schema and educational integrity.",
+      "engineState": "Validating",
+      "enterEvent": "GenerationCompleted",
+      "requiredContextKeys": [],
+      "actor": "system"
+    },
+    {
+      "phaseId": "review",
+      "title": "Teacher Review",
+      "description": "Teacher reviews and may edit or regenerate.",
+      "engineState": "Reviewing",
+      "enterEvent": "ValidationPassed",
+      "requiredContextKeys": [],
+      "actor": "teacher"
+    },
+    {
+      "phaseId": "ready-publish",
+      "title": "Ready / Publish",
+      "description": "Confirm readiness and optionally publish.",
+      "engineState": "Ready",
+      "enterEvent": "ValidationPassed",
+      "requiredContextKeys": [],
+      "actor": "teacher"
+    }
+  ],
+  "validationRules": [
+    {
+      "ruleId": "AL-V1",
+      "description": "No learner labeling or diagnostic language permitted",
+      "appliesAt": "Validating",
+      "severity": "block"
+    },
+    {
+      "ruleId": "AL-V2",
+      "description": "Learning intention integrity must be preserved",
+      "appliesAt": "Validating",
+      "severity": "block"
+    }
+  ],
+  "failureStates": [
+    "Failed",
+    "Cancelled"
+  ],
+  "recovery": {
+    "onFailed": "Retry→Planning",
+    "onCancelled": "Restore",
+    "onValidationFailed": "Edit",
+    "notes": "Failed → Retry returns to Planning; ValidationFailed → Editing; Cancelled → Restore from history or start a new session. AI never dispatches."
+  },
+  "completionCriteria": [
+    "State Completed",
+    "Adapted resource pack saved",
+    "Teacher approved adaptations"
+  ],
+  "producedObjects": [
+    "AdaptedLesson",
+    "DraftResource",
+    "PublishedResource"
+  ],
+  "aiRequestTypes": [
+    "ImproveLesson"
+  ],
+  "tags": [
+    "adapt",
+    "inclusion",
+    "lesson"
+  ]
+}

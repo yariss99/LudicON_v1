@@ -1,0 +1,178 @@
+{
+  "id": "publish-resource",
+  "kind": "publish-resource",
+  "displayName": "Publish Resource",
+  "version": "1.0.0",
+  "purpose": "Publish an already-ready educational resource with teacher confirmation.",
+  "entryConditions": [
+    "resourceId exists",
+    "Resource is in a reviewable/ready draft state in the product store"
+  ],
+  "requiredContext": [
+    {
+      "key": "teacher.teacherId",
+      "required": true,
+      "description": "Teacher identity"
+    },
+    {
+      "key": "resourceId",
+      "required": true,
+      "description": "Resource to publish"
+    },
+    {
+      "key": "projectId",
+      "required": true,
+      "description": "Project"
+    }
+  ],
+  "requiredPermissions": [
+    "workflow:start",
+    "workflow:publish",
+    "resource:write"
+  ],
+  "initialState": "Idle",
+  "allowedStates": [
+    "Idle",
+    "Initializing",
+    "LoadingContext",
+    "Planning",
+    "Generating",
+    "Validating",
+    "Editing",
+    "Reviewing",
+    "Ready",
+    "Publishing",
+    "Completed",
+    "Failed",
+    "Cancelled"
+  ],
+  "allowedEvents": [
+    "CreateWorkflow",
+    "LoadContext",
+    "PlanningCompleted",
+    "Generate",
+    "GenerationCompleted",
+    "ValidationPassed",
+    "ValidationFailed",
+    "Edit",
+    "SaveDraft",
+    "Publish",
+    "Retry",
+    "Cancel",
+    "Restore",
+    "Complete"
+  ],
+  "happyPathEvents": [
+    "CreateWorkflow",
+    "LoadContext",
+    "PlanningCompleted",
+    "Generate",
+    "GenerationCompleted",
+    "ValidationPassed",
+    "ValidationPassed",
+    "Publish",
+    "Complete"
+  ],
+  "phases": [
+    {
+      "phaseId": "start",
+      "title": "Start Publish",
+      "description": "Begin publish workflow.",
+      "engineState": "Initializing",
+      "enterEvent": "CreateWorkflow",
+      "requiredContextKeys": [
+        "resourceId"
+      ],
+      "actor": "teacher"
+    },
+    {
+      "phaseId": "load",
+      "title": "Load Resource",
+      "description": "Load resource and readiness checks.",
+      "engineState": "LoadingContext",
+      "enterEvent": "LoadContext",
+      "requiredContextKeys": [
+        "resourceId"
+      ],
+      "actor": "system"
+    },
+    {
+      "phaseId": "confirm-plan",
+      "title": "Confirm Publish Plan",
+      "description": "Confirm destination and visibility.",
+      "engineState": "Planning",
+      "enterEvent": "PlanningCompleted",
+      "requiredContextKeys": [
+        "temporaryMemory.publishTarget"
+      ],
+      "actor": "teacher"
+    },
+    {
+      "phaseId": "preflight",
+      "title": "Preflight Checks",
+      "description": "System preflight (non-authoritative).",
+      "engineState": "Generating",
+      "enterEvent": "Generate",
+      "requiredContextKeys": [],
+      "actor": "system"
+    },
+    {
+      "phaseId": "validate",
+      "title": "Validate Readiness",
+      "description": "Block publish if integrity checks fail.",
+      "engineState": "Validating",
+      "enterEvent": "GenerationCompleted",
+      "requiredContextKeys": [],
+      "actor": "system"
+    },
+    {
+      "phaseId": "review",
+      "title": "Teacher Confirm",
+      "description": "Teacher confirms publish.",
+      "engineState": "Reviewing",
+      "enterEvent": "ValidationPassed",
+      "requiredContextKeys": [],
+      "actor": "teacher"
+    },
+    {
+      "phaseId": "publish",
+      "title": "Publish",
+      "description": "Execute publish.",
+      "engineState": "Publishing",
+      "enterEvent": "Publish",
+      "requiredContextKeys": [
+        "resourceId"
+      ],
+      "actor": "teacher"
+    }
+  ],
+  "validationRules": [
+    {
+      "ruleId": "PR-V1",
+      "description": "Resource must pass readiness before Publishing",
+      "appliesAt": "Validating",
+      "severity": "block"
+    }
+  ],
+  "failureStates": [
+    "Failed",
+    "Cancelled"
+  ],
+  "recovery": {
+    "onFailed": "Retry→Generate",
+    "onCancelled": "Restore",
+    "onValidationFailed": "Edit",
+    "notes": "Publish failures Retry via Generate or Restore last Ready snapshot; teacher must re-confirm Publish."
+  },
+  "completionCriteria": [
+    "State Completed",
+    "PublishedResource record exists"
+  ],
+  "producedObjects": [
+    "PublishedResource"
+  ],
+  "tags": [
+    "publish",
+    "resource"
+  ]
+}

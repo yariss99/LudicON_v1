@@ -1,0 +1,26 @@
+{
+  "name": "@prima/engine-validation",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "PRIMA Validation Engine — mandatory pre-delivery artifact validation gate",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist", "rules"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test dist/tests/validation-engine.test.js",
+    "clean": "node -e \"fs.rmSync('dist',{recursive:true,force:true})\""
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "~6.0.2",
+    "@types/node": "^24.13.2"
+  }
+}

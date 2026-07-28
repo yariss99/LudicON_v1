@@ -1,44 +1,49 @@
-:root{
+:root {
+  /* ===== BRAND COLORS ===== */
 
-  /* ===== COLORS ===== */
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --indigo: #4f46e5;
+  --purple: #7c3aed;
+  --emerald: #10b981;
+  --amber: #f59e0b;
 
-  --primary:#2563EB;
-  --primary-dark:#1D4ED8;
+  --background: #ffffff;
+  --surface: #ffffff;
 
-  --background:#F4F7FC;
+  --text: #0f172a;
+  --text-light: #64748b;
+  --text-muted: #94a3b8;
 
-  --surface:#FFFFFF;
+  --border: rgba(15, 23, 42, 0.06);
 
-  --text:#1F2937;
-  --text-light:#6B7280;
-
-  --border:#E5E7EB;
-
-  --success:#22C55E;
-  --warning:#F59E0B;
-  --danger:#EF4444;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
 
   /* ===== RADIUS ===== */
 
-  --radius-sm:10px;
-  --radius-md:18px;
-  --radius-lg:24px;
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 24px;
 
   /* ===== SHADOW ===== */
 
-  --shadow:
-      0 12px 40px rgba(0,0,0,.08);
+  --shadow-soft: 0 4px 24px rgba(79, 70, 229, 0.08);
+  --shadow-card: 0 8px 32px rgba(15, 23, 42, 0.06);
+  --shadow-hover: 0 16px 48px rgba(79, 70, 229, 0.14);
+  --shadow-header: 0 4px 24px rgba(15, 23, 42, 0.06);
 
   /* ===== SPACING ===== */
 
-  --space-1:8px;
-  --space-2:16px;
-  --space-3:24px;
-  --space-4:32px;
-  --space-5:48px;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+  --space-6: 64px;
 
   /* ===== TRANSITIONS ===== */
 
-  --transition:.25s;
-
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }

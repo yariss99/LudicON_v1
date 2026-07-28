@@ -1,0 +1,38 @@
+{
+  "name": "@prima/composition",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "PRIMA Core production Composition Root — real engines only (fail-closed)",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test dist/tests/composition.integration.test.js dist/tests/contract-compat.test.js",
+    "clean": "node -e \"fs.rmSync('dist',{recursive:true,force:true})\""
+  },
+  "dependencies": {
+    "@prima/contracts": "0.1.0",
+    "@prima/runtime-orchestrator": "0.1.0",
+    "@prima/core-kernel": "0.1.0",
+    "@prima/eos": "0.1.0",
+    "@prima/engine-workflow": "0.1.0",
+    "@prima/engine-context": "0.1.0",
+    "@prima/engine-prompt": "0.1.0",
+    "@prima/ai-orchestrator": "0.1.0",
+    "@prima/engine-validation": "0.1.0",
+    "@prima/engine-memory": "0.1.0",
+    "@prima/engine-tools": "0.1.0"
+  },
+  "devDependencies": {
+    "typescript": "~6.0.2",
+    "@types/node": "^24.13.2"
+  }
+}

@@ -1,0 +1,178 @@
+{
+  "id": "review-lesson",
+  "kind": "review-lesson",
+  "displayName": "Review Lesson",
+  "version": "1.0.0",
+  "purpose": "Structured teacher review of a lesson before ready/publish.",
+  "entryConditions": [
+    "lessonId exists",
+    "Teacher has review rights"
+  ],
+  "requiredContext": [
+    {
+      "key": "teacher.teacherId",
+      "required": true,
+      "description": "Teacher identity"
+    },
+    {
+      "key": "lessonId",
+      "required": true,
+      "description": "Lesson under review"
+    },
+    {
+      "key": "projectId",
+      "required": true,
+      "description": "Project"
+    }
+  ],
+  "requiredPermissions": [
+    "workflow:start",
+    "workflow:review",
+    "resource:read",
+    "resource:write"
+  ],
+  "initialState": "Idle",
+  "allowedStates": [
+    "Idle",
+    "Initializing",
+    "LoadingContext",
+    "Planning",
+    "Generating",
+    "Validating",
+    "Editing",
+    "Reviewing",
+    "Ready",
+    "Publishing",
+    "Completed",
+    "Failed",
+    "Cancelled"
+  ],
+  "allowedEvents": [
+    "CreateWorkflow",
+    "LoadContext",
+    "PlanningCompleted",
+    "Generate",
+    "GenerationCompleted",
+    "ValidationPassed",
+    "ValidationFailed",
+    "Edit",
+    "SaveDraft",
+    "Publish",
+    "Retry",
+    "Cancel",
+    "Restore",
+    "Complete"
+  ],
+  "happyPathEvents": [
+    "CreateWorkflow",
+    "LoadContext",
+    "PlanningCompleted",
+    "Generate",
+    "GenerationCompleted",
+    "ValidationPassed",
+    "ValidationPassed",
+    "Complete"
+  ],
+  "phases": [
+    {
+      "phaseId": "start",
+      "title": "Start Review",
+      "description": "Open review session for an existing lesson.",
+      "engineState": "Initializing",
+      "enterEvent": "CreateWorkflow",
+      "requiredContextKeys": [
+        "lessonId"
+      ],
+      "actor": "teacher"
+    },
+    {
+      "phaseId": "load",
+      "title": "Load Lesson",
+      "description": "Load lesson and prior validation signals.",
+      "engineState": "LoadingContext",
+      "enterEvent": "LoadContext",
+      "requiredContextKeys": [
+        "lessonId"
+      ],
+      "actor": "system"
+    },
+    {
+      "phaseId": "plan-review",
+      "title": "Plan Review Focus",
+      "description": "Optional focus areas for review.",
+      "engineState": "Planning",
+      "enterEvent": "PlanningCompleted",
+      "requiredContextKeys": [],
+      "actor": "teacher"
+    },
+    {
+      "phaseId": "assist-review",
+      "title": "Assisted Checks",
+      "description": "System may run non-authoritative quality checks.",
+      "engineState": "Generating",
+      "enterEvent": "Generate",
+      "requiredContextKeys": [],
+      "actor": "system"
+    },
+    {
+      "phaseId": "validate",
+      "title": "Validate Findings",
+      "description": "Validate review report structure.",
+      "engineState": "Validating",
+      "enterEvent": "GenerationCompleted",
+      "requiredContextKeys": [],
+      "actor": "system"
+    },
+    {
+      "phaseId": "teacher-review",
+      "title": "Teacher Review",
+      "description": "Teacher accepts, edits, or rejects findings.",
+      "engineState": "Reviewing",
+      "enterEvent": "ValidationPassed",
+      "requiredContextKeys": [],
+      "actor": "teacher"
+    },
+    {
+      "phaseId": "complete",
+      "title": "Complete Review",
+      "description": "Mark review complete; may unlock Ready elsewhere.",
+      "engineState": "Ready",
+      "enterEvent": "ValidationPassed",
+      "requiredContextKeys": [],
+      "actor": "teacher"
+    }
+  ],
+  "validationRules": [
+    {
+      "ruleId": "RL-V1",
+      "description": "Review report must be teacher-editable",
+      "appliesAt": "Reviewing",
+      "severity": "block"
+    }
+  ],
+  "failureStates": [
+    "Failed",
+    "Cancelled"
+  ],
+  "recovery": {
+    "onFailed": "Retry→Planning",
+    "onCancelled": "Restore",
+    "onValidationFailed": "Edit",
+    "notes": "Failed → Retry returns to Planning; ValidationFailed → Editing; Cancelled → Restore from history or start a new session. AI never dispatches."
+  },
+  "completionCriteria": [
+    "State Completed or Ready then Complete",
+    "ReviewReport persisted"
+  ],
+  "producedObjects": [
+    "ReviewReport"
+  ],
+  "aiRequestTypes": [
+    "Summarize",
+    "ExplainConcept"
+  ],
+  "tags": [
+    "review",
+    "lesson"
+  ]
+}

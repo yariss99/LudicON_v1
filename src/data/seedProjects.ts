@@ -1,0 +1,93 @@
+import type { Project } from "../types/project";
+
+/** Deterministic seed used when local storage is empty. */
+export const SEED_PROJECTS: Project[] = [
+  {
+    id: "prj_fractions",
+    title: "Fracții — lecție introductivă",
+    subject: "Matematică",
+    grade: "Clasa a III-a",
+    color: "blue",
+    icon: "calculator",
+    description:
+      "Introducere în fracții prin exemple concrete și exerciții de reprezentare.",
+    createdAt: "2026-07-20T08:00:00.000Z",
+    updatedAt: "2026-07-26T07:00:00.000Z",
+    favorite: true,
+    archived: false,
+    state: "resources_ready",
+    resources: [
+      { id: "bp", type: "blueprint", label: "Plan pedagogic", status: "ready" },
+      { id: "ls", type: "lesson", label: "Lecție", status: "ready" },
+      { id: "ws", type: "worksheet", label: "Fișă", status: "draft" },
+      { id: "as", type: "assessment", label: "Evaluare", status: "empty" },
+      { id: "pr", type: "presentation", label: "Prezentare", status: "empty" },
+    ],
+  },
+  {
+    id: "prj_photosynthesis",
+    title: "Fotosinteza — lumea plantelor",
+    subject: "Științe",
+    grade: "Clasa a IV-a",
+    color: "emerald",
+    icon: "flask",
+    description:
+      "Explorarea fotosintezei cu experimente simple și material vizual.",
+    createdAt: "2026-07-18T10:00:00.000Z",
+    updatedAt: "2026-07-25T16:30:00.000Z",
+    favorite: false,
+    archived: false,
+    state: "blueprint_review",
+    resources: [
+      { id: "bp", type: "blueprint", label: "Plan pedagogic", status: "draft" },
+      { id: "ls", type: "lesson", label: "Lecție", status: "empty" },
+      { id: "ws", type: "worksheet", label: "Fișă", status: "empty" },
+      { id: "nt", type: "notes", label: "Note", status: "ready" },
+      { id: "pr", type: "presentation", label: "Prezentare", status: "empty" },
+    ],
+  },
+  {
+    id: "prj_grammar",
+    title: "Gramatică — substantivele",
+    subject: "Limba română",
+    grade: "Clasa a II-a",
+    color: "amber",
+    icon: "book",
+    description:
+      "Recunoașterea substantivelor prin exemple din texte narative scurte.",
+    createdAt: "2026-07-10T09:00:00.000Z",
+    updatedAt: "2026-07-23T11:15:00.000Z",
+    favorite: false,
+    archived: false,
+    state: "approved",
+    resources: [
+      { id: "bp", type: "blueprint", label: "Plan pedagogic", status: "ready" },
+      { id: "ls", type: "lesson", label: "Lecție", status: "empty" },
+      { id: "ws", type: "worksheet", label: "Fișă", status: "ready" },
+      { id: "gm", type: "game", label: "Joc", status: "empty" },
+      { id: "pr", type: "presentation", label: "Prezentare", status: "empty" },
+    ],
+  },
+  {
+    id: "prj_quiz_adventure",
+    title: "Quiz aventura fracțiilor",
+    subject: "Matematică",
+    grade: "Clasa a III-a",
+    color: "violet",
+    icon: "lightbulb",
+    description:
+      "Joc de consolidare pentru fracții, gândit ca aventură pe etape.",
+    createdAt: "2026-07-05T14:00:00.000Z",
+    updatedAt: "2026-07-19T18:45:00.000Z",
+    favorite: false,
+    archived: false,
+    state: "conversation",
+    resources: [
+      { id: "bp", type: "blueprint", label: "Plan pedagogic", status: "empty" },
+      { id: "ls", type: "lesson", label: "Lecție", status: "empty" },
+      { id: "gm", type: "game", label: "Joc", status: "draft" },
+      { id: "as", type: "assessment", label: "Evaluare", status: "empty" },
+      { id: "pr", type: "presentation", label: "Prezentare", status: "empty" },
+    ],
+  },
+];

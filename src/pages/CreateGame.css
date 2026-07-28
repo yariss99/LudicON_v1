@@ -27,6 +27,33 @@
     margin-bottom: 35px;
 }
 
+.progress-wrapper {
+    margin-bottom: 28px;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-light);
+}
+
+.progress-bar {
+    height: 8px;
+    background: var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 999px;
+    transition: width var(--transition);
+}
+
 .form-group {
     margin-bottom: 25px;
 }
@@ -51,6 +78,136 @@
 .form-group select:focus {
     outline: none;
     border-color: var(--primary);
+}
+
+.activity-grid,
+.game-type-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    margin-top: 25px;
+}
+
+.summary {
+    margin-top: 25px;
+    padding: 24px;
+    border-radius: var(--radius-md);
+    background: var(--background);
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.summary-row:first-child {
+    padding-top: 0;
+}
+
+.summary-row:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.summary-label {
+    font-weight: 600;
+    color: var(--text-light);
+    flex-shrink: 0;
+}
+
+.summary-value {
+    color: var(--text);
+    text-align: right;
+}
+
+.config-section {
+    margin-bottom: 25px;
+}
+
+.config-label {
+    display: block;
+    margin-bottom: 12px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.option-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+    cursor: pointer;
+    color: var(--text);
+    font-size: 15px;
+    transition: border-color var(--transition);
+}
+
+.option-item:has(input:checked) {
+    border-color: var(--primary);
+    background: #eff6ff;
+}
+
+.option-item input {
+    accent-color: var(--primary);
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text);
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.checkbox-item input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary);
+}
+
+.generate-button {
+    width: 100%;
+    min-width: unset;
+    margin-top: 35px;
+    padding: 18px 28px;
+    font-size: 18px;
+}
+
+.back-link {
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+    padding: 8px;
+    border: none;
+    background: none;
+    color: var(--text-light);
+    font-size: 15px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.back-link:hover {
+    color: var(--text);
 }
 
 .actions {
