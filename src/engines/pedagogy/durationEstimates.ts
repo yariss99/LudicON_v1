@@ -9,6 +9,7 @@ const BASE_MINUTES: Record<ProjectResourceType, number> = {
   assessment: 8,
   presentation: 8,
   game: 12,
+  story: 10,
   notes: 0,
   reflection: 5,
   resources: 0,

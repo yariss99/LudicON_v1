@@ -4,3 +4,8 @@ export { default as ProjectCard } from "./components/ProjectCard";
 export { default as CreateProjectDialog } from "./components/CreateProjectDialog";
 export { default as ProjectFormDialog } from "./components/ProjectFormDialog";
 export { default as ProjectGrid } from "./components/ProjectGrid";
+export { ProjectsDashboard } from "./pages/ProjectsDashboard";
+export { ProjectDetails } from "./pages/ProjectDetails";
+export { CreateProjectModal } from "./pages/CreateProjectModal";
+export { EditProjectModal } from "./pages/EditProjectModal";
+export { DeleteConfirmation } from "./pages/DeleteConfirmation";

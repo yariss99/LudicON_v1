@@ -4,30 +4,28 @@ export const WORKSPACE_TABS: readonly {
   id: ProjectWorkspaceTabId;
   label: string;
 }[] = [
-  { id: "overview", label: "Prezentare" },
-  { id: "lessons", label: "Lecții" },
-  { id: "worksheets", label: "Fișe" },
-  { id: "assessments", label: "Evaluări" },
-  { id: "stories", label: "Povești" },
-  { id: "games", label: "Jocuri" },
-  { id: "presentations", label: "Prezentări" },
-  { id: "resources", label: "Resurse" },
-  { id: "ai", label: "Sugestii PRIMA" },
-  { id: "versions", label: "Versiuni" },
-  { id: "activity", label: "Activitate" },
-  { id: "settings", label: "Setări" },
+  { id: "overview", label: "Overview" },
+  { id: "lessons", label: "Lessons" },
+  { id: "worksheets", label: "Worksheets" },
+  { id: "assessments", label: "Assessments" },
+  { id: "games", label: "Games" },
+  { id: "stories", label: "Stories" },
+  { id: "presentations", label: "Presentations" },
+  { id: "resources", label: "Resources" },
+  { id: "classroom", label: "Classroom" },
+  { id: "analytics", label: "Analytics" },
 ] as const;
 
 export const ARTIFACT_KIND_LABEL: Record<string, string> = {
-  lesson: "Lecție",
-  worksheet: "Fișă",
-  assessment: "Evaluare",
-  story: "Poveste",
-  game: "Joc",
-  presentation: "Prezentare",
-  resource: "Resursă",
-  note: "Notă",
-  unit: "Unitate",
+  lesson: "Lesson",
+  worksheet: "Worksheet",
+  assessment: "Assessment",
+  story: "Story",
+  game: "Game",
+  presentation: "Presentation",
+  resource: "Resource",
+  note: "Note",
+  unit: "Unit",
 };
 
 export const TAB_TO_KIND: Partial<

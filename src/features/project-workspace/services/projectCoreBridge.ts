@@ -5,6 +5,7 @@
 
 import type { Project } from "../../../types/project";
 import { projectWorkspaceRepository } from "./projectWorkspaceRepository";
+import { computeDynamicProgress } from "./dynamicProgress";
 import type {
   AiSuggestion,
   ArtifactKind,
@@ -37,17 +38,13 @@ export function buildProjectCoreContext(input: {
 }
 
 export function computeProgress(projectId: string): ProjectProgress {
-  const artifacts = projectWorkspaceRepository
-    .listArtifacts(projectId)
-    .filter((a) => a.status !== "archived");
-  const readyCount = artifacts.filter((a) => a.status === "ready").length;
-  const draftCount = artifacts.filter((a) => a.status === "draft").length;
-  const total = artifacts.length;
+  // Mission 003 — studio completion rules (auto-updates with LocalStorage inventory).
+  const dynamic = computeDynamicProgress(projectId);
   return {
-    totalArtifacts: total,
-    readyCount,
-    draftCount,
-    percentComplete: total === 0 ? 0 : Math.round((readyCount / total) * 100),
+    totalArtifacts: dynamic.totalArtifacts,
+    readyCount: dynamic.readyCount,
+    draftCount: dynamic.draftCount,
+    percentComplete: dynamic.percentComplete,
   };
 }
 
@@ -68,7 +65,7 @@ export function buildAiSuggestions(
       title: "Generează prima lecție",
       reason: `Proiectul „${project.title}” nu are încă o lecție gata.`,
       actionLabel: "Creează lecție",
-      href: `/create/experience?intent=lesson&project=${project.id}`,
+      href: `/create?type=lesson&project=${project.id}&source=blank`,
       kind: "lesson",
     });
   }
@@ -78,7 +75,7 @@ export function buildAiSuggestions(
       title: "Adaugă o fișă de practică",
       reason: "O fișă scurtă întărește obiectivele lecției.",
       actionLabel: "Generează fișă",
-      href: `/create/experience?intent=worksheet&project=${project.id}`,
+      href: `/create?type=worksheet&project=${project.id}&source=blank`,
       kind: "worksheet",
     });
   }
@@ -88,7 +85,7 @@ export function buildAiSuggestions(
       title: "Pregătește o verificare",
       reason: "Evaluarea formativă oferă feedback imediat elevilor.",
       actionLabel: "Creează evaluare",
-      href: `/create/experience?intent=assessment&project=${project.id}`,
+      href: `/create?type=assessment&project=${project.id}&source=blank`,
       kind: "assessment",
     });
   }
@@ -99,7 +96,7 @@ export function buildAiSuggestions(
       title: "Schiță de prezentare",
       reason: "PRIMA poate propune diapozitive aliniate la competențe.",
       actionLabel: "Generează",
-      href: `/create/experience?intent=presentation&project=${project.id}`,
+      href: `/create?type=presentation&project=${project.id}&source=blank`,
       kind: "presentation",
     });
   }

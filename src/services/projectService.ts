@@ -4,6 +4,7 @@ import type {
   ProjectFormInput,
   ProjectResourceStatus,
   ProjectResourceType,
+  ProjectStatus,
   UpdateProjectInput,
 } from "../types/project";
 import { createId } from "../utils/id";
@@ -15,11 +16,13 @@ import {
 
 function emptyResources(): Project["resources"] {
   return [
-    { id: "bp", type: "blueprint", label: "Plan pedagogic", status: "empty" },
-    { id: "ls", type: "lesson", label: "Lecție", status: "empty" },
-    { id: "ws", type: "worksheet", label: "Fișă", status: "empty" },
-    { id: "as", type: "assessment", label: "Evaluare", status: "empty" },
-    { id: "pr", type: "presentation", label: "Prezentare", status: "empty" },
+    { id: "ls", type: "lesson", label: "Lessons", status: "empty" },
+    { id: "ws", type: "worksheet", label: "Worksheets", status: "empty" },
+    { id: "as", type: "assessment", label: "Assessments", status: "empty" },
+    { id: "gm", type: "game", label: "Games", status: "empty" },
+    { id: "st", type: "story", label: "Stories", status: "empty" },
+    { id: "pr", type: "presentation", label: "Presentations", status: "empty" },
+    { id: "rs", type: "resources", label: "Resources", status: "empty" },
   ];
 }
 
@@ -31,10 +34,15 @@ function normalizeTitle(title: string): string {
     .replace(/[\u0300-\u036f]/g, "");
 }
 
-/**
- * Domain service for Projects.
- * Persistence is delegated to ProjectRepository — replaceable by an API later.
- */
+function withStatusFlags(
+  status: ProjectStatus,
+): Pick<Project, "status" | "archived"> {
+  return {
+    status,
+    archived: status === "archived",
+  };
+}
+
 export class ProjectService {
   private readonly repository: typeof projectRepository;
 
@@ -53,7 +61,6 @@ export class ProjectService {
   isTitleTaken(title: string, excludeId?: string): boolean {
     const normalized = normalizeTitle(title);
     if (!normalized) return false;
-
     return this.list().some(
       (project) =>
         project.id !== excludeId &&
@@ -63,21 +70,25 @@ export class ProjectService {
 
   create(input: ProjectFormInput): Project {
     const title = input.title.trim();
-    if (this.isTitleTaken(title)) {
-      throw new Error("EXISTS_TITLE");
-    }
+    if (!title) throw new Error("TITLE_REQUIRED");
+    if (this.isTitleTaken(title)) throw new Error("EXISTS_TITLE");
 
     const timestamp = nowIso();
+    const color = input.color || DEFAULT_PROJECT_COLOR;
+    const status = input.status || "draft";
     const project: Project = {
       id: createId("prj"),
       title,
       subject: input.subject.trim(),
       grade: input.grade.trim(),
       description: input.description.trim(),
-      color: input.color || DEFAULT_PROJECT_COLOR,
+      schoolYear: input.schoolYear.trim() || "2025-2026",
+      curriculum: input.curriculum.trim(),
+      ...withStatusFlags(status),
+      color,
+      coverColor: color,
       icon: input.icon || DEFAULT_PROJECT_ICON,
       favorite: Boolean(input.favorite),
-      archived: false,
       createdAt: timestamp,
       updatedAt: timestamp,
       resources: emptyResources(),
@@ -91,22 +102,25 @@ export class ProjectService {
   update(id: string, input: UpdateProjectInput): Project {
     const projects = this.list();
     const existing = projects.find((project) => project.id === id);
-    if (!existing) {
-      throw new Error("NOT_FOUND");
-    }
+    if (!existing) throw new Error("NOT_FOUND");
 
     const title = input.title.trim();
-    if (this.isTitleTaken(title, id)) {
-      throw new Error("EXISTS_TITLE");
-    }
+    if (!title) throw new Error("TITLE_REQUIRED");
+    if (this.isTitleTaken(title, id)) throw new Error("EXISTS_TITLE");
 
+    const color = input.color || existing.color;
+    const status = input.status || existing.status;
     const updated: Project = {
       ...existing,
       title,
       subject: input.subject.trim(),
       grade: input.grade.trim(),
       description: input.description.trim(),
-      color: input.color || existing.color,
+      schoolYear: input.schoolYear.trim() || existing.schoolYear,
+      curriculum: input.curriculum.trim(),
+      ...withStatusFlags(status),
+      color,
+      coverColor: color,
       icon: input.icon || existing.icon,
       favorite: Boolean(input.favorite),
       updatedAt: nowIso(),
@@ -119,15 +133,12 @@ export class ProjectService {
   }
 
   delete(id: string): void {
-    const next = this.list().filter((project) => project.id !== id);
-    this.repository.save(next);
+    this.repository.save(this.list().filter((project) => project.id !== id));
   }
 
   duplicate(id: string): Project {
     const source = this.getById(id);
-    if (!source) {
-      throw new Error("NOT_FOUND");
-    }
+    if (!source) throw new Error("NOT_FOUND");
 
     const timestamp = nowIso();
     const title = this.nextUniqueTitle(`${source.title} (copie)`);
@@ -136,7 +147,7 @@ export class ProjectService {
       id: createId("prj"),
       title,
       favorite: false,
-      archived: false,
+      ...withStatusFlags("draft"),
       createdAt: timestamp,
       updatedAt: timestamp,
       state: "conversation",
@@ -146,8 +157,15 @@ export class ProjectService {
     return duplicate;
   }
 
+  setStatus(id: string, status: ProjectStatus): Project {
+    return this.patch(id, {
+      ...withStatusFlags(status),
+      updatedAt: nowIso(),
+    });
+  }
+
   setArchived(id: string, archived: boolean): Project {
-    return this.patch(id, { archived, updatedAt: nowIso() });
+    return this.setStatus(id, archived ? "archived" : "active");
   }
 
   setFavorite(id: string, favorite: boolean): Project {
@@ -156,9 +174,7 @@ export class ProjectService {
 
   toggleFavorite(id: string): Project {
     const existing = this.getById(id);
-    if (!existing) {
-      throw new Error("NOT_FOUND");
-    }
+    if (!existing) throw new Error("NOT_FOUND");
     return this.setFavorite(id, !existing.favorite);
   }
 
@@ -184,9 +200,7 @@ export class ProjectService {
     label?: string,
   ): Project {
     const existing = this.getById(projectId);
-    if (!existing) {
-      throw new Error("NOT_FOUND");
-    }
+    if (!existing) throw new Error("NOT_FOUND");
 
     const resources = existing.resources.map((resource) =>
       resource.type === type
@@ -221,15 +235,10 @@ export class ProjectService {
     });
   }
 
-  private patch(
-    id: string,
-    changes: Partial<Omit<Project, "id">>,
-  ): Project {
+  private patch(id: string, changes: Partial<Omit<Project, "id">>): Project {
     const projects = this.list();
     const existing = projects.find((project) => project.id === id);
-    if (!existing) {
-      throw new Error("NOT_FOUND");
-    }
+    if (!existing) throw new Error("NOT_FOUND");
 
     const updated: Project = { ...existing, ...changes };
     this.repository.save(
@@ -240,18 +249,14 @@ export class ProjectService {
 
   private nextUniqueTitle(base: string): string {
     if (!this.isTitleTaken(base)) return base;
-
     let index = 2;
-    while (this.isTitleTaken(`${base} ${index}`)) {
-      index += 1;
-    }
+    while (this.isTitleTaken(`${base} ${index}`)) index += 1;
     return `${base} ${index}`;
   }
 }
 
 export const projectService = new ProjectService();
 
-/** Convenience re-exports for gradual migration */
 export function loadProjects(): Project[] {
   return projectService.list();
 }

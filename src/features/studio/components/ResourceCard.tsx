@@ -22,6 +22,7 @@ const icons: Record<ProjectResourceType, LucideIcon> = {
   assessment: ClipboardCheck,
   presentation: Presentation,
   game: Gamepad2,
+  story: BookOpen,
   notes: NotebookPen,
   reflection: Sparkles,
   resources: FolderOpen,

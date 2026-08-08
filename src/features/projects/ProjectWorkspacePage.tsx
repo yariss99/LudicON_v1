@@ -35,6 +35,7 @@ const icons: Record<ProjectResourceType, typeof BookOpen> = {
   assessment: ClipboardCheck,
   presentation: Presentation,
   game: Gamepad2,
+  story: BookOpen,
   notes: NotebookPen,
   reflection: Sparkles,
   resources: FolderOpen,

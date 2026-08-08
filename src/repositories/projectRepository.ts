@@ -1,5 +1,9 @@
-import type { Project } from "../types/project";
+import type { Project, ProjectStatus } from "../types/project";
 import { SEED_PROJECTS } from "../data/seedProjects";
+import {
+  DEFAULT_PROJECT_COLOR,
+  DEFAULT_PROJECT_ICON,
+} from "../features/projects/constants";
 
 const STORAGE_KEY = "prima.projects.v1";
 
@@ -13,6 +17,19 @@ function isBrowser(): boolean {
   return typeof window !== "undefined" && typeof localStorage !== "undefined";
 }
 
+function deriveStatus(candidate: Partial<Project>): ProjectStatus {
+  if (candidate.archived) return "archived";
+  if (
+    candidate.status === "draft" ||
+    candidate.status === "active" ||
+    candidate.status === "completed" ||
+    candidate.status === "archived"
+  ) {
+    return candidate.status;
+  }
+  return "active";
+}
+
 function normalizeProject(value: unknown): Project | null {
   if (!value || typeof value !== "object") return null;
   const candidate = value as Partial<Project>;
@@ -22,37 +39,46 @@ function normalizeProject(value: unknown): Project | null {
     typeof candidate.title !== "string" ||
     typeof candidate.subject !== "string" ||
     typeof candidate.grade !== "string" ||
-    typeof candidate.color !== "string" ||
-    typeof candidate.icon !== "string" ||
     typeof candidate.createdAt !== "string" ||
-    typeof candidate.updatedAt !== "string" ||
-    typeof candidate.description !== "string" ||
-    !Array.isArray(candidate.resources) ||
-    typeof candidate.state !== "string"
+    typeof candidate.updatedAt !== "string"
   ) {
     return null;
   }
 
+  const color =
+    (candidate.coverColor as Project["color"]) ||
+    (candidate.color as Project["color"]) ||
+    DEFAULT_PROJECT_COLOR;
+  const status = deriveStatus(candidate);
+
   return {
     id: candidate.id,
     title: candidate.title,
-    description: candidate.description,
+    description:
+      typeof candidate.description === "string" ? candidate.description : "",
     subject: candidate.subject,
     grade: candidate.grade,
-    color: candidate.color,
-    icon: candidate.icon,
+    schoolYear:
+      typeof candidate.schoolYear === "string" && candidate.schoolYear
+        ? candidate.schoolYear
+        : "2025-2026",
+    curriculum:
+      typeof candidate.curriculum === "string" ? candidate.curriculum : "",
+    status,
+    color,
+    coverColor: color,
+    icon: (candidate.icon as Project["icon"]) || DEFAULT_PROJECT_ICON,
     createdAt: candidate.createdAt,
     updatedAt: candidate.updatedAt,
     favorite: Boolean(candidate.favorite),
-    archived: Boolean(candidate.archived),
-    resources: candidate.resources,
-    state: candidate.state,
+    archived: status === "archived" || Boolean(candidate.archived),
+    resources: Array.isArray(candidate.resources) ? candidate.resources : [],
+    state: (candidate.state as Project["state"]) || "conversation",
   };
 }
 
 function readRaw(): unknown[] | null {
   if (!isBrowser()) return null;
-
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
@@ -63,15 +89,13 @@ function readRaw(): unknown[] | null {
   }
 }
 
-/**
- * LocalStorage-backed repository.
- * Swap this implementation for an API repository later — ProjectService stays stable.
- */
 export class LocalStorageProjectRepository implements ProjectRepository {
   load(): Project[] {
     const raw = readRaw();
     if (!raw) {
-      const seeded = structuredClone(SEED_PROJECTS);
+      const seeded = structuredClone(SEED_PROJECTS).map((p) =>
+        normalizeProject(p),
+      ).filter((p): p is Project => p !== null);
       this.save(seeded);
       return seeded;
     }
@@ -81,7 +105,9 @@ export class LocalStorageProjectRepository implements ProjectRepository {
       .filter((project): project is Project => project !== null);
 
     if (projects.length === 0) {
-      const seeded = structuredClone(SEED_PROJECTS);
+      const seeded = structuredClone(SEED_PROJECTS)
+        .map((p) => normalizeProject(p))
+        .filter((p): p is Project => p !== null);
       this.save(seeded);
       return seeded;
     }

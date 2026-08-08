@@ -1,5 +1,6 @@
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { WorkspaceBreadcrumb } from "../components/WorkspaceBreadcrumb";
 import { WorkspaceHeader } from "./WorkspaceHeader";
 import { tabFromPath, WorkspaceTabNav } from "./WorkspaceTabNav";
 import { useProjectWorkspace } from "../hooks/useProjectWorkspace";
@@ -7,7 +8,7 @@ import "../styles/project-workspace.css";
 
 export function ProjectWorkspaceLayout() {
   const location = useLocation();
-  const { setTab } = useProjectWorkspace();
+  const { project, setTab } = useProjectWorkspace();
 
   useEffect(() => {
     setTab(tabFromPath(location.pathname));
@@ -16,9 +17,7 @@ export function ProjectWorkspaceLayout() {
   return (
     <div className="project-workspace">
       <div className="pw-shell">
-        <Link className="pw-back" to="/projects">
-          ← Înapoi la proiecte
-        </Link>
+        <WorkspaceBreadcrumb projectTitle={project.title} />
         <WorkspaceHeader />
         <WorkspaceTabNav />
         <div className="pw-panel">

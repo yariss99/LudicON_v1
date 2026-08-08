@@ -8,6 +8,7 @@ export type ProjectResourceType =
   | "assessment"
   | "presentation"
   | "game"
+  | "story"
   | "notes"
   | "reflection"
   | "resources"
@@ -27,6 +28,8 @@ export type ProjectState =
   | "blueprint_review"
   | "approved"
   | "resources_ready";
+
+export type ProjectStatus = "draft" | "active" | "completed" | "archived";
 
 export type ProjectIconId =
   | "book"
@@ -51,24 +54,25 @@ export type ProjectColorId =
   | "sky";
 
 /**
- * Canonical Project — primary workspace for lessons, worksheets,
- * presentations, assessments and educational resources.
- *
- * `createdAt` / `updatedAt` are ISO-8601 strings (Date serialisation for LocalStorage).
+ * Canonical Project — every educational artifact belongs to a Project.
  */
 export type Project = {
   id: string;
   title: string;
   description: string;
   subject: string;
+  /** Class / grade label shown in UI as Class */
   grade: string;
+  schoolYear: string;
+  curriculum: string;
+  status: ProjectStatus;
   color: ProjectColorId;
+  coverColor: ProjectColorId;
   icon: ProjectIconId;
   createdAt: string;
   updatedAt: string;
   favorite: boolean;
   archived: boolean;
-  /** Future modules attach resources here */
   resources: ProjectResource[];
   state: ProjectState;
 };
@@ -78,6 +82,9 @@ export type ProjectFormInput = {
   subject: string;
   grade: string;
   description: string;
+  schoolYear: string;
+  curriculum: string;
+  status: ProjectStatus;
   color: ProjectColorId;
   icon: ProjectIconId;
   favorite: boolean;
@@ -89,7 +96,7 @@ export type CreateProjectInput = ProjectFormInput;
 export type UpdateProjectInput = ProjectFormInput;
 
 export type ProjectFormErrors = Partial<
-  Record<"title" | "subject" | "grade", string>
+  Record<"title" | "subject" | "grade" | "schoolYear" | "curriculum", string>
 >;
 
 export type ProjectSortOption =

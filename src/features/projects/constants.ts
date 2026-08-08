@@ -25,6 +25,25 @@ export const PROJECT_GRADES = [
   "Clasa a VIII-a",
 ] as const;
 
+export const PROJECT_SCHOOL_YEARS = [
+  "2024-2025",
+  "2025-2026",
+  "2026-2027",
+] as const;
+
+export const PROJECT_CURRICULA = [
+  "Curriculum național",
+  "Curriculum opțional",
+  "Curriculum local",
+] as const;
+
+export const PROJECT_STATUSES = [
+  { id: "draft", label: "Draft" },
+  { id: "active", label: "Active" },
+  { id: "completed", label: "Completed" },
+  { id: "archived", label: "Archived" },
+] as const;
+
 export type ProjectColorOption = {
   id: ProjectColorId;
   label: string;

@@ -9,6 +9,7 @@ import {
 import type {
   Project,
   ProjectFormInput,
+  ProjectStatus,
   UpdateProjectInput,
 } from "../types/project";
 import type { ParsedStudioIntent } from "../types/studio";
@@ -25,6 +26,7 @@ type ProjectContextValue = {
   duplicateProject: (id: string) => Project;
   archiveProject: (id: string) => void;
   unarchiveProject: (id: string) => void;
+  setProjectStatus: (id: string, status: ProjectStatus) => void;
   toggleFavorite: (id: string) => void;
   isTitleTaken: (title: string, excludeId?: string) => boolean;
   getProject: (id: string) => Project | undefined;
@@ -88,6 +90,11 @@ export function ProjectProvider({ children }: ProjectProviderProps) {
     setProjects(reload());
   }, []);
 
+  const setProjectStatus = useCallback((id: string, status: ProjectStatus) => {
+    projectService.setStatus(id, status);
+    setProjects(reload());
+  }, []);
+
   const toggleFavorite = useCallback((id: string) => {
     projectService.toggleFavorite(id);
     setProjects(reload());
@@ -119,6 +126,7 @@ export function ProjectProvider({ children }: ProjectProviderProps) {
       duplicateProject,
       archiveProject,
       unarchiveProject,
+      setProjectStatus,
       toggleFavorite,
       isTitleTaken,
       getProject,
@@ -134,6 +142,7 @@ export function ProjectProvider({ children }: ProjectProviderProps) {
       duplicateProject,
       archiveProject,
       unarchiveProject,
+      setProjectStatus,
       toggleFavorite,
       isTitleTaken,
       getProject,

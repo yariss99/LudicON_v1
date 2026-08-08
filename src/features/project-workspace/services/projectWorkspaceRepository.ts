@@ -274,26 +274,9 @@ export const projectWorkspaceRepository = {
     return meta;
   },
 
-  seedIfEmpty(projectId: string, subject: string): void {
-    if (this.listArtifacts(projectId).length > 0) return;
-    const unit = this.ensureDefaultUnit(projectId);
-    this.createArtifact({
-      projectId,
-      kind: "lesson",
-      title: `Lecție introductivă · ${subject}`,
-      unitId: unit.id,
-      payload: {
-        objectives: ["Introduce conceptul principal"],
-        content: "Schiță de lecție",
-      },
-    });
-    this.createArtifact({
-      projectId,
-      kind: "worksheet",
-      title: "Fișă de practică",
-      unitId: unit.id,
-      payload: { items: 5 },
-    });
+  seedIfEmpty(projectId: string, _subject: string): void {
+    // New projects start empty — hub cards show 0 until the teacher creates resources.
+    this.ensureDefaultUnit(projectId);
   },
 };
 

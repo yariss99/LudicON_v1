@@ -62,9 +62,9 @@ export function ArtifactsTab({ kind, title, lead, createLabel }: Props) {
           </button>
           <Link
             className="pw-btn"
-            to={`/create/experience?intent=${kind}&project=${project.id}`}
+            to={`/create?type=${kind}&project=${project.id}&source=blank`}
           >
-            Flux complet
+            Creation wizard
           </Link>
         </div>
       </div>
@@ -131,16 +131,5 @@ export function ArtifactsTab({ kind, title, lead, createLabel }: Props) {
         </div>
       )}
     </div>
-  );
-}
-
-export function WorksheetsTab() {
-  return (
-    <ArtifactsTab
-      kind="worksheet"
-      title="Fișe de lucru"
-      lead="Generează, previzualizează și exportă fișe aliniate la lecții."
-      createLabel="Fișă nouă"
-    />
   );
 }

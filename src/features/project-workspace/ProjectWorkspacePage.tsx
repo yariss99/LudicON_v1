@@ -3,13 +3,15 @@ import { useProjects } from "../../context/ProjectContext";
 import { ProjectWorkspaceProvider } from "./hooks/useProjectWorkspace";
 import { ProjectWorkspaceLayout } from "./layout/ProjectWorkspaceLayout";
 import { OverviewTab } from "./pages/OverviewTab";
-import { WorksheetsTab } from "./pages/ArtifactsTab";
 import { LessonsTab } from "./pages/LessonsTab";
+import { WorksheetsTab } from "./pages/WorksheetsTab";
 import { AssessmentsTab } from "./pages/AssessmentsTab";
 import { StoriesTab } from "./pages/StoriesTab";
 import { GamesTab } from "./pages/GamesTab";
 import { PresentationsTab } from "./pages/PresentationsTab";
 import { ResourcesTab } from "./pages/ResourcesTab";
+import { ClassroomTab } from "./pages/ClassroomTab";
+import { AnalyticsTab } from "./pages/AnalyticsTab";
 import { AiSuggestionsTab } from "./pages/AiSuggestionsTab";
 import { VersionsTab } from "./pages/VersionsTab";
 import { ActivityTab } from "./pages/ActivityTab";
@@ -62,6 +64,8 @@ export function ProjectWorkspacePage() {
           <Route path="games" element={<GamesTab />} />
           <Route path="presentations" element={<PresentationsTab />} />
           <Route path="resources" element={<ResourcesTab />} />
+          <Route path="classroom" element={<ClassroomTab />} />
+          <Route path="analytics" element={<AnalyticsTab />} />
           <Route path="ai" element={<AiSuggestionsTab />} />
           <Route path="versions" element={<VersionsTab />} />
           <Route path="activity" element={<ActivityTab />} />
