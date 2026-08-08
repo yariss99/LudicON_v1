@@ -3,7 +3,7 @@ Status: Official — Constitutional State Machine Model
 Version: 1.0
 Owner: LUDI ON Product Team
 Depends On: PRIMA_CONSTITUTIONAL_DOMAIN_MODEL.md, PRIMA_CONSTITUTIONAL_COMMAND_MODEL.md, PRIMA_CONSTITUTIONAL_EVENT_MODEL.md, PRIMA_CONSTITUTIONAL_DECISION_MODEL.md, PRIMA_CONSTITUTIONAL_USE_CASE_MODEL.md, PRIMA_EDUCATIONAL_OPERATING_SYSTEM.md, PRIMA_CONSTITUTIONAL_LANGUAGE.md
-Related Documents: solution/PRIMA_STATE_MODEL.md, PRIMA_FAILURE_MODEL.md
+Related Documents: PRIMA_CONSTITUTIONAL_EVENT_MODEL.md, PRIMA_CONSTITUTIONAL_POLICIES.md
 Last Updated: July 2026
 ---
 
@@ -29,7 +29,7 @@ Last Updated: July 2026
 | **CSM-07** | Cross-aggregate sync never bypasses Teacher Authorization |
 | **CSM-08** | Orthogonal concerns may use parallel state dimensions (not fake mega-states) |
 
-**Precedence:** This document owns aggregate lifecycle legality. [`solution/PRIMA_STATE_MODEL.md`](./solution/PRIMA_STATE_MODEL.md) must align.
+**Precedence:** This document owns aggregate lifecycle legality. (The `solution/PRIMA_STATE_MODEL.md` required to align with it was removed in the August 2026 cleanup.)
 
 ---
 

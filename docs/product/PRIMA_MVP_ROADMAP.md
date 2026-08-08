@@ -2,8 +2,8 @@
 Status: Official — MVP & Release Roadmap
 Version: 1.0
 Owner: LUDI ON Product Team
-Depends On: LUDI_ON_PROJECT_BIBLE.md, PRIMA_PRODUCT_DESIGN.md, PRIMA_PRODUCT_REDESIGN.md, PRIMA_TEACHER_EXPERIENCE.md, PRIMA_BLUEPRINT.md, PRIMA_DECISION_MODEL.md
-Related Documents: PRODUCT_ROADMAP.md, PRODUCT_VISION.md, PRIMA_DESIGN_SYSTEM.md
+Depends On: PRIMA-DOC-001_PRODUCT_VISION_STRATEGIC_DIRECTION.md, PRIMA-DOC-002_PRODUCT_MANIFEST.md, LUDI_ON_PROJECT_BIBLE.md, INSTRUCTIONAL_BLUEPRINT_SPECIFICATION.md
+Related Documents: PRIMA_CONSTITUTIONAL_DECISION_MODEL.md, ../design/DESIGN-001_PRIMA_PRODUCT_DESIGN_SYSTEM.md, ../../ROADMAP.md
 Last Updated: July 2026
 ---
 
@@ -16,7 +16,7 @@ Last Updated: July 2026
 
 Every feature increases complexity. Only essential capabilities belong in early versions. PRIMA must evolve as a **focused educational operating system** — capabilities grow **without** growing cognitive load.
 
-This roadmap **supersedes** [`PRODUCT_ROADMAP.md`](./PRODUCT_ROADMAP.md) on prioritization conflicts. The legacy roadmap remains historical reference for sequencing ideas; **this document is the shipping authority**.
+This is the **shipping authority** for scope and sequencing. The legacy `PRODUCT_ROADMAP.md` it superseded was removed in the August 2026 cleanup. Strategic direction above it sits in [`PRIMA-DOC-001_PRODUCT_VISION_STRATEGIC_DIRECTION.md`](./PRIMA-DOC-001_PRODUCT_VISION_STRATEGIC_DIRECTION.md).
 
 ---
 
@@ -433,11 +433,13 @@ Sprints 1–4 complete. One intention. One resource type (Lesson). Full loop.
 
 | Document | Role |
 |----------|------|
+| [`PRIMA-DOC-001_PRODUCT_VISION_STRATEGIC_DIRECTION.md`](./PRIMA-DOC-001_PRODUCT_VISION_STRATEGIC_DIRECTION.md) | Strategic direction this roadmap serves |
+| [`PRIMA-DOC-002_PRODUCT_MANIFEST.md`](./PRIMA-DOC-002_PRODUCT_MANIFEST.md) | What makes a feature worthy of shipping |
 | [`LUDI_ON_PROJECT_BIBLE.md`](./LUDI_ON_PROJECT_BIBLE.md) | Scope boundaries — MVP must not violate |
-| [`PRIMA_PRODUCT_REDESIGN.md`](./PRIMA_PRODUCT_REDESIGN.md) | Experience structure MVP implements |
-| [`PRIMA_DECISION_MODEL.md`](./PRIMA_DECISION_MODEL.md) | Which AI actions ship when |
-| [`PRODUCT_ROADMAP.md`](./PRODUCT_ROADMAP.md) | Legacy sequence — **this doc wins on cuts** |
-| [`PRIMA_DESIGN_SYSTEM.md`](./PRIMA_DESIGN_SYSTEM.md) | Visual bar for each release |
+| [`PRIMA_CONSTITUTIONAL_DECISION_MODEL.md`](./PRIMA_CONSTITUTIONAL_DECISION_MODEL.md) | Which AI actions ship when |
+| [`../design/DESIGN_BOOK_CH10_PRODUCT_BLUEPRINT.md`](../design/DESIGN_BOOK_CH10_PRODUCT_BLUEPRINT.md) | Screen inventory each release draws from |
+| [`../design/DESIGN-001_PRIMA_PRODUCT_DESIGN_SYSTEM.md`](../design/DESIGN-001_PRIMA_PRODUCT_DESIGN_SYSTEM.md) | Visual bar for each release |
+| [`../../ROADMAP.md`](../../ROADMAP.md) | Engineering foundation status |
 
 ---
 

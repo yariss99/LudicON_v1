@@ -2,12 +2,17 @@
 Status: Enterprise Product Architecture Specification
 Version: 1.0
 Owner: LUDI ON Product Team
-Depends On: LUDI_ON_PROJECT_BIBLE.md, PRIMA_ARCHITECTURAL_PRINCIPLES.md, PRIMA_DOMAIN_MODEL.md
-Related Documents: INSTRUCTIONAL_BLUEPRINT_SPECIFICATION.md, PRIMA_ORCHESTRATOR.md, PRIMA_ENGINE.md, All PRIMA engine specifications
+Depends On: LUDI_ON_PROJECT_BIBLE.md, PRIMA_ARCHITECTURAL_PRINCIPLES.md, PRIMA_CONSTITUTIONAL_DOMAIN_MODEL.md
+Related Documents: INSTRUCTIONAL_BLUEPRINT_SPECIFICATION.md, PRIMA_CONSTITUTIONAL_ENGINE_ARCHITECTURE.md, PRIMA_CONSTITUTIONAL_LANGUAGE.md
 Last Updated: July 2026
 ---
 
 # PRIMA Canonical Artifacts
+
+> **Cleanup note (August 2026).** This document references specifications that were removed when the
+> repository moved to a monorepo: PRIMA_DOMAIN_MODEL.md, the G1 engine specifications (PRIMA_ENGINE, PRIMA_DECISION_ENGINE, PRIMA_GENERATION_ENGINE, PRIMA_KNOWLEDGE_ENGINE, PRIMA_MEMORY_ENGINE, PRIMA_VALIDATION_ENGINE, PRIMA_ORCHESTRATOR), PRIMA_CONVERSATION_BLUEPRINT.md, LUDI_ON_SOLUTION_ARCHITECTURE.md and the `solution/` models.
+> Those names now appear as plain text, not links. Where an authority replaced them it is noted below;
+> otherwise treat the reference as historical. Current authority map: [`../README.md`](../README.md).
 
 **Version:** 1.0  
 **Status:** Official — Enterprise Product Architecture Specification
@@ -46,7 +51,7 @@ This document defines **architectural contracts** — not software objects, seri
 |----------|--------------|
 | [`LUDI_ON_PROJECT_BIBLE.md`](./LUDI_ON_PROJECT_BIBLE.md) | Defines product intent and baseline terminology. This document formalizes the **information contracts** that implement that intent across engines. |
 | [`PRIMA_ARCHITECTURAL_PRINCIPLES.md`](./PRIMA_ARCHITECTURAL_PRINCIPLES.md) | Establishes **AP-03** (artifact-based communication), **BP-05** (canonical Blueprint definition), and **EV-03** (contract versioning). This document instantiates those principles as named artifacts. |
-| [`PRIMA_DOMAIN_MODEL.md`](./PRIMA_DOMAIN_MODEL.md) | Defines **entities** — what exists in the domain. This document defines **artifacts** — the structured information those entities take when crossing engine boundaries. |
+| `PRIMA_DOMAIN_MODEL.md` | Defines **entities** — what exists in the domain. This document defines **artifacts** — the structured information those entities take when crossing engine boundaries. |
 | [`INSTRUCTIONAL_BLUEPRINT_SPECIFICATION.md`](./INSTRUCTIONAL_BLUEPRINT_SPECIFICATION.md) | Structural authority for the Instructional Blueprint artifact. This registry defines artifact role and governance; the Blueprint Specification defines section content. |
 | Engine specifications | Define how engines produce and consume artifacts listed here. On artifact identity or authority conflict, **this document prevails**. On behavioural detail, engine specs prevail. |
 
@@ -156,7 +161,7 @@ Session-scoped. No independent major version. Checkpointed with Session State on
 - Confirmation in Conversation Context does not authorize Generation.
 
 **Notes**  
-Field-level structure deferred to future Session Model specification. This registry defines artifact role only. See [`PRIMA_CONVERSATION_BLUEPRINT.md`](./PRIMA_CONVERSATION_BLUEPRINT.md) for stage behaviour.
+Field-level structure deferred to future Session Model specification. This registry defines artifact role only. See `PRIMA_CONVERSATION_BLUEPRINT.md` for stage behaviour.
 
 ---
 
@@ -247,7 +252,7 @@ Ephemeral — no standalone version lineage. Assembly timestamp and reasoning pa
 - Decision Context is consumed, not stored as authoritative design.
 
 **Notes**  
-See [`PRIMA_DECISION_ENGINE.md`](./PRIMA_DECISION_ENGINE.md) for reasoning pipeline behaviour.
+See `PRIMA_DECISION_ENGINE.md` for reasoning pipeline behaviour.
 
 ---
 
@@ -338,7 +343,7 @@ Bound to Knowledge Pack version active for the reasoning pass. Pack version fixe
 - Generation encodes knowledge indirectly through approved Blueprint only.
 
 **Notes**  
-Distinct from Knowledge Pack (curated corpus entity). Knowledge Package is the **exchange artifact** for one query. See [`PRIMA_KNOWLEDGE_ENGINE.md`](./PRIMA_KNOWLEDGE_ENGINE.md).
+Distinct from Knowledge Pack (curated corpus entity). Knowledge Package is the **exchange artifact** for one query. See `PRIMA_KNOWLEDGE_ENGINE.md`.
 
 ---
 
@@ -386,7 +391,7 @@ Delivery identifier per session start. No migration — rebuilt on each session 
 - Memory Context never substitutes for Teacher Intent or Blueprint.
 
 **Notes**  
-See [`PRIMA_MEMORY_ENGINE.md`](./PRIMA_MEMORY_ENGINE.md) — Retrieval Lifecycle.
+See `PRIMA_MEMORY_ENGINE.md` — Retrieval Lifecycle.
 
 ---
 
@@ -572,7 +577,7 @@ Generation run version tied to Blueprint Version and run identifier. Regeneratio
 - Package does not modify Instructional Blueprint.
 
 **Notes**  
-See [`PRIMA_GENERATION_ENGINE.md`](./PRIMA_GENERATION_ENGINE.md).
+See `PRIMA_GENERATION_ENGINE.md`.
 
 ---
 
@@ -663,7 +668,7 @@ Tied to Generation Package run. Re-validation produces new report — prior repo
 - Blueprint Version is fidelity reference (**VP-04**).
 
 **Notes**  
-See [`PRIMA_VALIDATION_ENGINE.md`](./PRIMA_VALIDATION_ENGINE.md).
+See `PRIMA_VALIDATION_ENGINE.md`.
 
 ---
 
@@ -849,7 +854,7 @@ Workflow profile version per activity type (e.g., Lecție). State enum evolves v
 - State before action (**OP-02**).
 
 **Notes**  
-See [`PRIMA_ORCHESTRATOR.md`](./PRIMA_ORCHESTRATOR.md) for phase definitions.
+See `PRIMA_ORCHESTRATOR.md` for phase definitions.
 
 ---
 
@@ -1340,11 +1345,11 @@ Amendment process: session log proposal → Product Team review → this documen
 
 | Document | Relationship |
 |----------|--------------|
-| [`LUDI_ON_SOLUTION_ARCHITECTURE.md`](./LUDI_ON_SOLUTION_ARCHITECTURE.md) | Maps artifact exchange to solution building blocks and end-to-end flows |
-| [`solution/PRIMA_SYSTEM_CONTEXT.md`](./solution/PRIMA_SYSTEM_CONTEXT.md) | System boundary and context zones |
-| [`solution/PRIMA_INTERACTION_MODEL.md`](./solution/PRIMA_INTERACTION_MODEL.md) | Component interaction and artifact handoffs |
-| [`solution/PRIMA_STATE_MODEL.md`](./solution/PRIMA_STATE_MODEL.md) | Workflow and session state machines |
-| [`solution/PRIMA_ERROR_MODEL.md`](./solution/PRIMA_ERROR_MODEL.md) | Failure classification and recovery |
+| `LUDI_ON_SOLUTION_ARCHITECTURE.md` | Maps artifact exchange to solution building blocks and end-to-end flows |
+| `solution/PRIMA_SYSTEM_CONTEXT.md` | System boundary and context zones |
+| `solution/PRIMA_INTERACTION_MODEL.md` | Component interaction and artifact handoffs |
+| `solution/PRIMA_STATE_MODEL.md` | Workflow and session state machines |
+| `solution/PRIMA_ERROR_MODEL.md` | Failure classification and recovery |
 | `PRIMA_SESSION_MODEL.md` | Field-level contract for Conversation Context and Session State — subordinate to this registry |
 | PRIMA Reflection Engine specification | Reflection Report structure detail |
 | Future API / contract specifications | Must implement artifacts defined here without redefining authority |
@@ -1378,4 +1383,4 @@ Every workflow transforms artifacts. Every gate is recorded in artifacts. Every 
 
 ## Next Recommended Document
 
-→ [`LUDI_ON_SOLUTION_ARCHITECTURE.md`](./LUDI_ON_SOLUTION_ARCHITECTURE.md) — Solution Architecture index; begin with [`solution/PRIMA_SYSTEM_CONTEXT.md`](./solution/PRIMA_SYSTEM_CONTEXT.md).
+→ [`PRIMA_CONSTITUTIONAL_ENGINE_ARCHITECTURE.md`](./PRIMA_CONSTITUTIONAL_ENGINE_ARCHITECTURE.md) — Engine ownership and boundaries. Implemented structure: [`../../ARCHITECTURE.md`](../../ARCHITECTURE.md).

@@ -1,0 +1,17 @@
+{
+  "name": "@ludicon/config",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "files": [
+    "tsconfig.base.json",
+    "tsconfig.lib.json",
+    "tsconfig.react.json",
+    "tsconfig.node.json"
+  ],
+  "scripts": {
+    "lint": "echo \"(config: nothing to lint)\"",
+    "typecheck": "echo \"(config: nothing to typecheck)\"",
+    "clean": "echo \"(config: nothing to clean)\""
+  }
+}

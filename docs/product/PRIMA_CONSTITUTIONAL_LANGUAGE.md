@@ -2,10 +2,10 @@
 Status: Official — Constitutional Language
 Version: 2.0
 Owner: LUDI ON Product Team
-Depends On: LUDI_ON_PROJECT_BIBLE.md, PRIMA_EDUCATIONAL_OPERATING_SYSTEM.md, PRIMA_DOMAIN_MODEL.md, PRIMA_CANONICAL_ARTIFACTS.md
-Related Documents: PRIMA_UBIQUITOUS_LANGUAGE.md, PRIMA_ARCHITECTURAL_PRINCIPLES.md, PRIMA_BLUEPRINT.md, PRIMA_CONTEXT_MODEL.md, PRIMA_KNOWLEDGE_MODEL.md, PRIMA_PRODUCT_DESIGN.md, PRIMA_TEACHER_EXPERIENCE.md
+Depends On: LUDI_ON_PROJECT_BIBLE.md, PRIMA_EDUCATIONAL_OPERATING_SYSTEM.md, PRIMA_CONSTITUTIONAL_DOMAIN_MODEL.md, PRIMA_CANONICAL_ARTIFACTS.md
+Related Documents: PRIMA_ARCHITECTURAL_PRINCIPLES.md, INSTRUCTIONAL_BLUEPRINT_SPECIFICATION.md, ../engineering/ES-007_CONTEXT_MODEL.md, ../engineering/ES-008_KNOWLEDGE_MODEL.md, ../engineering/UX-001_TEACHER_LANGUAGE_FIRST.md
 Last Updated: July 2026
-Supersedes: PRIMA_UBIQUITOUS_LANGUAGE.md v1.0 on terminology conflicts
+Supersedes: PRIMA_UBIQUITOUS_LANGUAGE.md v1.0 (removed August 2026)
 ---
 
 # PRIMA Constitutional Language
@@ -37,7 +37,7 @@ Every important concept has:
 
 **Binding surfaces:** documentation, UI concept-maps, code, API, database, AI prompts, workflows, future architecture.
 
-**Precedence:** On naming or meaning conflict, **this document wins**. [`PRIMA_UBIQUITOUS_LANGUAGE.md`](./PRIMA_UBIQUITOUS_LANGUAGE.md) is the EPIC 4 register and **defers** to this constitution. Domain Model and Canonical Artifacts shall align.
+**Precedence:** On naming or meaning conflict, **this document wins**. The deferred `PRIMA_UBIQUITOUS_LANGUAGE.md` register was removed in the August 2026 cleanup. Constitutional Domain Model and Canonical Artifacts shall align. Teacher-facing wording additionally obeys [`../engineering/UX-001_TEACHER_LANGUAGE_FIRST.md`](../engineering/UX-001_TEACHER_LANGUAGE_FIRST.md).
 
 **Interpretation test:** After reading an entry, two architects must not diverge. If they can, amend the entry.
 

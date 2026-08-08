@@ -2,7 +2,7 @@
 Status: Official — Constitutional Domain Model
 Version: 1.0
 Owner: LUDI ON Product Team
-Depends On: PRIMA_CONSTITUTIONAL_LANGUAGE.md, PRIMA_CONSTITUTIONAL_CAPABILITY_MODEL.md, PRIMA_EDUCATIONAL_OPERATING_SYSTEM.md, PRIMA_DOMAIN_MODEL.md
+Depends On: PRIMA_CONSTITUTIONAL_LANGUAGE.md, PRIMA_CONSTITUTIONAL_CAPABILITY_MODEL.md, PRIMA_EDUCATIONAL_OPERATING_SYSTEM.md
 Related Documents: PRIMA_CANONICAL_ARTIFACTS.md, PRIMA_ARCHITECTURAL_PRINCIPLES.md, PRIMA_MVP_ROADMAP.md
 Last Updated: July 2026
 ---
@@ -16,7 +16,7 @@ Last Updated: July 2026
 > This model is **executable as business meaning** — not as a database schema.  
 > It must remain valid under Event Sourcing, CQRS, and distributed services.
 
-**Precedence:** On entity identity, aggregate boundaries, or ownership conflict with [`PRIMA_DOMAIN_MODEL.md`](./PRIMA_DOMAIN_MODEL.md), **this document wins**. The legacy Domain Model shall align to Constitutional Language and this constitution.
+**Precedence:** This document owns entity identity, aggregate boundaries and ownership. The legacy `PRIMA_DOMAIN_MODEL.md` it overrode was removed in the August 2026 cleanup. The implemented domain lives in `packages/domain` and shall align to this constitution and to Constitutional Language.
 
 **Non-goals:** tables, APIs, ORMs, engine class diagrams, UI components.
 

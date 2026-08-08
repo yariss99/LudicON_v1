@@ -1,0 +1,214 @@
+/**
+ * Tailwind v4 theme mapping.
+ *
+ * `@theme inline` binds semantic tokens to Tailwind's generated utilities, so
+ * `bg-background`, `text-muted-foreground`, `border-border`, `rounded-lg`,
+ * `shadow-soft` all resolve through the token layer and therefore respond to
+ * light/dark automatically. `inline` matters: it emits `var(--background)`
+ * rather than the resolved value, which is what lets the theme switch at
+ * runtime instead of being baked at build time.
+ *
+ * This is the only place Tailwind learns about colour. Components must never
+ * use a raw palette variable or a hex.
+ */
+
+@import "tailwindcss";
+@import "./tokens.css";
+
+/**
+ * Scan this package's components for utility classes.
+ *
+ * Tailwind v4 auto-detects sources relative to the *consuming* project root
+ * (apps/web), so without this every utility used only inside @ludicon/ui is
+ * silently never generated — the class lands in the DOM and resolves to the
+ * browser default. That failure is invisible in code review: `fill-primary`
+ * simply renders black.
+ */
+@source "../../src";
+
+@theme inline {
+  /* ---- Colour roles ---- */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-foreground: var(--surface-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-panel: var(--panel);
+  --color-panel-foreground: var(--panel-foreground);
+  --color-studio-canvas: var(--studio-canvas);
+
+  --color-strong: var(--text-strong);
+  --color-subtle: var(--text-subtle);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary-soft: var(--secondary-soft);
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-soft: var(--accent-soft);
+
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-warning-soft: var(--warning-soft);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-soft: var(--destructive-soft);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-info-soft: var(--info-soft);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-studio-primary: var(--studio-primary);
+  --color-studio-recommend: var(--studio-recommend);
+
+  /* ---- Typography. Source Sans 3 / Source Serif 4 / IBM Plex Mono are the
+         mandated identity (CH01 §5.1). Inter and Roboto are explicitly
+         forbidden as brand defaults. ---- */
+  --font-sans:
+    "Source Sans 3 Variable", "Source Sans 3", "Segoe UI", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-display:
+    "Source Serif 4 Variable", "Source Serif 4", Georgia, ui-serif, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* ---- Radii ---- */
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-full: var(--radius-full);
+
+  /* ---- Elevation ---- */
+  --shadow-soft: var(--shadow-soft);
+  --shadow-hover: var(--shadow-hover);
+
+  /* ---- Breakpoints (CH08 §5 canonical). `tablet` at 900px closes the gap the
+         pre-refactor app had, where md: was used 3 times against sm: 199 and
+         lg: 158 — tablet was effectively undesigned. ---- */
+  --breakpoint-sm: 480px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-tablet-lg: 900px;
+  --breakpoint-laptop: 1024px;
+  --breakpoint-desktop: 1280px;
+  --breakpoint-wide: 1440px;
+
+  /* ---- Motion ---- */
+  --ease-standard: var(--ease-standard);
+  --ease-emphasized: var(--ease-emphasized);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    /* CH07 §4: 16px floor, 1.5 line-height minimum. Non-negotiable. */
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /**
+   * The blue focus outline is switched off at the product owner's request.
+   *
+   * Keyboard focus is instead carried by a soft surface tint, so a keyboard or
+   * screen-reader user can still see where they are without a hard ring. This
+   * is weaker than the 2px outline CH07 asks for — it relies on a background
+   * change rather than a border, and it will be less obvious on already-tinted
+   * surfaces. Restoring the outline is a one-line change here.
+   */
+  * {
+    outline: none;
+  }
+
+  /* Only non-text controls take the tint. A text field already shows focus
+     through its caret, so it needs no decoration of its own — and any border
+     or shadow here reads as a stray box around the field. */
+  :focus-visible:not(:is(input, textarea, select, [contenteditable])) {
+    background-color: var(--muted);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--text-strong);
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Display face is reserved for greetings and lesson titles (CH01 §5.1). */
+  .font-display {
+    font-family: var(--font-display);
+  }
+}
+
+@layer utilities {
+  /* The Guiding Star pulse. Runs only where recommendations exist, and stops
+     entirely under prefers-reduced-motion via the token collapse. */
+  @keyframes prima-pulse {
+    0%,
+    100% {
+      opacity: 0.55;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  .animate-prima-pulse {
+    animation: prima-pulse var(--motion-pulse) ease-in-out infinite;
+  }
+
+  /* The studio's measure. Every page inside the shell uses this, so the top
+     island, the breadcrumb trail, the pending skeleton and the page body all
+     land on the same two edges — a teacher moving between Acasă, Proiecte and
+     Biblioteca sees the content start and stop in the same place each time.
+
+     It is wide because the studio is a workspace: tables, resource grids and
+     project cards, not prose. `--reading-max` still exists for surfaces that
+     *are* prose, and the landing page and the builders keep it. */
+  .shell-column {
+    max-width: var(--shell-max);
+    margin-inline: auto;
+  }
+
+  .reading-column {
+    max-width: var(--reading-max);
+    margin-inline: auto;
+  }
+
+  .block-measure {
+    max-width: var(--block-max);
+    margin-inline: auto;
+  }
+}

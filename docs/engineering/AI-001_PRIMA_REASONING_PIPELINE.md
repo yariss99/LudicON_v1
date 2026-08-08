@@ -72,8 +72,8 @@ Teacher
 
 ## Implementation
 
-- Runtime: [`src/engines/reasoning/`](../../src/engines/reasoning/)
-- Decision internals (IT-003): [`src/engines/decision/`](../../src/engines/decision/)
+- Runtime: [`apps/web/src/engines/reasoning/`](../../apps/web/src/engines/reasoning/)
+- Decision internals (IT-003): [`apps/web/src/engines/decision/`](../../apps/web/src/engines/decision/)
 - Constitutional AI Architecture: [`PAS-005_PRIMA_AI_ARCHITECTURE.md`](./PAS-005_PRIMA_AI_ARCHITECTURE.md)
 
 ## Success

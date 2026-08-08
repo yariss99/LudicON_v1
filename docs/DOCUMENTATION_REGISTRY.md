@@ -1,10 +1,10 @@
 ---
 Status: Official — Document Registry
 Code: DOC-002
-Version: 1.1.0
+Version: 1.2.0
 Owner: LUDI ON Chief Software Architect / Documentation Architect
 Depends On: DOC-001@^2.0.0
-Last Updated: July 2026
+Last Updated: August 2026
 Authority: Catalog of record for governed PRIMA documents. Contains no product definitions.
 ---
 
@@ -30,6 +30,8 @@ Authority: Catalog of record for governed PRIMA documents. Contains no product d
 
 **Layers (DOC-001):** BIB(0) · CON(1) · CS(2) · FS(3) · UX(4) · TS(5) · API(6) · AT(7) · IT(8) · DN(9) · DOC(meta)
 
+**Authority order:** Foundation Suite (`PRIMA-DOC-*`) → DOCUMENT-000 → layers above.
+
 ---
 
 ## Meta (DOC)
@@ -41,9 +43,37 @@ Authority: Catalog of record for governed PRIMA documents. Contains no product d
 
 ---
 
+## Foundation Suite (PRIMA-DOC-000 … 006)
+
+Supreme. Above every layer below, including DOCUMENT-000. Registered under native `PRIMA-DOC-*` codes;
+these are not `DOC-*` meta codes and do not consume the DOC counter.
+
+Read in the order given — later documents assume the vocabulary and constraints of earlier ones.
+Suite membership, reading order and derivation rule are declared in
+[`product/PRIMA_FOUNDATION_SUITE.md`](./product/PRIMA_FOUNDATION_SUITE.md).
+
+**Conflict rule:** PRIMA-DOC-000 prevails on substance · within the Suite, earlier constrains later ·
+lower specifications yield to the Suite on foundation questions · PRIMA-DOC-000-AP prevails on authorship
+and amendment procedure.
+
+| Order | Code | Title | Domain | Path | Status | Version |
+|------:|------|-------|--------|------|--------|---------|
+| — | PRIMA-FOUNDATION-SUITE | PRIMA Foundation Suite | Registry | [`product/PRIMA_FOUNDATION_SUITE.md`](./product/PRIMA_FOUNDATION_SUITE.md) | Approved | 1.0 |
+| 1 | PRIMA-DOC-000 | The Founding Charter of PRIMA | Constitution | [`product/PRIMA-DOC-000_FOUNDING_CHARTER.md`](./product/PRIMA-DOC-000_FOUNDING_CHARTER.md) | Approved | 2.0 |
+| 2 | PRIMA-DOC-001 | Product Vision & Strategic Direction | Strategy | [`product/PRIMA-DOC-001_PRODUCT_VISION_STRATEGIC_DIRECTION.md`](./product/PRIMA-DOC-001_PRODUCT_VISION_STRATEGIC_DIRECTION.md) | Approved | 1.0 |
+| 3 | PRIMA-DOC-002 | Product Manifest | Product | [`product/PRIMA-DOC-002_PRODUCT_MANIFEST.md`](./product/PRIMA-DOC-002_PRODUCT_MANIFEST.md) | Approved | 1.0 |
+| 4 | PRIMA-DOC-003 | Pedagogical Framework | Pedagogy | [`product/PRIMA-DOC-003_PEDAGOGICAL_FRAMEWORK.md`](./product/PRIMA-DOC-003_PEDAGOGICAL_FRAMEWORK.md) | Approved | 1.0 |
+| 5 | PRIMA-DOC-004 | AI Constitution | Intelligence | [`product/PRIMA-DOC-004_AI_CONSTITUTION.md`](./product/PRIMA-DOC-004_AI_CONSTITUTION.md) | Approved | 1.0 |
+| 6 | PRIMA-DOC-005 | UX Design Standards | Experience | [`product/PRIMA-DOC-005_UX_DESIGN_STANDARDS.md`](./product/PRIMA-DOC-005_UX_DESIGN_STANDARDS.md) | Approved | 1.0 |
+| 7 | PRIMA-DOC-006 | Engineering Standards | Engineering | [`product/PRIMA-DOC-006_ENGINEERING_STANDARDS.md`](./product/PRIMA-DOC-006_ENGINEERING_STANDARDS.md) | Approved | 1.0 |
+| — | PRIMA-DOC-000-AP | Authoring Protocol for the Founding Charter | Procedure | [`product/PRIMA-DOC-000-AP_AUTHORING_PROTOCOL.md`](./product/PRIMA-DOC-000-AP_AUTHORING_PROTOCOL.md) | Approved | 1.0 |
+
+---
+
 ## Foundational Identity (DOCUMENT-000)
 
-Above all layers. Philosophical identity; prevails on purpose, ethics, teacher/AI role, language, and data.
+Below the Foundation Suite, above every numbered layer. Philosophical identity and voice; prevails on
+purpose, ethics, teacher/AI role, language, and data — except where PRIMA-DOC-000 speaks.
 
 | Code | Alias | Title | Path | Status |
 |------|-------|-------|------|--------|
@@ -113,8 +143,9 @@ TS engineering aliases continue via SPEC_INDEX (`ES-*`, `PPS-*`, `PVC-*`, …). 
 
 | Area | Path | Note |
 |------|------|------|
-| Session logs | `docs/session_logs/` | DN family; never `Depends On` authority |
-| Research | `docs/research/` | Ideas only |
+| Research | [`docs/research/`](./research/) | Ideas, future features, open questions. Never a `Depends On` authority |
+
+`docs/session_logs/` was removed in the August 2026 documentation cleanup.
 
 ---
 
@@ -123,7 +154,25 @@ TS engineering aliases continue via SPEC_INDEX (`ES-*`, `PPS-*`, `PVC-*`, …). 
 | Name | Path | Role |
 |------|------|------|
 | SPEC_INDEX | [`engineering/SPEC_INDEX.md`](./engineering/SPEC_INDEX.md) | Engineering alias companion |
-| INV-001 | [`engineering/PRIMA_ARCHITECTURE_INVENTORY.md`](./engineering/PRIMA_ARCHITECTURE_INVENTORY.md) | Architecture inventory |
+| Documentation map | [`README.md`](./README.md) | Human entry point; mirrors this registry, defines nothing |
+| ADR index | [`architecture/adr/README.md`](./architecture/adr/README.md) | Historical PRIMA Core freeze decisions |
+
+INV-001 (`engineering/PRIMA_ARCHITECTURE_INVENTORY.md`) was removed in the August 2026 cleanup — it
+inventoried a repository structure that no longer exists. The current structure is described in
+[`../ARCHITECTURE.md`](../ARCHITECTURE.md) and
+[`engineering/ARCHITECTURE_DECISIONS.md`](./engineering/ARCHITECTURE_DECISIONS.md).
+
+---
+
+## Removed from this registry (August 2026)
+
+| Code | Document | Reason |
+|------|----------|--------|
+| INV-001 | PRIMA Architecture Inventory | Inventoried the pre-refactor tree; superseded by `ARCHITECTURE.md` |
+| — | `docs/session_logs/` (DN area) | Directory deleted |
+
+72 documents under `docs/` were deleted in the same pass, all describing dead architectures. Apart from
+INV-001 above, none held a code in the tables of this registry.
 
 ---
 
@@ -131,6 +180,7 @@ TS engineering aliases continue via SPEC_INDEX (`ES-*`, `PPS-*`, `PVC-*`, …). 
 
 | Prefix | Next free |
 |--------|-----------|
+| PRIMA-DOC | 007 (Suite amendment requires Founding Council adoption under PRIMA-DOC-000-AP) |
 | DOC | 003 |
 | BIB | 002 |
 | CON | 005 |

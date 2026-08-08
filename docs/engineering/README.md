@@ -17,12 +17,7 @@ Normative engineering specs for the PRIMA / LUDI ON repository.
 | [ES-009_KNOWLEDGE_ENGINE.md](./ES-009_KNOWLEDGE_ENGINE.md) | Knowledge Engine (ENG-02) |
 | [COMPOSITION_ROOT.md](./COMPOSITION_ROOT.md) | Composition root standard |
 | [PAS_MODULE_PACKAGE_MAP.md](./PAS_MODULE_PACKAGE_MAP.md) | Module ↔ package map |
-| [PRIMA_ARCHITECTURE_INVENTORY.md](./PRIMA_ARCHITECTURE_INVENTORY.md) | Architecture Inventory v1.0 |
-| [PVC-005_VALIDATION_CONTEXT_PROFILE_RESOLUTION.md](./PVC-005_VALIDATION_CONTEXT_PROFILE_RESOLUTION.md) | Validation Context & Profile Resolution (VCPR) v1.0 |
-| [PVC-004_PROMPT_VALIDATION_PROFILES.md](./PVC-004_PROMPT_VALIDATION_PROFILES.md) | Prompt Validation Profiles (PVP) v1.0 |
-| [PVC-003_PROMPT_VALIDATION_ENGINE.md](./PVC-003_PROMPT_VALIDATION_ENGINE.md) | Prompt Validation Engine (PVE) v1.0 |
-| [PVC-002_PROMPT_VALIDATION_RULES_SPECIFICATION.md](./PVC-002_PROMPT_VALIDATION_RULES_SPECIFICATION.md) | Prompt Validation Rules Specification (PVRS) v1.0 |
-| [PVC-001_PROMPT_VALIDATION_FRAMEWORK.md](./PVC-001_PROMPT_VALIDATION_FRAMEWORK.md) | Prompt Validation Framework (PVF) v1.0 |
+| [PVC-001_PROMPT_VALIDATION_FRAMEWORK.md](./PVC-001_PROMPT_VALIDATION_FRAMEWORK.md) | Prompt Validation Framework (PVF) v2.0 — authoritative |
 | [PPS-006_PROMPT_SEMANTIC_MODEL.md](./PPS-006_PROMPT_SEMANTIC_MODEL.md) | Prompt Semantic Model (PSM) v1.0 |
 | [PPS-005_PROMPT_ONTOLOGY.md](./PPS-005_PROMPT_ONTOLOGY.md) | Prompt Ontology (PO) v1.0 |
 | [PPS-004_PROMPT_META_MODEL.md](./PPS-004_PROMPT_META_MODEL.md) | Prompt Meta Model (PMM) v1.0 |
@@ -32,7 +27,10 @@ Normative engineering specs for the PRIMA / LUDI ON repository.
 | [PAP-004_ARCHITECTURE_THINKING_PROTOCOL.md](./PAP-004_ARCHITECTURE_THINKING_PROTOCOL.md) | Architecture Thinking Protocol (ATP) v1.0 — mandatory |
 | [ADL-001_ARCHITECTURAL_DECISION_LIFECYCLE.md](./ADL-001_ARCHITECTURAL_DECISION_LIFECYCLE.md) | Architectural Decision Lifecycle v1.0 |
 | [adr/README.md](./adr/README.md) | ADR index + template |
-| [PRIMA_REPOSITORY_INTELLIGENCE_MAP.md](./PRIMA_REPOSITORY_INTELLIGENCE_MAP.md) | Repository Intelligence Map v1.0 (RIM-001) |
-| [AGR-001_REPOSITORY_FOUNDATION_REVIEW.md](./AGR-001_REPOSITORY_FOUNDATION_REVIEW.md) | Architecture Gate Review (decision: GO WITH RECOMMENDATIONS) |
+| [ARCHITECTURE_DECISIONS.md](./ARCHITECTURE_DECISIONS.md) | Monorepo & runtime stack decisions and their rationale |
 
+Repository structure as built: [`../../ARCHITECTURE.md`](../../ARCHITECTURE.md).
 Product constitution and architecture live under [`../product/`](../product/).
+
+Removed in the August 2026 cleanup: PVC-002…005 (superseded by PVC-001 v2.0), and INV-001, RIM-001, AGR-001
+and the AFPRR audit records, which described a repository structure that no longer exists.

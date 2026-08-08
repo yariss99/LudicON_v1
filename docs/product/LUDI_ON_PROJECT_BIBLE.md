@@ -3,11 +3,16 @@ Status: Official
 Version: 1.0
 Owner: LUDI ON Product Team
 Depends On: DOCUMENT-000_PRIMA_MANIFESTO.md
-Related Documents: DOCUMENT-000_PRIMA_MANIFESTO.md, PRODUCT_VISION.md, PRODUCT_ROADMAP.md, PRIMA_ENGINE.md, SYSTEM_ARCHITECTURE.md
+Related Documents: DOCUMENT-000_PRIMA_MANIFESTO.md, PRIMA-DOC-001_PRODUCT_VISION_STRATEGIC_DIRECTION.md, PRIMA_MVP_ROADMAP.md, PRIMA_CONSTITUTIONAL_ENGINE_ARCHITECTURE.md, ../../ARCHITECTURE.md
 Last Updated: July 2026
 ---
 
 # LUDI ON — Project Bible
+
+> **Cleanup note (August 2026).** This document references specifications that were removed when the
+> repository moved to a monorepo: PRIMA_ENGINE.md, PRIMA_ORCHESTRATOR.md, PRODUCT_VISION.md, PRODUCT_ROADMAP.md.
+> Those names now appear as plain text, not links. Where an authority replaced them it is noted below;
+> otherwise treat the reference as historical. Current authority map: [`../README.md`](../README.md).
 
 Philosophical identity: [`DOCUMENT-000 — The PRIMA Manifesto`](./DOCUMENT-000_PRIMA_MANIFESTO.md). On conflict of purpose or ethics, the Manifesto prevails.
 
@@ -76,7 +81,7 @@ The transition from Dashboard to PRIMA Experience must be deliberate. The teache
 
 **PRIMA** is the intelligence core of LUDI ON. It owns discovery, reasoning, blueprint composition, and the handoff to **Generation**. It does not replace teacher judgment or publish content without teacher approval.
 
-PRIMA is decomposed into specialized engines. Each engine has a single responsibility. Full architecture: [`PRIMA_ENGINE.md`](./PRIMA_ENGINE.md).
+PRIMA is decomposed into specialized engines. Each engine has a single responsibility. Full architecture: `PRIMA_ENGINE.md`.
 
 | Engine | Role |
 |--------|------|
@@ -89,7 +94,7 @@ PRIMA is decomposed into specialized engines. Each engine has a single responsib
 | **Generation** | Coordinates execution of an approved Instructional Blueprint through platform AI engines |
 | **Validation** | Validates generated resources against approved Blueprint before teacher preview |
 
-A **PRIMA Orchestrator** sequences engines, maintains session integrity, and enforces the blueprint approval gate. It contains no pedagogical logic. Full specification: [`PRIMA_ORCHESTRATOR.md`](./PRIMA_ORCHESTRATOR.md).
+A **PRIMA Orchestrator** sequences engines, maintains session integrity, and enforces the blueprint approval gate. It contains no pedagogical logic. Full specification: `PRIMA_ORCHESTRATOR.md`.
 
 ---
 
@@ -106,7 +111,7 @@ It specifies the complete Learning Experience design — objectives, activity ph
 | **Editability** | Teacher may revise any section before approval |
 | **Versioning** | States are explicit: draft → reviewed → approved |
 
-Schema detail: [`product/INSTRUCTIONAL_BLUEPRINT_SPECIFICATION.md`](./product/INSTRUCTIONAL_BLUEPRINT_SPECIFICATION.md).
+Schema detail: [`INSTRUCTIONAL_BLUEPRINT_SPECIFICATION.md`](./INSTRUCTIONAL_BLUEPRINT_SPECIFICATION.md).
 
 ---
 
@@ -181,7 +186,7 @@ Scope boundaries for **Version 1.0**. Items outside this scope are not committed
 | **Auto-publish to students** | Teachers review and export; platform does not deliver content to learners autonomously |
 | **Generic global EdTech** | Romanian curriculum and classroom context first |
 
-Future scope is tracked in [`PRODUCT_ROADMAP.md`](./PRODUCT_ROADMAP.md) and [`../research/FUTURE_FEATURES.md`](../research/FUTURE_FEATURES.md). Inclusion there does not imply Version 1.0 commitment.
+Future scope is tracked in `PRODUCT_ROADMAP.md` and [`../research/FUTURE_FEATURES.md`](../research/FUTURE_FEATURES.md). Inclusion there does not imply Version 1.0 commitment.
 
 ---
 
@@ -203,7 +208,7 @@ Primary interface language: **Romanian**.
 |------|-------------|
 | **Documentation before code** | No major feature ships without an approved product document |
 | **Single source of truth** | This document owns product intent. `/docs/product/` owns feature specifications. `/docs/technical/` owns implementation. |
-| **Architectural constitution** | [`PRIMA_ARCHITECTURAL_PRINCIPLES.md`](./product/PRIMA_ARCHITECTURAL_PRINCIPLES.md) governs all PRIMA architectural decisions and prevails over engine specs and implementation on architectural conflict. |
+| **Architectural constitution** | [`PRIMA_ARCHITECTURAL_PRINCIPLES.md`](./PRIMA_ARCHITECTURAL_PRINCIPLES.md) governs all PRIMA architectural decisions and prevails over engine specs and implementation on architectural conflict. |
 | **Conflict resolution** | Product intent: this Bible prevails over subordinate product docs. Architecture: Architectural Principles prevail over engine and implementation docs. See Decision Framework in Architectural Principles. |
 | **Interconnected docs** | Every document links forward via *Next Recommended Document* |
 | **Session logs** | Significant work sessions are recorded in `/docs/session_logs/` |
@@ -238,4 +243,4 @@ Operational rules that enforce Product Principles in the product experience.
 
 ## Next Recommended Document
 
-→ [`PRODUCT_VISION.md`](./PRODUCT_VISION.md) — Long-term product direction and strategic boundaries.
+→ [`PRIMA-DOC-001_PRODUCT_VISION_STRATEGIC_DIRECTION.md`](./PRIMA-DOC-001_PRODUCT_VISION_STRATEGIC_DIRECTION.md) — Long-term product direction and strategic boundaries.

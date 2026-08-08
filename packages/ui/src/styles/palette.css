@@ -1,0 +1,81 @@
+/**
+ * PRIMA palette — THE single place to change colours.
+ *
+ * Everything downstream (semantic roles in tokens.css, Tailwind utilities,
+ * every component) resolves through these variables. To experiment with the
+ * product's colour identity, edit this file and nothing else.
+ *
+ * Light values are mandated by Design Book CH01 §4 and must not be altered
+ * casually — they carry documented pedagogical meaning:
+ *   blue    = trust / commitment / "I decide to continue"
+ *   emerald = success / saved / design commitment
+ *   amber   = attention / recommendation  (warning shares this token by design)
+ *   red     = true errors ONLY
+ *
+ * Dark values: CH01 §4.6 specifies only seven target hexes (canvas, surface,
+ * panel, text, muted, primary, plus "keep hue, lift lightness 8-12%" for amber
+ * and emerald). The remaining dark values are derived here following that
+ * instruction — they are a considered extrapolation, not a documented mandate.
+ *
+ * HARD RULE (CH01 §12.2, stated five times across the design book):
+ * no purple. Purple "AI" branding, gradients and glows are forbidden.
+ */
+
+:root {
+  /* ---- Brand ramp: Educational Blue ---- */
+  --p-blue-50: #eff6ff;
+  /* 300/400 exist for dark mode only. CH01 §4.6 says "keep the hue, lift the
+     lightness"; measured against the dark surfaces, blue-500 reaches only
+     3.56:1 as text on --primary-soft and 3.84:1 on --popover, so the ramp needs
+     two steps above it rather than one. */
+  --p-blue-300: #93c5fd;
+  --p-blue-400: #60a5fa;
+  --p-blue-500: #3b82f6;
+  --p-blue-600: #2563eb;
+  --p-blue-700: #1d4ed8;
+
+  /* ---- Studio Emerald ---- */
+  --p-emerald-50: #ecfdf5;
+  --p-emerald-500: #10b981;
+  --p-emerald-600: #059669;
+  --p-emerald-700: #047857;
+
+  /* ---- Guiding Amber ---- */
+  --p-amber-50: #fffbeb;
+  --p-amber-500: #f59e0b;
+  --p-amber-600: #d97706;
+  --p-amber-700: #b45309;
+  --p-gold-600: #ca8a04;
+
+  /* ---- Danger ---- */
+  --p-red-50: #fef2f2;
+  /* 400 is the dark-mode text weight: red-500 measures 3.76:1 on --popover,
+     which is the surface the one destructive menu row is actually painted on. */
+  --p-red-400: #f87171;
+  --p-red-500: #ef4444;
+  --p-red-600: #dc2626;
+  --p-red-700: #b91c1c;
+
+  /* ---- Neutral ink ---- */
+  --p-ink-900: #0f172a;
+  --p-ink-600: #475569;
+  --p-ink-500: #64748b;
+  --p-ink-450: #616f85; /* text tier 3, light — passes AA on every light surface */
+  --p-ink-400: #94a3b8; /* text tier 3, dark; decoration only in light */
+  --p-ink-200: #e2e8f0;
+  --p-ink-100: #f1f5f9;
+  --p-paper: #ffffff;
+  --p-canvas: #f4f5f7;
+  --p-panel: #fafbfc;
+  --p-studio-canvas: #fafaf7; /* warm white, Design Canvas only */
+
+  /* ---- Dark neutrals (CH01 §4.6 targets) ---- */
+  --p-dark-canvas: #0f1419; /* soft charcoal, deliberately not pure black */
+  --p-dark-surface: #1a222c;
+  --p-dark-panel: #151b23;
+  --p-dark-elevated: #222c38;
+  --p-dark-text: #e8eef5;
+  --p-dark-muted: #94a3b8;
+  --p-dark-muted-strong: #b6c2d0; /* text tier 2, dark */
+  --p-dark-studio-canvas: #141a21;
+}

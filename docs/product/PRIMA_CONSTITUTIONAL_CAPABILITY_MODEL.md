@@ -2,8 +2,8 @@
 Status: Official — Constitutional Capability Model
 Version: 1.0
 Owner: LUDI ON Product Team
-Depends On: LUDI_ON_PROJECT_BIBLE.md, PRIMA_EDUCATIONAL_OPERATING_SYSTEM.md, PRIMA_CONSTITUTIONAL_LANGUAGE.md, PRIMA_DOMAIN_MODEL.md, PRIMA_MVP_ROADMAP.md
-Related Documents: solution/PRIMA_CAPABILITY_MODEL.md, PRIMA_CANONICAL_ARTIFACTS.md, PRIMA_ARCHITECTURAL_PRINCIPLES.md, PRIMA_TEACHER_EXPERIENCE.md
+Depends On: LUDI_ON_PROJECT_BIBLE.md, PRIMA_EDUCATIONAL_OPERATING_SYSTEM.md, PRIMA_CONSTITUTIONAL_LANGUAGE.md, PRIMA_CONSTITUTIONAL_DOMAIN_MODEL.md, PRIMA_MVP_ROADMAP.md
+Related Documents: PRIMA_CANONICAL_ARTIFACTS.md, PRIMA_ARCHITECTURAL_PRINCIPLES.md, PRIMA-DOC-005_UX_DESIGN_STANDARDS.md
 Last Updated: July 2026
 ---
 
@@ -16,7 +16,7 @@ Last Updated: July 2026
 > Capabilities are **what PRIMA can do** as a business.  
 > They are not screens, APIs, engines, or components.
 
-**Precedence:** On capability identity, ownership, or maturity conflict with [`solution/PRIMA_CAPABILITY_MODEL.md`](./solution/PRIMA_CAPABILITY_MODEL.md), **this document wins**. The solution capability model elaborates allocation to components; it must not invent parallel capability identities.
+**Precedence:** This document owns capability identity, ownership and maturity. No other document may introduce a parallel capability identity. (The `solution/PRIMA_CAPABILITY_MODEL.md` it previously overrode was removed in the August 2026 cleanup.)
 
 **Vocabulary:** Official Names from [`PRIMA_CONSTITUTIONAL_LANGUAGE.md`](./PRIMA_CONSTITUTIONAL_LANGUAGE.md).
 

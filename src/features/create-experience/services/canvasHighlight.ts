@@ -1,1 +1,0 @@
-export { panelIdsToCanvasHighlights } from "./intelligentCanvas";

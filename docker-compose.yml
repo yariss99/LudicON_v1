@@ -1,0 +1,200 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# LudicON — local development stack.
+#
+#   npm run docker:web    web only
+#   npm run docker:api    web + api + postgres
+#   npm run docker:full   web + api + worker + postgres + redis
+#   npm run docker:down   stop everything and delete the volumes
+#
+# Each service declares every profile it belongs to, so a wider profile is a
+# superset of a narrower one. Nothing depends on a service outside its own
+# profiles — that is why `api` does not declare a dependency on `redis`, which
+# exists only in `full`.
+#
+# All images build from the REPO ROOT with an explicit `dockerfile:` path.
+# npm workspaces resolve from the root manifest and lockfile, so a per-app build
+# context could not install dependencies.
+#
+# Every value below has a default, so the stack runs with no `.env` present.
+# Copy `.env.example` to `.env` to change any of them.
+# ─────────────────────────────────────────────────────────────────────────────
+
+name: ${COMPOSE_PROJECT_NAME:-ludicon}
+
+# `required: false` keeps `docker compose up` working before anyone has created
+# a .env — the defaults below are enough for a first run.
+x-env-file: &env-file
+  - path: .env
+    required: false
+
+services:
+  # ───────────────────────────────────────────────────────────────────────────
+  # web — Vite SPA.
+  #
+  # Deliberately depends on nothing. In the `web` profile it runs completely
+  # standalone against its localStorage data provider, with no API and no
+  # database anywhere in sight.
+  # ───────────────────────────────────────────────────────────────────────────
+  web:
+    profiles: ["web", "api", "full"]
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      target: ${WEB_TARGET:-dev}
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:3000}
+        VITE_CLERK_PUBLISHABLE_KEY: ${VITE_CLERK_PUBLISHABLE_KEY:-}
+    env_file: *env-file
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:3000}
+      VITE_CLERK_PUBLISHABLE_KEY: ${VITE_CLERK_PUBLISHABLE_KEY:-}
+      # Bind mounts on macOS and Windows do not deliver inotify events; Vite's
+      # watcher needs polling to see host edits. Harmless on Linux, just noisier.
+      CHOKIDAR_USEPOLLING: ${CHOKIDAR_USEPOLLING:-true}
+    ports:
+      # nginx in the runtime target also listens on 5173, so this mapping is
+      # correct for both targets.
+      - "${WEB_PORT:-5173}:5173"
+    volumes:
+      # Live source for the dev target. Inert for the runtime target, which
+      # serves prebuilt files out of /usr/share/nginx/html.
+      - .:/repo
+      # Anonymous volumes shield the image's installed dependencies from being
+      # hidden by the bind mount above.
+      - /repo/node_modules
+      - /repo/apps/web/node_modules
+    init: true
+    restart: unless-stopped
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # api — Hono. Runs migrations at start, then serves.
+  # ───────────────────────────────────────────────────────────────────────────
+  api:
+    profiles: ["api", "full"]
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+      target: ${API_TARGET:-dev}
+    env_file: *env-file
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      PORT: ${PORT:-3000}
+      DATABASE_URL: ${DATABASE_URL:-postgresql://ludicon:change-me-local-only@postgres:5432/ludicon}
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379}
+      QUEUE_PREFIX: ${QUEUE_PREFIX:-bull}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:5173}
+      CLERK_PUBLISHABLE_KEY: ${CLERK_PUBLISHABLE_KEY:-}
+      CLERK_SECRET_KEY: ${CLERK_SECRET_KEY:-}
+    ports:
+      - "${API_PORT:-3000}:3000"
+    volumes:
+      - .:/repo
+      - /repo/node_modules
+      - /repo/apps/api/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+    # No dependency on redis: it belongs to the `full` profile only, and
+    # declaring it here would break `--profile api`. The API's Redis client
+    # connects lazily and retries, so ordering does not matter.
+    init: true
+    restart: unless-stopped
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # worker — BullMQ processor. No ports; it only dials out.
+  # ───────────────────────────────────────────────────────────────────────────
+  worker:
+    profiles: ["full"]
+    build:
+      context: .
+      dockerfile: apps/worker/Dockerfile
+      target: ${WORKER_TARGET:-dev}
+    env_file: *env-file
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      SERVICE_NAME: ${WORKER_SERVICE_NAME:-ludicon-worker}
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379}
+      QUEUE_PREFIX: ${QUEUE_PREFIX:-bull}
+      DATABASE_URL: ${DATABASE_URL:-postgresql://ludicon:change-me-local-only@postgres:5432/ludicon}
+      WORKER_CONCURRENCY: ${WORKER_CONCURRENCY:-4}
+      WORKER_JOB_ATTEMPTS: ${WORKER_JOB_ATTEMPTS:-3}
+      WORKER_SHUTDOWN_TIMEOUT_MS: ${WORKER_SHUTDOWN_TIMEOUT_MS:-25000}
+    volumes:
+      - .:/repo
+      - /repo/node_modules
+      - /repo/apps/worker/node_modules
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    init: true
+    restart: unless-stopped
+    # Must exceed WORKER_SHUTDOWN_TIMEOUT_MS, or Compose SIGKILLs the process
+    # mid-drain and the graceful shutdown is pointless.
+    stop_grace_period: 35s
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # postgres
+  # ───────────────────────────────────────────────────────────────────────────
+  postgres:
+    profiles: ["api", "full"]
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-ludicon}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me-local-only}
+      POSTGRES_DB: ${POSTGRES_DB:-ludicon}
+      # Postgres refuses to initialise an existing non-empty data directory,
+      # so keep the data in a subdirectory of the mount point.
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-ludicon} -d ${POSTGRES_DB:-ludicon}",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+    restart: unless-stopped
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # redis — queue backend. AOF on, so a restart does not drop queued jobs.
+  # ───────────────────────────────────────────────────────────────────────────
+  redis:
+    profiles: ["full"]
+    image: redis:8-alpine
+    command:
+      [
+        "redis-server",
+        "--appendonly",
+        "yes",
+        "--appendfsync",
+        "everysec",
+        # BullMQ requires this: evicting a key mid-job would corrupt queue state.
+        "--maxmemory-policy",
+        "noeviction",
+      ]
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep -q PONG"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:

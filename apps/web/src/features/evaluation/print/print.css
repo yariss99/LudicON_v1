@@ -1,0 +1,182 @@
+/**
+ * The printed sheet, and nothing else on the paper.
+ *
+ * The rule this file exists to keep: THE PRINTED PAPER IS THE PREVIEW,
+ * RENDERED AGAIN — the same `DocumentRenderer`, the same `mode="preview"`, the
+ * same millimetre arithmetic — so fidelity is structural rather than a second
+ * set of measurements that has to be kept in step. Until now `Tipărește` called
+ * `window.print()` with no stylesheet at all, which printed the whole editor:
+ * the toolbar, the two rails, the zoom slider, and the paper at whatever
+ * magnification the teacher happened to be working at.
+ *
+ * The rejected alternative was a print-specific renderer — a component that
+ * walks the document and emits print-shaped markup. It is the obvious way to
+ * get exact control of the sheet, and it is exactly the divergence the brief
+ * forbids: two renderers means two opinions about where a column seam lands,
+ * and the one nobody looks at is the one that goes to the classroom.
+ *
+ * The second rejected alternative was printing the editor canvas in place,
+ * hiding its chrome. It fails for reasons that only show up on paper: the
+ * canvas lives inside a scroller, so anything below the fold is clipped; it is
+ * drawn at the teacher's zoom, so `--mm` is not a millimetre; and the selection
+ * overlay sits in the same coordinate space. So the paper is rendered a second
+ * time, at zoom 1, into a portal that is a direct child of `<body>` — which is
+ * what lets the whole app be hidden by ONE structural rule below rather than by
+ * a list of component-specific ones that goes stale the moment a panel is added.
+ *
+ * ## Two things this cannot do from a browser
+ *
+ *  - **Background graphics are the reader's setting, not ours.** Chrome, Edge
+ *    and Firefox all default to NOT printing background colours and images.
+ *    `print-color-adjust: exact` tells the browser not to optimise the colours
+ *    it does print; it does not turn the setting on. A teacher printing a paper
+ *    with coloured boxes must tick "Grafică de fundal" / "Background graphics"
+ *    in the print window, and the interface says so — see `print-dialog.tsx`.
+ *  - **There is no one-click PDF here.** `window.print()` opens the operating
+ *    system's print window; "Save as PDF" inside it is the user's choice, not
+ *    ours, and we never see the file. A real downloaded PDF needs the
+ *    headless-Chrome worker: the contract already exists as `ExportDocumentJob`
+ *    in `packages/contracts/src/queue.ts`, and
+ *    `apps/worker/src/handlers/export-document.ts` is an honest stub that
+ *    reports `skipped` rather than pretending a file was produced.
+ */
+
+/**
+ * On screen the surface is LAID OUT BUT NOT PAINTED.
+ *
+ * `visibility: hidden` rather than `display: none`, because this element is
+ * also what the pre-export check measures: a display-none subtree has no boxes,
+ * so every height reads zero and "content overflows the page" could never fire.
+ * `height: 0` with `overflow: hidden` keeps it out of the app's layout while
+ * its descendants keep their real sizes — clipping is a paint concern, and
+ * `scrollHeight` is unaffected by it.
+ *
+ * `width: max-content` and not a fixed `210mm`: the sheet stack centres its
+ * children, and a container narrower than a sheet would squeeze the sheet and
+ * quietly change the measurement this exists to take.
+ */
+[data-print-paper] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: max-content;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@media print {
+  /**
+   * The sheet is the page. Zero margin because the document already carries
+   * its own — `pageSetup.margins` defaults to 20/18/20/18mm, the Romanian
+   * school convention — and a page margin on top of that would inset the paper
+   * a second time and move every measurement the teacher set.
+   */
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  /**
+   * One rule removes the entire application.
+   *
+   * Structural, not a list: the shell, any open dialog, the toaster and Radix's
+   * portals are all direct children of `<body>`, so naming the one thing that
+   * should survive is both shorter and impossible to leave stale. A list of
+   * `.builder-toolbar, .pages-rail, …` would print a new panel the day someone
+   * adds one, and nobody would notice until a classroom did.
+   */
+  body > *:not([data-print-paper]) {
+    display: none !important;
+  }
+
+  html,
+  body {
+    height: auto;
+    overflow: visible;
+    /* The sheets paint their own background from the teacher's theme; the app
+       canvas behind them is chrome and must not tint the paper. */
+    background: transparent;
+  }
+
+  [data-print-paper] {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    visibility: visible;
+    /* Inherited, so one declaration covers every sheet and everything on it:
+       a coloured box the teacher drew is content, not decoration, and must not
+       be "optimised" to white. It still needs the reader's background-graphics
+       setting — see the file docblock. */
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /**
+   * The stack of sheets loses its screen presentation.
+   *
+   * `DocumentRenderer` spaces its pages with a 10mm flex gap and centres them,
+   * which is how a stack of paper reads on a desk and is meaningless on paper.
+   * `display: block` retires the gap and the centring together — `gap` has no
+   * effect outside flex and grid — so neither has to be zeroed by hand.
+   */
+  [data-print-paper] [data-document-id] {
+    display: block !important;
+  }
+
+  /**
+   * `break-before` on every sheet except the first, rather than `break-after`
+   * on every sheet except the last.
+   *
+   * The two are equivalent in the middle and differ at the ends, and the end is
+   * where printing goes wrong: a trailing `break-after: page` asks for one more
+   * page and produces the blank final sheet that every print stylesheet
+   * eventually grows a `:last-child` rule to undo. Asking for the break in
+   * front means the last sheet never asks for anything after it, and the
+   * barem — which always starts a new sheet — needs no special case at all.
+   */
+  [data-print-paper] [data-document-id] > * + *,
+  [data-print-paper] [data-barem-sheet] {
+    break-before: page;
+  }
+
+  /* The drop shadow is what makes a sheet read as paper on a screen. Paper is
+     already paper. */
+  [data-print-paper] [data-document-id] > *,
+  [data-print-paper] [data-barem-sheet] {
+    box-shadow: none !important;
+  }
+
+  /**
+   * Keep-together.
+   *
+   * On the paper this is a safety net rather than the mechanism: a page of an
+   * evaluation is one modelled `Page` drawn as one fixed 210×297mm box with
+   * `overflow: hidden`, so the browser has nothing to break — content that does
+   * not fit is CLIPPED, which is why "content overflows the page" is a blocking
+   * check before printing rather than something the stylesheet can rescue.
+   *
+   * Where it does real work is the barem, which flows: a row carrying an
+   * answer, its points and the teacher's note must not be split down the middle
+   * by a page boundary. A row is the unit a marker reads.
+   *
+   * A row of the paper (`[data-section-id]`) is the finest keep-together
+   * available here, and it is coarser than the brief asks for: an exercise is a
+   * block inside that row, and a block carries no attribute saying which kind
+   * it is, so "keep this exercise together" cannot be expressed without the
+   * canvas emitting one. Reported rather than worked around.
+   */
+  [data-print-paper] [data-section-id],
+  [data-print-paper] [data-barem-row] {
+    break-inside: avoid;
+  }
+
+  [data-print-paper] p,
+  [data-print-paper] li {
+    orphans: 3;
+    widows: 3;
+  }
+}

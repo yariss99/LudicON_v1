@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2023"],
+    "types": ["node"],
+    /* Run through tsx; tsc is a compile gate, not the shipped artifact.
+       rootDir/outDir are deliberately NOT set here — in an extended config they
+       resolve relative to this file, not the consumer. */
+    "noEmit": true
+  },
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+}

@@ -55,10 +55,8 @@ Last Updated: July 2026
 | **ES-007** | Cognitive Objects Model | [`ES-007_COGNITIVE_OBJECTS_MODEL.md`](./ES-007_COGNITIVE_OBJECTS_MODEL.md) · Context detail: [`ES-007_CONTEXT_MODEL.md`](./ES-007_CONTEXT_MODEL.md) |
 | **ES-008** | Canonical Knowledge Model | [`ES-008_KNOWLEDGE_MODEL.md`](./ES-008_KNOWLEDGE_MODEL.md) |
 | **ES-009** | Knowledge Engine (ENG-02) | [`ES-009_KNOWLEDGE_ENGINE.md`](./ES-009_KNOWLEDGE_ENGINE.md) |
-| **AGR-001** | Architecture Gate Review — Repository Foundation | [`AGR-001_REPOSITORY_FOUNDATION_REVIEW.md`](./AGR-001_REPOSITORY_FOUNDATION_REVIEW.md) |
-| **INV-001** | PRIMA Architecture Inventory | [`PRIMA_ARCHITECTURE_INVENTORY.md`](./PRIMA_ARCHITECTURE_INVENTORY.md) |
-| **RIM-001** | PRIMA Repository Intelligence Map | [`PRIMA_REPOSITORY_INTELLIGENCE_MAP.md`](./PRIMA_REPOSITORY_INTELLIGENCE_MAP.md) |
 | **ADL-001** | Architectural Decision Lifecycle | [`ADL-001_ARCHITECTURAL_DECISION_LIFECYCLE.md`](./ADL-001_ARCHITECTURAL_DECISION_LIFECYCLE.md) · ADR index: [`adr/README.md`](./adr/README.md) |
+| **AD** | Monorepo & Runtime Stack Decisions — npm workspaces, Hono, Drizzle, BullMQ, TanStack, Zod, DataProvider | [`ARCHITECTURE_DECISIONS.md`](./ARCHITECTURE_DECISIONS.md) · structure: [`../../ARCHITECTURE.md`](../../ARCHITECTURE.md) |
 | **PAP-004** | Architecture Thinking Protocol (ATP) | [`PAP-004_ARCHITECTURE_THINKING_PROTOCOL.md`](./PAP-004_ARCHITECTURE_THINKING_PROTOCOL.md) |
 | **PPS-001** | Prompt Engineering Standard (PPEF) | [`PPS-001_PROMPT_ENGINEERING_STANDARD.md`](./PPS-001_PROMPT_ENGINEERING_STANDARD.md) · index: [`ppef/README.md`](./ppef/README.md) |
 | **PPS-002** | Architectural Prompt Pattern Language (APPL) | [`PPS-002_ARCHITECTURAL_PROMPT_PATTERN_LANGUAGE.md`](./PPS-002_ARCHITECTURAL_PROMPT_PATTERN_LANGUAGE.md) |
@@ -66,14 +64,12 @@ Last Updated: July 2026
 | **PPS-005** | Prompt Ontology (PO) | [`PPS-005_PROMPT_ONTOLOGY.md`](./PPS-005_PROMPT_ONTOLOGY.md) |
 | **PPS-006** | Prompt Semantic Model (PSM) | [`PPS-006_PROMPT_SEMANTIC_MODEL.md`](./PPS-006_PROMPT_SEMANTIC_MODEL.md) |
 | **PVC-001** | Prompt Validation Framework (PVF) v2.0 — **authoritative Validation subsystem** | [`PVC-001_PROMPT_VALIDATION_FRAMEWORK.md`](./PVC-001_PROMPT_VALIDATION_FRAMEWORK.md) · [`ppef/validation/`](./ppef/validation/) |
-| **PVC-002** | Prompt Validation Rules Specification (PVRS) — Historical, superseded by PVC-001 v2.0 | [`PVC-002_PROMPT_VALIDATION_RULES_SPECIFICATION.md`](./PVC-002_PROMPT_VALIDATION_RULES_SPECIFICATION.md) · catalogs: [`ppef/validation/rules/`](./ppef/validation/rules/) |
-| **PVC-003** | Prompt Validation Engine (PVE) — Historical, superseded by PVC-001 v2.0 | [`PVC-003_PROMPT_VALIDATION_ENGINE.md`](./PVC-003_PROMPT_VALIDATION_ENGINE.md) |
-| **PVC-004** | Prompt Validation Profiles (PVP) — Historical, superseded by PVC-001 v2.0 | [`PVC-004_PROMPT_VALIDATION_PROFILES.md`](./PVC-004_PROMPT_VALIDATION_PROFILES.md) · catalogs: [`ppef/validation/profiles/`](./ppef/validation/profiles/) |
-| **PVC-005** | Validation Context & Profile Resolution (VCPR) — Historical, superseded by PVC-001 v2.0 | [`PVC-005_VALIDATION_CONTEXT_PROFILE_RESOLUTION.md`](./PVC-005_VALIDATION_CONTEXT_PROFILE_RESOLUTION.md) · catalogs: [`ppef/validation/contexts/`](./ppef/validation/contexts/) |
+| **PVC-002…005** | Rules Spec · Engine · Profiles · Context Resolution — superseded by PVC-001 v2.0, **removed August 2026** | Catalogs survive: [`ppef/validation/rules/`](./ppef/validation/rules/) · [`ppef/validation/profiles/`](./ppef/validation/profiles/) · [`ppef/validation/contexts/`](./ppef/validation/contexts/) |
 
 **Supporting:** [`COMPOSITION_ROOT.md`](./COMPOSITION_ROOT.md) · [`PAS_MODULE_PACKAGE_MAP.md`](./PAS_MODULE_PACKAGE_MAP.md)
 
-**Precedence:** POSS → PAS-001 (PSA) → PAS technical (RTA/CEA) → PDC → Engineering Specifications (ES-*) → code.  
-**Gates:** AGR decisions bind authorization of subsequent ES implementation work.  
+**Precedence:** Foundation Suite (PRIMA-DOC-000…006) → POSS → PAS-001 (PSA) → PAS technical (RTA/CEA) → PDC → Engineering Specifications (ES-*) → code.  
 **PAS family:** PAS-001 System · PAS-002 Domain · PAS-003 Service · PAS-004 Knowledge · PAS-005 AI · **PAS-006 Learning**. All PAS-xxx SHALL reference PAS-001; domains → PAS-002; services → PAS-003; Knowledge → PAS-004; AI → PAS-005; Learning Experiences/pedagogy → PAS-006. RTA/CEA remain technology-independent technical/engine detail.  
-**PPEF Validation:** PVC-001 v2.0 is the single authoritative Validation subsystem; PVC-002…PVC-005 are Historical and MUST NOT be cited as normative authority.
+**PPEF Validation:** PVC-001 v2.0 is the single authoritative Validation subsystem. PVC-002…PVC-005 were Historical and were removed in the August 2026 documentation cleanup; their operational catalogs under `ppef/validation/` remain.
+
+**Removed August 2026:** AGR-001 (Repository Foundation Review), INV-001 (Architecture Inventory), RIM-001 (Repository Intelligence Map), AFPRR records, PVC-002…005. The first four described a repository structure that no longer exists — see [`../../ARCHITECTURE.md`](../../ARCHITECTURE.md) and [`ARCHITECTURE_DECISIONS.md`](./ARCHITECTURE_DECISIONS.md).

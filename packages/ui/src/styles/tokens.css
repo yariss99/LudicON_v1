@@ -1,0 +1,286 @@
+/**
+ * Semantic token layer.
+ *
+ * Components reference ONLY these semantic roles, never the raw palette and
+ * never a hex. That indirection is what makes light/dark/high-contrast work
+ * and what makes a palette change a one-file edit.
+ *
+ * Replaces 279 CSS custom properties spread across 23 prefixes in the
+ * pre-refactor tree, including eleven feature-private sets (--ts-*, --lb-*,
+ * --ab-*, --sb-*, --gb-*, --pb-*, --pw-*, --rc-*, --ta-*, --atelier-*) that
+ * each re-declared the same eight values.
+ */
+
+@import "./palette.css";
+
+:root {
+  color-scheme: light;
+
+  /* ---- Surfaces ---- */
+  --background: var(--p-canvas);
+  --foreground: var(--p-ink-900);
+  --surface: var(--p-paper);
+  --surface-foreground: var(--p-ink-900);
+  --card: var(--p-paper);
+  --card-foreground: var(--p-ink-900);
+  --popover: var(--p-paper);
+  --popover-foreground: var(--p-ink-900);
+  --panel: var(--p-panel);
+  --panel-foreground: var(--p-ink-900);
+  --studio-canvas: var(--p-studio-canvas);
+
+  /* ---- Text hierarchy (three tiers; CH01 documents two, subtle is derived) ---- */
+  --text-strong: var(--p-ink-900);
+  /* Three text tiers, all AA-compliant. Tier 3 was #94a3b8 (2.56:1 on white),
+     which failed for anything a teacher actually reads; the whole scale moved
+     down one step rather than collapsing tier 3 into tier 2. */
+  --text-muted: var(--p-ink-600);
+  --text-subtle: var(--p-ink-450);
+
+  /* ---- Actions ---- */
+  --primary: var(--p-blue-600);
+  --primary-hover: var(--p-blue-700);
+  --primary-foreground: var(--p-paper);
+  --primary-soft: var(--p-blue-50);
+
+  --secondary: var(--p-emerald-600);
+  --secondary-hover: var(--p-emerald-700);
+  --secondary-foreground: var(--p-paper);
+  --secondary-soft: var(--p-emerald-50);
+
+  --accent: var(--p-amber-600);
+  --accent-hover: var(--p-amber-700);
+  --accent-foreground: var(--p-ink-900);
+  --accent-soft: var(--p-amber-50);
+
+  /* ---- Status. warning intentionally aliases accent (CH01 §4.4). ---- */
+  --success: var(--p-emerald-600);
+  --success-foreground: var(--p-paper);
+  --success-soft: var(--p-emerald-50);
+  --warning: var(--p-amber-600);
+  --warning-foreground: var(--p-ink-900);
+  --warning-soft: var(--p-amber-50);
+  --destructive: var(--p-red-600);
+  --destructive-foreground: var(--p-paper);
+  --destructive-soft: var(--p-red-50);
+  /* info is not specified in the design book; blue doubles as information emphasis */
+  --info: var(--p-blue-600);
+  --info-foreground: var(--p-paper);
+  --info-soft: var(--p-blue-50);
+
+  /* ---- Muted / neutral fills (not specified in docs; derived) ---- */
+  --muted: var(--p-ink-100);
+  --muted-foreground: var(--p-ink-600);
+
+  /* ---- Lines. Hairline ring is preferred over hard borders. ---- */
+  --border: rgb(15 23 42 / 0.08);
+  --border-strong: rgb(15 23 42 / 0.16);
+  --input: rgb(15 23 42 / 0.12);
+  --ring: var(--p-blue-600);
+
+  /* ---- Studio-specific (CH12 §9.1) ---- */
+  --studio-primary: var(--p-emerald-600);
+  --studio-recommend: var(--p-gold-600);
+
+  /* ---- Radii (CH01 §7.1) ---- */
+  --radius-sm: 0.625rem; /* 10px — inputs, chips */
+  --radius-md: 1rem; /* 16px — cards */
+  --radius-lg: 1.5rem; /* 24px — panels, sections */
+  --radius-full: 999px; /* buttons, pills, status */
+
+  /* ---- Elevation. Exactly three levels; ambient paper depth, never neon. ---- */
+  --shadow-soft: 0 8px 30px rgb(15 23 42 / 0.04);
+  --shadow-hover: 0 12px 40px rgb(15 23 42 / 0.08);
+
+  /* ---- Motion (CH06 §3). Hard cap 250ms for discrete UI. ---- */
+  --motion-micro: 100ms;
+  --motion-fast: 150ms;
+  --motion-standard: 220ms;
+  --motion-expand: 240ms;
+  --motion-pulse: 2400ms;
+  --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --motion-rise: 6px;
+  --motion-hover-y: 3px;
+  --motion-press-scale: 0.98;
+
+  /* ---- Layout ---- */
+  --shell-max: 100rem; /* 1600px */
+  --reading-max: 65rem; /* 1040px — Desk reading column */
+  --block-max: 45rem; /* 720px — Studio block measure */
+  --panel-width: 23.75rem; /* 380px — PRIMA rail */
+  --navigator-width: 16rem; /* 256px — Studio navigator */
+  --navigator-collapsed: 3rem; /* 48px icon rail */
+
+  /* ---- Touch targets. CH07 overrides CH02's 40px. ---- */
+  --touch-min: 2.75rem; /* 44px */
+  --touch-comfortable: 3rem; /* 48px */
+}
+
+/**
+ * Dark theme.
+ *
+ * Applied via `data-theme="dark"` on <html>, set by the theme provider. The
+ * media query below handles "system" mode, which the provider expresses by
+ * leaving data-theme absent. The explicit attribute must win in both
+ * directions, so the attribute selectors are declared after the media query.
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --background: var(--p-dark-canvas);
+    --foreground: var(--p-dark-text);
+    --surface: var(--p-dark-surface);
+    --surface-foreground: var(--p-dark-text);
+    --card: var(--p-dark-surface);
+    --card-foreground: var(--p-dark-text);
+    --popover: var(--p-dark-elevated);
+    --popover-foreground: var(--p-dark-text);
+    --panel: var(--p-dark-panel);
+    --panel-foreground: var(--p-dark-text);
+    --studio-canvas: var(--p-dark-studio-canvas);
+
+    --text-strong: var(--p-dark-text);
+    --text-muted: var(--p-dark-muted-strong);
+    --text-subtle: var(--p-dark-muted);
+
+    /* Measured, not eyeballed. blue-500 as TEXT reached 3.56:1 on
+       --primary-soft (the active rail row), 3.74:1 on --muted and 3.84:1 on
+       --popover — so the one thing naming the teacher's current location was
+       the least readable text in the shell. blue-400 clears 4.5:1 on all of
+       them and still carries --primary-foreground at 7.5:1 when filled. */
+    --primary: var(--p-blue-400);
+    --primary-hover: var(--p-blue-300);
+    --primary-foreground: #0b1220;
+    --primary-soft: rgb(59 130 246 / 0.16);
+
+    --secondary: var(--p-emerald-500);
+    --secondary-hover: #34d399;
+    --secondary-foreground: #06231a;
+    --secondary-soft: rgb(16 185 129 / 0.16);
+
+    --accent: var(--p-amber-500);
+    --accent-hover: #fbbf24;
+    --accent-foreground: #241a05;
+    --accent-soft: rgb(245 158 11 / 0.16);
+
+    --success: var(--p-emerald-500);
+    --success-foreground: #06231a;
+    --success-soft: rgb(16 185 129 / 0.16);
+    --warning: var(--p-amber-500);
+    --warning-foreground: #241a05;
+    --warning-soft: rgb(245 158 11 / 0.16);
+    /* red-500 measured 3.76:1 as text on --popover, which is exactly where the
+       one destructive menu row lives. red-400 clears AA there. */
+    --destructive: var(--p-red-400);
+    --destructive-foreground: #2a0b0b;
+    --destructive-soft: rgb(239 68 68 / 0.16);
+    --info: var(--p-blue-400);
+    --info-foreground: #0b1220;
+    --info-soft: rgb(59 130 246 / 0.16);
+
+    --muted: #232e3b;
+    --muted-foreground: var(--p-dark-muted);
+
+    --border: rgb(232 238 245 / 0.1);
+    --border-strong: rgb(232 238 245 / 0.2);
+    --input: rgb(232 238 245 / 0.14);
+    --ring: var(--p-blue-400);
+
+    --studio-primary: var(--p-emerald-500);
+    --studio-recommend: #eab308;
+
+    /* Paper-depth shadows read as noise on dark; deepen and soften instead. */
+    --shadow-soft: 0 8px 30px rgb(0 0 0 / 0.32);
+    --shadow-hover: 0 12px 40px rgb(0 0 0 / 0.44);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --background: var(--p-dark-canvas);
+  --foreground: var(--p-dark-text);
+  --surface: var(--p-dark-surface);
+  --surface-foreground: var(--p-dark-text);
+  --card: var(--p-dark-surface);
+  --card-foreground: var(--p-dark-text);
+  --popover: var(--p-dark-elevated);
+  --popover-foreground: var(--p-dark-text);
+  --panel: var(--p-dark-panel);
+  --panel-foreground: var(--p-dark-text);
+  --studio-canvas: var(--p-dark-studio-canvas);
+
+  --text-strong: var(--p-dark-text);
+  --text-muted: var(--p-dark-muted-strong);
+  --text-subtle: var(--p-dark-muted);
+
+  /* See the note in the media-query block above: blue-500 failed AA as text on
+     every dark surface lighter than the canvas. */
+  --primary: var(--p-blue-400);
+  --primary-hover: var(--p-blue-300);
+  --primary-foreground: #0b1220;
+  --primary-soft: rgb(59 130 246 / 0.16);
+
+  --secondary: var(--p-emerald-500);
+  --secondary-hover: #34d399;
+  --secondary-foreground: #06231a;
+  --secondary-soft: rgb(16 185 129 / 0.16);
+
+  --accent: var(--p-amber-500);
+  --accent-hover: #fbbf24;
+  --accent-foreground: #241a05;
+  --accent-soft: rgb(245 158 11 / 0.16);
+
+  --success: var(--p-emerald-500);
+  --success-foreground: #06231a;
+  --success-soft: rgb(16 185 129 / 0.16);
+  --warning: var(--p-amber-500);
+  --warning-foreground: #241a05;
+  --warning-soft: rgb(245 158 11 / 0.16);
+  --destructive: var(--p-red-400);
+  --destructive-foreground: #2a0b0b;
+  --destructive-soft: rgb(239 68 68 / 0.16);
+  --info: var(--p-blue-400);
+  --info-foreground: #0b1220;
+  --info-soft: rgb(59 130 246 / 0.16);
+
+  --muted: #232e3b;
+  --muted-foreground: var(--p-dark-muted);
+
+  --border: rgb(232 238 245 / 0.1);
+  --border-strong: rgb(232 238 245 / 0.2);
+  --input: rgb(232 238 245 / 0.14);
+  --ring: var(--p-blue-400);
+
+  --studio-primary: var(--p-emerald-500);
+  --studio-recommend: #eab308;
+
+  --shadow-soft: 0 8px 30px rgb(0 0 0 / 0.32);
+  --shadow-hover: 0 12px 40px rgb(0 0 0 / 0.44);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+/**
+ * Reduced motion is a hard accessibility requirement, not a nicety
+ * (CH06 §3.5 / CH07). Collapsing the tokens disables every transition that
+ * references them, which is all of them.
+ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-micro: 1ms;
+    --motion-fast: 1ms;
+    --motion-standard: 1ms;
+    --motion-expand: 1ms;
+    --motion-pulse: 0ms;
+    --motion-rise: 0px;
+    --motion-hover-y: 0px;
+    --motion-press-scale: 1;
+  }
+}

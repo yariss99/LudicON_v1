@@ -1,0 +1,13 @@
+{
+  "extends": "../../packages/config/tsconfig.react.json",
+  "compilerOptions": {
+    "types": ["vite/client", "node"],
+    /* No `baseUrl` — it is deprecated in TS 6 and removed in TS 7. Since
+       TS 5.4, `paths` resolve relative to this file, which is what we want. */
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*", "vite.config.ts"],
+  "exclude": ["node_modules", "dist", "src/**/tests/**", "src/**/*.test.ts"]
+}

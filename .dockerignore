@@ -1,0 +1,64 @@
+# Build context exclusions.
+#
+# Two jobs: keep the context small (it is uploaded to the daemon on every
+# build), and make sure nothing secret or host-specific is ever baked into an
+# image layer.
+
+# ── Dependencies and build output ────────────────────────────────────────────
+# Installed inside the image by `npm ci`; host copies are the wrong platform.
+node_modules
+**/node_modules
+dist
+**/dist
+dist-ssr
+**/dist-ssr
+build
+**/build
+.turbo
+**/.turbo
+*.tsbuildinfo
+**/*.tsbuildinfo
+coverage
+**/coverage
+
+# ── Secrets ──────────────────────────────────────────────────────────────────
+# Never let a real .env into an image. The examples are safe and useful.
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+
+# ── VCS and CI ───────────────────────────────────────────────────────────────
+.git
+.gitignore
+.gitattributes
+.github
+
+# ── Editor / OS noise ────────────────────────────────────────────────────────
+.vscode
+.idea
+.DS_Store
+*.swp
+*.swo
+
+# ── Logs ─────────────────────────────────────────────────────────────────────
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ── Docs (large, never needed at build time) ─────────────────────────────────
+docs
+*.md
+!apps/web/src/**/*.md
+
+# ── Docker's own files ───────────────────────────────────────────────────────
+Dockerfile
+**/Dockerfile
+.dockerignore
+docker-compose.yml
+docker-compose.*.yml

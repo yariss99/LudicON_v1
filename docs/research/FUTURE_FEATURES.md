@@ -2,8 +2,8 @@
 Status: Draft
 Version: 1.0
 Owner: LUDI ON Product Team
-Depends On: PRODUCT_ROADMAP.md, IDEAS.md
-Related Documents: OPEN_QUESTIONS.md, ../product/PRIMA_CONVERSATION_BLUEPRINT.md
+Depends On: ../product/PRIMA_MVP_ROADMAP.md, IDEAS.md
+Related Documents: OPEN_QUESTIONS.md, ../product/PRIMA-DOC-001_PRODUCT_VISION_STRATEGIC_DIRECTION.md
 Last Updated: July 2026
 ---
 

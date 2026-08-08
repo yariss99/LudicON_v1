@@ -2,7 +2,7 @@
 Status: Official — Constitutional Decision Model
 Version: 1.0
 Owner: LUDI ON Product Team
-Depends On: PRIMA_EDUCATIONAL_OPERATING_SYSTEM.md, PRIMA_CONSTITUTIONAL_LANGUAGE.md, PRIMA_CONSTITUTIONAL_CAPABILITY_MODEL.md, PRIMA_CONSTITUTIONAL_DOMAIN_MODEL.md, PRIMA_CONSTITUTIONAL_COMMAND_MODEL.md, PRIMA_CONSTITUTIONAL_EVENT_MODEL.md, PRIMA_CONSTITUTIONAL_USE_CASE_MODEL.md, PRIMA_DECISION_MODEL.md
+Depends On: PRIMA_EDUCATIONAL_OPERATING_SYSTEM.md, PRIMA_CONSTITUTIONAL_LANGUAGE.md, PRIMA_CONSTITUTIONAL_CAPABILITY_MODEL.md, PRIMA_CONSTITUTIONAL_DOMAIN_MODEL.md, PRIMA_CONSTITUTIONAL_COMMAND_MODEL.md, PRIMA_CONSTITUTIONAL_EVENT_MODEL.md, PRIMA_CONSTITUTIONAL_USE_CASE_MODEL.md
 Related Documents: PRIMA_DECISION_FRAMEWORK.md, PRIMA_INTELLIGENCE_KERNEL.md, PRIMA_FAILURE_MODEL.md
 Last Updated: July 2026
 ---
@@ -29,7 +29,7 @@ Not prompts. Not ML. Not implementation algorithms.
 | Concern | Authority |
 |---------|-----------|
 | Decision **identity catalog** & ownership | **This document** |
-| Decision **hierarchy** H-01…H-12 | [`PRIMA_DECISION_MODEL.md`](./PRIMA_DECISION_MODEL.md) (aligned here) |
+| Decision **hierarchy** H-01…H-12 | Owned here. The behavioural `PRIMA_DECISION_MODEL.md` it was aligned with was removed in the August 2026 cleanup |
 | Decision **Authority levels** | EOS (Automatic→…→Exclusive Teacher) |
 | Engine behaviour detail | Engine specs — must comply |
 

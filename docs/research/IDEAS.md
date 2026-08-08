@@ -2,7 +2,7 @@
 Status: Draft
 Version: 1.0
 Owner: LUDI ON Product Team
-Depends On: LUDI_ON_PROJECT_BIBLE.md
+Depends On: ../product/LUDI_ON_PROJECT_BIBLE.md
 Related Documents: FUTURE_FEATURES.md, OPEN_QUESTIONS.md
 Last Updated: July 2026
 ---
@@ -56,10 +56,10 @@ Research and exploratory concepts **not yet approved** for the roadmap.
 
 ## How Ideas Graduate
 
-1. Capture here or in session log
+1. Capture here
 2. Discuss in product review
-3. If approved → move to `FUTURE_FEATURES.md` or `PRODUCT_ROADMAP.md`
-4. If rejected → note reason in session log
+3. If approved → move to `FUTURE_FEATURES.md` or [`../product/PRIMA_MVP_ROADMAP.md`](../product/PRIMA_MVP_ROADMAP.md)
+4. If rejected → note the reason inline, struck through
 
 ---
 

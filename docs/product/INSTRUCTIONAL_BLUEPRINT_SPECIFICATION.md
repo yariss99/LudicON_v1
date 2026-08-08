@@ -2,8 +2,8 @@
 Status: Enterprise Product Architecture Specification
 Version: 1.0
 Owner: LUDI ON Product Team
-Depends On: LUDI_ON_PROJECT_BIBLE.md, PRIMA_ENGINE.md
-Related Documents: PRIMA_DECISION_ENGINE.md, PRIMA_GENERATION_ENGINE.md, PRIMA_CONVERSATION_BLUEPRINT.md, PRIMA_KNOWLEDGE_ENGINE.md, PRIMA_MEMORY_ENGINE.md
+Depends On: LUDI_ON_PROJECT_BIBLE.md, PRIMA_EDUCATIONAL_OPERATING_SYSTEM.md
+Related Documents: PRIMA_CONSTITUTIONAL_ENGINE_ARCHITECTURE.md, PRIMA_CONSTITUTIONAL_DECISION_MODEL.md, PRIMA_CANONICAL_ARTIFACTS.md, ../design/DESIGN_BOOK_CH12_LESSON_DESIGN_STUDIO.md
 Last Updated: July 2026
 ---
 
@@ -207,7 +207,7 @@ stateDiagram-v2
 
 The Instructional Blueprint is organized into **conceptual sections**. Each section has a defined purpose, owner during composition, and consumers during generation and validation.
 
-Sections are listed in **dependency order** — the order Decision Engine uses for composition per [`PRIMA_DECISION_ENGINE.md`](./PRIMA_DECISION_ENGINE.md).
+Sections are listed in **dependency order** — the order in which composition proceeds. Engine ownership is defined in [`PRIMA_CONSTITUTIONAL_ENGINE_ARCHITECTURE.md`](./PRIMA_CONSTITUTIONAL_ENGINE_ARCHITECTURE.md).
 
 ---
 
@@ -940,4 +940,4 @@ Subordinate documents — including legacy `docs/LUDI_ON_BLUEPRINT/INSTRUCTIONAL
 
 ## Next Recommended Document
 
-→ [`PRIMA_DECISION_ENGINE.md`](./PRIMA_DECISION_ENGINE.md) — How the Decision Engine composes, validates, and revises Blueprint sections.
+→ [`PRIMA_CONSTITUTIONAL_DECISION_MODEL.md`](./PRIMA_CONSTITUTIONAL_DECISION_MODEL.md) — How decisions compose, validate, and revise Blueprint sections.

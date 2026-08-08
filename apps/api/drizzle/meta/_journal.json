@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1786094430444,
+      "tag": "0000_faulty_joseph",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1786127155623,
+      "tag": "0001_project_material_kind",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1786196393380,
+      "tag": "0002_evaluation_projects",
+      "breakpoints": true
+    }
+  ]
+}

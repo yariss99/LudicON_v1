@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2023"],
+    /* These packages are consumed from source (`main` points at src/index.ts)
+       and bundled by Vite or run through tsx. They deliberately do NOT emit:
+       `composite` would make TypeScript demand a built `dist/` from every
+       dependent, which is a build step with no consumer. */
+    "noEmit": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+}

@@ -2,12 +2,17 @@
 Status: Official — Intelligence Kernel Specification (Constitutional)
 Version: 1.2
 Owner: LUDI ON Product Team
-Depends On: LUDI_ON_PROJECT_BIBLE.md, PRIMA_ARCHITECTURAL_PRINCIPLES.md, PRIMA_DOMAIN_MODEL.md, PRIMA_CANONICAL_ARTIFACTS.md, PRIMA_INTELLIGENCE_MODEL.md, PRIMA_REASONING_FRAMEWORK.md, PRIMA_CONTEXT_MODEL.md, PRIMA_KNOWLEDGE_MODEL.md, PRIMA_DECISION_FRAMEWORK.md, PRIMA_FAILURE_MODEL.md, solution/PRIMA_SYSTEM_CONTEXT.md, solution/PRIMA_CAPABILITY_MODEL.md, solution/PRIMA_WORKFLOW_MODEL.md, solution/PRIMA_STATE_MODEL.md
-Related Documents: PRIMA_COGNITIVE_CORE.md, PRIMA_ENGINE.md, LUDI_ON_SOLUTION_ARCHITECTURE.md
+Depends On: LUDI_ON_PROJECT_BIBLE.md, PRIMA_ARCHITECTURAL_PRINCIPLES.md, PRIMA_CANONICAL_ARTIFACTS.md, PRIMA_CONSTITUTIONAL_DOMAIN_MODEL.md
+Related Documents: PRIMA_COGNITIVE_MODEL.md, PRIMA_EDUCATIONAL_OPERATING_SYSTEM.md, PRIMA_CONSTITUTIONAL_ENGINE_ARCHITECTURE.md, ../engineering/ES-007_CONTEXT_MODEL.md, ../engineering/ES-008_KNOWLEDGE_MODEL.md
 Last Updated: July 2026
 ---
 
 # PRIMA Intelligence Kernel
+
+> **Cleanup note (August 2026).** This document references specifications that were removed when the
+> repository moved to a monorepo: PRIMA_COGNITIVE_CORE.md, PRIMA_INTELLIGENCE_MODEL.md, PRIMA_REASONING_FRAMEWORK.md, PRIMA_CONTEXT_MODEL.md, PRIMA_KNOWLEDGE_MODEL.md, PRIMA_DECISION_FRAMEWORK.md, PRIMA_ENGINE.md, the `solution/` models and PRIMA_ARCHITECTURE_CONSISTENCY_REVIEW.md.
+> Those names now appear as plain text, not links. Where an authority replaced them it is noted below;
+> otherwise treat the reference as historical. Current authority map: [`../README.md`](../README.md).
 
 **Version:** 1.2  
 **Status:** Official — Constitutional Intelligence Operating System Specification
@@ -29,10 +34,10 @@ It is not another architecture document in a stack. It is the **Intelligence Ope
 | Layer | Document | Authority |
 |-------|----------|-----------|
 | **Kernel (this document)** | Intelligence OS — EPC + capabilities + gates | **Constitutional — supreme** |
-| **Cognitive Core** | [`PRIMA_COGNITIVE_CORE.md`](./PRIMA_COGNITIVE_CORE.md) | Operationalizes kernel capabilities |
-| **Intelligence Model** | [`PRIMA_INTELLIGENCE_MODEL.md`](./PRIMA_INTELLIGENCE_MODEL.md) | Intelligence layers IL-01–IL-10 |
+| **Cognitive Core** | `PRIMA_COGNITIVE_CORE.md` | Operationalizes kernel capabilities |
+| **Intelligence Model** | `PRIMA_INTELLIGENCE_MODEL.md` | Intelligence layers IL-01–IL-10 |
 | **Specialized models** | Reasoning, Context, Knowledge, Decision, Failure | Domain specialization |
-| **Product engines** | [`PRIMA_ENGINE.md`](./PRIMA_ENGINE.md) | Implementation — subordinate |
+| **Product engines** | `PRIMA_ENGINE.md` | Implementation — subordinate |
 
 The Kernel **extends** the approved constitutional foundation without redefining it.
 
@@ -133,7 +138,7 @@ Every recommendation must be grounded in contextual information including curric
 |-------------|-----------|
 | Primary capability | Context Cognition (CCAP-02) |
 | Mandatory gate | IK-G02 Context Gate |
-| Context model | [`PRIMA_CONTEXT_MODEL.md`](./PRIMA_CONTEXT_MODEL.md) — CP-* rules |
+| Context model | `PRIMA_CONTEXT_MODEL.md` — CP-* rules |
 | Violation | Architecturally invalid — reasoning blocked |
 
 ---
@@ -150,7 +155,7 @@ Every recommendation must be supported by identifiable educational knowledge, pe
 |-------------|-----------|
 | Primary capabilities | Knowledge Cognition (CCAP-04) → Reasoning Cognition (CCAP-05) |
 | Mandatory gates | IK-G04 Knowledge Gate; IK-G05 Reasoning Gate |
-| Knowledge model | [`PRIMA_KNOWLEDGE_MODEL.md`](./PRIMA_KNOWLEDGE_MODEL.md) — KN-04 provenance |
+| Knowledge model | `PRIMA_KNOWLEDGE_MODEL.md` — KN-04 provenance |
 | Violation | Architecturally invalid — recommendation withheld |
 
 ---
@@ -356,7 +361,7 @@ flowchart TB
 EPC is **distributed** across:
 
 - **Teacher** — final approval, override, cancel  
-- **Session Governance** — gate enforcement, checkpoint, routing ([`PRIMA_WORKFLOW_MODEL.md`](./solution/PRIMA_WORKFLOW_MODEL.md))  
+- **Session Governance** — gate enforcement, checkpoint, routing (`PRIMA_WORKFLOW_MODEL.md`)  
 - **Architectural Principles** — constitutional bounds  
 - **Decision Framework** — authority registry  
 
@@ -409,7 +414,7 @@ Operational principles **implement and enforce** the constitutional principles (
 
 ## 6. Cognitive Capabilities
 
-Nine independent cognitive capabilities compose the kernel. Each is a **conceptual function** — not a deployment unit. Mapping to [`PRIMA_COGNITIVE_CORE.md`](./PRIMA_COGNITIVE_CORE.md) modules is one-to-one.
+Nine independent cognitive capabilities compose the kernel. Each is a **conceptual function** — not a deployment unit. Mapping to `PRIMA_COGNITIVE_CORE.md` modules is one-to-one.
 
 | Capability ID | Capability | Cognitive Core module |
 |---------------|------------|----------------------|
@@ -450,7 +455,7 @@ Nine independent cognitive capabilities compose the kernel. Each is a **conceptu
 | **Context assembly** | Compose Decision Context from authorized sources |
 | **Context prioritization** | Teacher > approval > intent > knowledge > memory |
 | **Context validation** | CP-* rules; conflict detection |
-| **Context activation** | Phase-bound layer activation per [`PRIMA_CONTEXT_MODEL.md`](./PRIMA_CONTEXT_MODEL.md) |
+| **Context activation** | Phase-bound layer activation per `PRIMA_CONTEXT_MODEL.md` |
 | **Context expiration** | Deactivate on phase exit; GP-05 at generation |
 | **Conflict resolution** | Surface — never silent merge |
 | **Educational value** | Reasoning uses precisely relevant situational information |
@@ -675,7 +680,7 @@ Every capability adheres to the kernel contract schema:
 | Memory Cognition | Hint delivery | Intent override |
 | **Teacher + EPC** | Approval, override, cancel | — |
 
-Full contract detail: [`PRIMA_COGNITIVE_CORE.md`](./PRIMA_COGNITIVE_CORE.md) §8.
+Full contract detail: `PRIMA_COGNITIVE_CORE.md` §8.
 
 ---
 
@@ -715,7 +720,7 @@ Teacher leads → PRIMA assists → Teacher decides → PRIMA explains
 Teacher approves → PRIMA executes faithfully → Teacher reflects → PRIMA learns
 ```
 
-Partnership model detail: [`PRIMA_INTELLIGENCE_MODEL.md`](./PRIMA_INTELLIGENCE_MODEL.md) §Human-AI Collaboration.
+Partnership model detail: `PRIMA_INTELLIGENCE_MODEL.md` §Human-AI Collaboration.
 
 ---
 
@@ -765,12 +770,12 @@ Executive Pedagogical Control supervises nine cognitive capabilities through a g
 | Question | Answer document |
 |----------|-----------------|
 | *How should educational intelligence be organized for teachers?* | **This document — Intelligence Kernel** |
-| *How does the cognitive system operate?* | [`PRIMA_COGNITIVE_CORE.md`](./PRIMA_COGNITIVE_CORE.md) |
-| *What intelligence layers exist?* | [`PRIMA_INTELLIGENCE_MODEL.md`](./PRIMA_INTELLIGENCE_MODEL.md) |
-| *How does PRIMA reason?* | [`PRIMA_REASONING_FRAMEWORK.md`](./PRIMA_REASONING_FRAMEWORK.md) |
-| *What is relevant now?* | [`PRIMA_CONTEXT_MODEL.md`](./PRIMA_CONTEXT_MODEL.md) |
-| *What is known?* | [`PRIMA_KNOWLEDGE_MODEL.md`](./PRIMA_KNOWLEDGE_MODEL.md) |
-| *Who authorizes?* | [`PRIMA_DECISION_FRAMEWORK.md`](./PRIMA_DECISION_FRAMEWORK.md) |
+| *How does the cognitive system operate?* | `PRIMA_COGNITIVE_CORE.md` |
+| *What intelligence layers exist?* | `PRIMA_INTELLIGENCE_MODEL.md` |
+| *How does PRIMA reason?* | `PRIMA_REASONING_FRAMEWORK.md` |
+| *What is relevant now?* | `PRIMA_CONTEXT_MODEL.md` |
+| *What is known?* | `PRIMA_KNOWLEDGE_MODEL.md` |
+| *Who authorizes?* | `PRIMA_DECISION_FRAMEWORK.md` |
 
 Content generation is a possible consequence. **Educational thinking, quality, and teacher authority** are the objectives.
 
@@ -1103,14 +1108,14 @@ PRIMA_INTELLIGENCE_KERNEL.md .......... Intelligence OS (THIS — constitutional
 | Document | Relationship to Kernel |
 |----------|------------------------|
 | **This document** | **Supreme authority** — all intelligence conforms here |
-| [`PRIMA_COGNITIVE_CORE.md`](./PRIMA_COGNITIVE_CORE.md) | Operationalizes kernel capabilities as modules — subordinate |
-| [`PRIMA_INTELLIGENCE_MODEL.md`](./PRIMA_INTELLIGENCE_MODEL.md) | IL layers map to capability clusters — subordinate |
+| `PRIMA_COGNITIVE_CORE.md` | Operationalizes kernel capabilities as modules — subordinate |
+| `PRIMA_INTELLIGENCE_MODEL.md` | IL layers map to capability clusters — subordinate |
 | All immutable baseline docs | Constitutional foundation — extended not replaced |
-| [`PRIMA_ENGINE.md`](./PRIMA_ENGINE.md) | Implements kernel — subordinate |
+| `PRIMA_ENGINE.md` | Implements kernel — subordinate |
 | Future agents, workflows, engines | Must conform — no exception without kernel amendment |
 
 ---
 
 ## Next Recommended Document
 
-→ [`PRIMA_ARCHITECTURE_CONSISTENCY_REVIEW.md`](./PRIMA_ARCHITECTURE_CONSISTENCY_REVIEW.md) — Holistic audit including Intelligence Kernel, Cognitive Core, and full architecture stack.
+→ [`PRIMA_COGNITIVE_MODEL.md`](./PRIMA_COGNITIVE_MODEL.md) — Constitutional cognitive specification (CM-001), the surviving authority on cognition.

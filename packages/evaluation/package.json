@@ -1,0 +1,32 @@
+{
+  "name": "@ludicon/evaluation",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./model": "./src/model/index.ts",
+    "./theme": "./src/theme/index.ts",
+    "./layout": "./src/layout/index.ts",
+    "./commands": "./src/commands/index.ts",
+    "./exercises": "./src/exercises/index.ts",
+    "./exercises/*": "./src/exercises/types/*/index.ts",
+    "./validation": "./src/validation/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "oxlint src",
+    "clean": "rm -rf dist .turbo"
+  },
+  "dependencies": {
+    "@ludicon/domain": "*",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@ludicon/config": "*",
+    "oxlint": "^1.71.0",
+    "typescript": "~6.0.3"
+  }
+}

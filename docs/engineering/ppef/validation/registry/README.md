@@ -14,4 +14,4 @@ Append-only index of Validation executions (PVC-001 v2.0 §9).
 |--------------|-----------------|---------|---------|--------|-----------|-----------|--------|-----------------|-------------|
 | — | *(none yet)* | — | — | — | — | — | — | — | — |
 
-**Reports:** [`../reports/README.md`](../reports/README.md)
+**Reports:** `../reports/` — created when the first Validation Report is written (PVC-001 §8).

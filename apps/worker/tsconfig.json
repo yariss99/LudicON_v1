@@ -1,0 +1,19 @@
+{
+  "extends": "../../packages/config/tsconfig.node.json",
+  "compilerOptions": {
+    /* Workspace packages (`@ludicon/contracts`, `@ludicon/domain`) publish
+       TypeScript source rather than build output — their `main` points at
+       `./src/index.ts`. tsc therefore pulls those files into this program, and
+       a `rootDir` of `./src` would fail with TS6059 ("not under rootDir").
+       Pinning rootDir to the repo root keeps the emit layout deterministic:
+       this app's output lands in `dist/apps/worker/src/`. */
+    "rootDir": "../..",
+    "outDir": "./dist",
+
+    /* An application, not a library: nothing consumes its declarations. */
+    "declaration": false,
+    "sourceMap": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

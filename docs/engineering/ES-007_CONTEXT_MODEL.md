@@ -3,7 +3,7 @@ Status: Official — Engineering Specification ES-007 (Context Object Detail)
 Version: 1.0
 Owner: LUDI ON Product + Engineering Architecture
 Depends On: POSS, PAS, PDC, ES-002, ES-003, ES-004, ES-006, ES-007_COGNITIVE_OBJECTS_MODEL.md
-Related Documents: ../product/PRIMA_CONTEXT_MODEL.md, ../product/PRIMA_CONSTITUTIONAL_ENGINE_ARCHITECTURE.md, ../product/PRIMA_EDUCATIONAL_OPERATING_SYSTEM.md, ES-007_COGNITIVE_OBJECTS_MODEL.md
+Related Documents: ../product/PRIMA_CONSTITUTIONAL_ENGINE_ARCHITECTURE.md, ../product/PRIMA_EDUCATIONAL_OPERATING_SYSTEM.md, ES-007_COGNITIVE_OBJECTS_MODEL.md
 Last Updated: July 2026
 ---
 
@@ -26,7 +26,7 @@ Last Updated: July 2026
 |---------|-----------|
 | Cognitive Objects catalog and envelope | [`ES-007_COGNITIVE_OBJECTS_MODEL.md`](./ES-007_COGNITIVE_OBJECTS_MODEL.md) |
 | EOS execution Context Object (dimensions below) | **This document** |
-| Conceptual Context Stack / activation philosophy | [`PRIMA_CONTEXT_MODEL.md`](../product/PRIMA_CONTEXT_MODEL.md) — must align; on EOS dimension identity conflict, **this document prevails** after Product confirmation |
+| Conceptual Context Stack / activation philosophy | Owned here. The enterprise `PRIMA_CONTEXT_MODEL.md` it prevailed over was removed in the August 2026 cleanup |
 | Situational assembly behaviour | Context Engine (ENG-01) — implements this model later |
 
 ---

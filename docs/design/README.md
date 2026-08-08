@@ -49,6 +49,21 @@
 
 ## Runtime
 
-- Tokens: `src/styles/prima-design-tokens.css`
-- Components: `src/design-system/`
-- Showcase: `/design-system`
+The shared token layer lives in `packages/ui`:
+
+| | Path |
+|---|---|
+| Palette (raw values) | `packages/ui/src/styles/palette.css` |
+| Semantic tokens | `packages/ui/src/styles/tokens.css` |
+| Tailwind `@theme` mapping | `packages/ui/src/styles/theme.css` |
+| Light / dark / system | `packages/ui/src/theme/theme-provider.tsx` |
+
+App-local, pending migration into `packages/ui`:
+
+| | Path |
+|---|---|
+| Legacy tokens | `apps/web/src/styles/prima-design-tokens.css` |
+| Components | `apps/web/src/design-system/` |
+| Showcase route | `/design-system` |
+
+Components reference semantic tokens only — never the raw palette, never a hex.

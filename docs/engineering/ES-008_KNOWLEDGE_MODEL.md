@@ -3,7 +3,7 @@ Status: Official — Engineering Specification ES-008
 Version: 1.0
 Owner: LUDI ON Product + Engineering Architecture
 Depends On: POSS, PAS, PDC, ES-007, PRIMA_CONSTITUTIONAL_DOMAIN_MODEL.md, PRIMA_CONSTITUTIONAL_LANGUAGE.md
-Related Documents: ES-009, PAS-004_PRIMA_KNOWLEDGE_ARCHITECTURE.md, PAS-005_PRIMA_AI_ARCHITECTURE.md, ../product/PRIMA_KNOWLEDGE_MODEL.md, ../product/PRIMA_KNOWLEDGE_ENGINE.md, ../product/PRIMA_CONSTITUTIONAL_ENGINE_ARCHITECTURE.md, ES-007_COGNITIVE_OBJECTS_MODEL.md
+Related Documents: ES-009, PAS-004_PRIMA_KNOWLEDGE_ARCHITECTURE.md, PAS-005_PRIMA_AI_ARCHITECTURE.md, ../product/PRIMA_CONSTITUTIONAL_ENGINE_ARCHITECTURE.md, ES-007_COGNITIVE_OBJECTS_MODEL.md
 Last Updated: July 2026
 ---
 
@@ -24,7 +24,7 @@ Last Updated: July 2026
 | Concern | Authority |
 |---------|-----------|
 | EOS Knowledge domains, units, governance for execution | **This document (ES-008)** |
-| Broader enterprise knowledge philosophy / quality essays | [`PRIMA_KNOWLEDGE_MODEL.md`](../product/PRIMA_KNOWLEDGE_MODEL.md) — align; on EOS unit/domain identity conflict, **ES-008 prevails** after Product confirmation |
+| Broader enterprise knowledge philosophy / quality essays | Owned here. The enterprise `PRIMA_KNOWLEDGE_MODEL.md` ES-008 prevailed over was removed in the August 2026 cleanup |
 | Runtime assembly behaviour | Knowledge Engine (ENG-02) — implements this model later |
 
 ---

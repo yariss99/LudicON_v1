@@ -2,7 +2,7 @@
 Status: Draft
 Version: 1.0
 Owner: LUDI ON Product Team
-Depends On: LUDI_ON_PROJECT_BIBLE.md, PRODUCT_VISION.md
+Depends On: ../product/LUDI_ON_PROJECT_BIBLE.md, ../product/PRIMA-DOC-001_PRODUCT_VISION_STRATEGIC_DIRECTION.md
 Related Documents: IDEAS.md, FUTURE_FEATURES.md
 Last Updated: July 2026
 ---
@@ -67,12 +67,12 @@ Unresolved decisions that block or shape future implementation.
 
 ## Resolution Process
 
-1. Log new questions here with date in session log
-2. Assign owner in product review
-3. When resolved → move answer to relevant product doc; strike through question with link
+1. Log new questions here with a date
+2. Assign an owner in product review
+3. When resolved → move the answer to the relevant product doc; strike the question through with a link
 
 ---
 
 ## Next Recommended Document
 
-→ [`../session_logs/README.md`](../session_logs/README.md) — How to document work sessions.
+→ [`IDEAS.md`](./IDEAS.md) — Exploratory concepts not yet approved.
