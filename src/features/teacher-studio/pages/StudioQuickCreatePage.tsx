@@ -1,6 +1,7 @@
 import {
   ArrowLeft,
   ArrowRight,
+  Check,
   ClipboardCheck,
   FileText,
   Gamepad2,
@@ -8,12 +9,18 @@ import {
   Presentation,
   ScrollText,
 } from "lucide-react";
-import { useMemo, useState, type FormEvent } from "react";
+import { useMemo, useState, type CSSProperties, type FormEvent } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useProjects } from "../../../context/ProjectContext";
+import { getProjectColor } from "../../projects/constants";
 import { CREATE_OPTIONS } from "../constants/navigation";
 import { useTeacherStudio } from "../context/TeacherStudioContext";
 import type { CreateOption, CreateOptionId } from "../types";
+
+/** Accent comes from the real project colour registry, not a parallel palette. */
+function accentStyle(option: CreateOption): CSSProperties {
+  return { "--ts-c": getProjectColor(option.color).swatch } as CSSProperties;
+}
 
 const ICONS: Record<CreateOptionId, typeof NotebookPen> = {
   lesson: NotebookPen,
@@ -97,59 +104,75 @@ export function StudioQuickCreatePage() {
 
       <fieldset className="ts-qc-types">
         <legend className="ts-qc-legend">Tipul materialului</legend>
-        {CREATE_OPTIONS.map((option) => {
-          const Icon = ICONS[option.id];
-          const supported = isSupported(option);
-          const checked = selectedId === option.id;
+        <div className="ts-qc-type-grid">
+          {CREATE_OPTIONS.map((option) => {
+            const Icon = ICONS[option.id];
+            const supported = isSupported(option);
+            const checked = selectedId === option.id;
 
-          return (
-            <label
-              key={option.id}
-              className={[
-                "ts-qc-type",
-                `is-${option.accent}`,
-                checked ? "is-selected" : "",
-                supported ? "" : "is-soon",
-              ].join(" ")}
-            >
-              <input
-                type="radio"
-                name="create-type"
-                value={option.id}
-                className="ts-qc-radio"
-                checked={checked}
-                disabled={!supported}
-                onChange={() => {
-                  setSelectedId(option.id);
-                  setError(null);
-                }}
-              />
-              <span className="ts-qc-type-icon" aria-hidden>
-                <Icon size={18} strokeWidth={1.75} />
-              </span>
-              <span className="ts-qc-type-body">
-                <span className="ts-qc-type-label">
-                  {option.label}
-                  {!supported ? (
-                    <span className="ts-create-badge">În curând</span>
-                  ) : null}
-                  {checked ? (
-                    <span className="ts-qc-type-check">Selectat</span>
-                  ) : null}
+            return (
+              <label
+                key={option.id}
+                className={[
+                  "ts-qc-type",
+                  checked ? "is-selected" : "",
+                  supported ? "" : "is-soon",
+                ].join(" ")}
+                style={accentStyle(option)}
+              >
+                <input
+                  type="radio"
+                  name="create-type"
+                  value={option.id}
+                  className="ts-qc-radio"
+                  checked={checked}
+                  disabled={!supported}
+                  onChange={() => {
+                    setSelectedId(option.id);
+                    setError(null);
+                  }}
+                />
+                <span className="ts-qc-type-icon" aria-hidden>
+                  <Icon size={20} strokeWidth={1.75} />
                 </span>
-                <span className="ts-qc-type-desc">{option.description}</span>
-              </span>
-            </label>
-          );
-        })}
+                <span className="ts-qc-type-body">
+                  <span className="ts-qc-type-label">{option.label}</span>
+                  <span className="ts-qc-type-desc">{option.description}</span>
+                </span>
+
+                {checked ? (
+                  <span className="ts-qc-type-check">
+                    <Check size={12} strokeWidth={3} aria-hidden />
+                    Selectat
+                  </span>
+                ) : null}
+                {!supported ? (
+                  <span className="ts-qc-type-soon">În curând</span>
+                ) : null}
+              </label>
+            );
+          })}
+        </div>
       </fieldset>
 
       {selected ? (
-        <form className="ts-qc-form" onSubmit={handleSubmit}>
-          <h2 className="ts-block-title">Despre {selected.label.toLowerCase()}</h2>
-          <p className="ts-block-lead">
-            Doar atât cât să pornim. Restul se completează în atelier.
-          </p>
+        <form
+          className="ts-qc-form"
+          onSubmit={handleSubmit}
+          style={accentStyle(selected)}
+        >
+          <div className="ts-qc-form-head">
+            <span className="ts-qc-form-mark" aria-hidden>
+              {(() => {
+                const Icon = ICONS[selected.id];
+                return <Icon size={18} strokeWidth={1.75} />;
+              })()}
+            </span>
+            <div>
+              <h2 className="ts-block-title">Spune-ne doar câteva lucruri</h2>
+              <p className="ts-block-lead">{selected.hint}</p>
+            </div>
+          </div>
 
           <div className="ts-qc-fields">
             <label className="ts-qc-field">

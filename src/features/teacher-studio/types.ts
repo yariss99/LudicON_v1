@@ -22,19 +22,12 @@ export type CreateOptionId =
   | "assessment"
   | "presentation";
 
-export type CreateAccent =
-  | "blue"
-  | "teal"
-  | "amber"
-  | "coral"
-  | "green"
-  | "indigo";
-
 export type CreateOption = {
   readonly id: CreateOptionId;
   readonly label: string;
   readonly description: string;
-  readonly accent: CreateAccent;
+  /** Short reassurance shown once this type is chosen. */
+  readonly hint: string;
   /** Real builder route; needs `/:projectId` appended. Null when none exists. */
   readonly builderPath: string | null;
   /** An existing alternative flow for this type, if the repository has one. */

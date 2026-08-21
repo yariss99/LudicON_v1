@@ -8,8 +8,10 @@ import {
   ScrollText,
   Sparkles,
 } from "lucide-react";
+import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import { useProjects } from "../../../context/ProjectContext";
+import { getProjectColor } from "../../projects/constants";
 import { useTeacherAssistant } from "../../teacher-assistant/hooks/useTeacherAssistant";
 import { formatRelativeTime } from "../../../utils/date";
 import { ProjectCard } from "../components/ProjectCard";
@@ -233,16 +235,20 @@ function CreateCard({ option }: { option: CreateOption }) {
     </>
   );
 
+  const accent = {
+    "--ts-c": getProjectColor(option.color).swatch,
+  } as CSSProperties;
+
   if (!href) {
     return (
-      <div className={`ts-create-card is-${option.accent} is-soon`}>
+      <div className="ts-create-card is-soon" style={accent}>
         {body}
       </div>
     );
   }
 
   return (
-    <Link to={href} className={`ts-create-card is-${option.accent}`}>
+    <Link to={href} className="ts-create-card" style={accent}>
       {body}
     </Link>
   );
