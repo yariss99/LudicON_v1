@@ -228,5 +228,5 @@ export const COPILOT_PROMPTS: readonly string[] = [
 export const STUDIO_BRAND = {
   name: "LudicON",
   workspace: "Teacher Studio",
-  workspaceRo: "Atelierul Profesorului",
+  workspaceRo: "Atelierul creativ al profesorului",
 } as const;
