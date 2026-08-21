@@ -661,8 +661,16 @@
   gap: 0.85rem;
 }
 
-.ts-project-card {
+.ts-project-cell {
+  position: relative;
   display: flex;
+}
+
+.ts-project-card {
+  --ts-p: var(--ts-accent);
+
+  display: flex;
+  flex: 1;
   flex-direction: column;
   gap: 0.35rem;
   padding: 1rem 1.1rem;
@@ -679,21 +687,45 @@
 }
 
 .ts-project-card:hover {
-  border-color: color-mix(in srgb, var(--ts-accent) 35%, var(--ts-line));
+  border-color: color-mix(in srgb, var(--ts-p) 45%, var(--ts-line));
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
   transform: translateY(-2px);
 }
 
 .ts-project-card:focus-visible {
-  outline: 2px solid var(--ts-accent);
+  outline: 2px solid var(--ts-p);
   outline-offset: 2px;
 }
 
-.ts-project-head {
+.ts-project-top {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
+  margin-bottom: 0.15rem;
+}
+
+.ts-project-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--ts-p) 12%, transparent);
+  color: var(--ts-p);
+}
+
+.ts-project-flag {
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ts-p) 12%, transparent);
+  color: var(--ts-p);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .ts-project-title {
@@ -701,18 +733,6 @@
   font-weight: 600;
   line-height: 1.35;
   color: var(--ts-ink);
-}
-
-.ts-project-fav {
-  flex: none;
-  padding: 0.1rem 0.45rem;
-  border-radius: 999px;
-  background: #fffbeb;
-  color: #b45309;
-  font-size: 0.625rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
 .ts-project-meta {
@@ -725,7 +745,6 @@
   flex-wrap: wrap;
   gap: 0.25rem;
   margin-top: 0.15rem;
-  min-height: 1.15rem;
 }
 
 .ts-project-tag {
@@ -737,16 +756,77 @@
   font-weight: 600;
 }
 
+.ts-project-tag.is-fav {
+  background: #fffbeb;
+  color: #b45309;
+}
+
 .ts-project-foot {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  margin-top: 0.5rem;
-  padding-top: 0.55rem;
+  margin-top: auto;
+  padding-top: 0.7rem;
   border-top: 1px solid var(--ts-line);
   font-size: 0.6875rem;
   color: var(--ts-faint);
+}
+
+.ts-project-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 600;
+  color: var(--ts-p);
+}
+
+/* The most recently updated project reads slightly stronger. */
+.ts-project-cell.is-featured .ts-project-card {
+  border-color: color-mix(in srgb, var(--ts-p) 30%, var(--ts-line));
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--ts-p) 5%, var(--ts-surface)) 0%,
+    var(--ts-surface) 60%
+  );
+}
+
+/* Secondary control: a sibling of the link, never nested inside it. */
+.ts-project-actions {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.75rem;
+}
+
+.ts-project-fav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--ts-line);
+  background: var(--ts-surface);
+  color: var(--ts-faint);
+  font-size: 0.9rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ts-project-fav-btn:hover {
+  border-color: #f0c674;
+  color: #b45309;
+}
+
+.ts-project-fav-btn[aria-pressed="true"] {
+  color: #b45309;
+  border-color: #f0c674;
+  background: #fffbeb;
+}
+
+.ts-project-fav-btn:focus-visible {
+  outline: 2px solid var(--ts-accent);
+  outline-offset: 2px;
 }
 
 .ts-desk-empty {

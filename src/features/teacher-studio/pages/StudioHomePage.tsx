@@ -13,6 +13,7 @@ import { useProjects } from "../../../context/ProjectContext";
 import { useTeacherAssistant } from "../../teacher-assistant/hooks/useTeacherAssistant";
 import { formatRelativeTime } from "../../../utils/date";
 import type { Project } from "../../../types/project";
+import { ProjectCard } from "../components/ProjectCard";
 import { COPILOT_PROMPTS, CREATE_OPTIONS } from "../constants/navigation";
 import {
   useStudioActivityData,
@@ -103,7 +104,7 @@ export function StudioHomePage() {
             <p className="ts-block-lead">Continuă de unde ai rămas.</p>
           </div>
           <Link to="/projects" className="ts-block-link">
-            Vezi toate
+            Vezi toate proiectele
             <ArrowRight size={14} aria-hidden />
           </Link>
         </div>
@@ -123,43 +124,13 @@ export function StudioHomePage() {
           </div>
         ) : (
           <div className="ts-project-grid">
-            {dashboardProjects.map((project) => (
-              <Link
+            {dashboardProjects.map((project, index) => (
+              <ProjectCard
                 key={project.id}
-                to={`/studio/${project.id}`}
-                className="ts-project-card"
-                onClick={() => setActiveProjectId(project.id)}
-              >
-                <span className="ts-project-head">
-                  <span className="ts-project-title">{project.title}</span>
-                  {project.favorite ? (
-                    <span className="ts-project-fav" title="Favorit">
-                      Favorit
-                    </span>
-                  ) : null}
-                </span>
-
-                <span className="ts-project-meta">
-                  {[project.subject, project.grade].filter(Boolean).join(" · ") ||
-                    "Fără disciplină"}
-                </span>
-
-                <span className="ts-project-tags">
-                  {project.resources
-                    .filter((resource) => resource.status !== "empty")
-                    .slice(0, 3)
-                    .map((resource) => (
-                      <span key={resource.id} className="ts-project-tag">
-                        {resource.label}
-                      </span>
-                    ))}
-                </span>
-
-                <span className="ts-project-foot">
-                  <span>Actualizat {formatRelativeTime(project.updatedAt)}</span>
-                  <ArrowRight size={14} aria-hidden />
-                </span>
-              </Link>
+                project={project}
+                featured={index === 0}
+                onOpen={() => setActiveProjectId(project.id)}
+              />
             ))}
           </div>
         )}
