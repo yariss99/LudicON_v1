@@ -188,6 +188,9 @@
 }
 
 .ab-nav-group-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   font-size: 0.6875rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -195,6 +198,36 @@
   color: var(--ab-faint);
   margin-bottom: 0.4rem;
   padding: 0 0.65rem;
+}
+
+.ab-nav-group-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  font-size: 0.625rem;
+  letter-spacing: 0;
+}
+
+.ab-nav-group-title.is-done {
+  color: var(--ab-ok);
+}
+
+.ab-nav-group-title.is-done .ab-nav-group-step {
+  background: var(--ab-ok-soft);
+  border-color: transparent;
+}
+
+.ab-nav-group-title.is-current {
+  color: var(--ab-accent);
+}
+
+.ab-nav-group-title.is-current .ab-nav-group-step {
+  background: var(--ab-accent-soft);
+  border-color: transparent;
 }
 
 .ab-nav-btn {
@@ -414,6 +447,166 @@
   text-align: center;
   gap: 0.75rem;
   padding: 2rem;
+}
+
+/* Workflow band — the four-stage journey, above the editor.
+   Chrome, not content: a hairline rule instead of a card. */
+
+.ab-workflow {
+  margin: -0.25rem 0 1.4rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--ab-line);
+}
+
+.ab-wf-track {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.15rem;
+  list-style: none;
+  margin: 0 0 0.9rem;
+  padding: 0;
+}
+
+.ab-wf-item {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.ab-wf-link {
+  width: 1.15rem;
+  height: 1px;
+  margin: 0 0.15rem;
+  background: var(--ab-line);
+}
+
+.ab-wf-stage {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  font: inherit;
+  font-size: 0.8125rem;
+  color: var(--ab-faint);
+  cursor: pointer;
+  transition:
+    background var(--motion-fast, 150ms) ease,
+    color var(--motion-fast, 150ms) ease,
+    border-color var(--motion-fast, 150ms) ease;
+}
+
+.ab-wf-stage:hover {
+  color: var(--ab-ink);
+  background: var(--ab-bg);
+}
+
+.ab-wf-stage.is-started {
+  color: var(--ab-muted);
+}
+
+.ab-wf-stage.is-done {
+  color: var(--ab-ok);
+}
+
+.ab-wf-stage.is-current {
+  background: var(--ab-accent-soft);
+  border-color: color-mix(in srgb, var(--ab-accent) 22%, transparent);
+  color: var(--ab-accent);
+  font-weight: 600;
+}
+
+.ab-wf-stage:focus-visible {
+  outline: 2px solid var(--ab-accent);
+  outline-offset: 2px;
+}
+
+.ab-wf-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  font-size: 0.6875rem;
+  font-weight: 600;
+}
+
+.ab-wf-stage.is-done .ab-wf-marker {
+  background: var(--ab-ok-soft);
+  border-color: transparent;
+}
+
+.ab-wf-stage.is-current .ab-wf-marker {
+  background: var(--ab-surface);
+  border-color: transparent;
+}
+
+.ab-wf-label {
+  white-space: nowrap;
+}
+
+.ab-wf-next {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.ab-wf-now {
+  margin: 0;
+  min-width: 0;
+  font-size: 0.8125rem;
+}
+
+.ab-wf-now-stage {
+  font-weight: 600;
+  color: var(--ab-ink);
+}
+
+.ab-wf-now-hint {
+  color: var(--ab-muted);
+}
+
+.ab-wf-now-stage::after {
+  content: " · ";
+  color: var(--ab-faint);
+  font-weight: 400;
+}
+
+.ab-wf-cta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.ab-wf-cta-hint {
+  font-size: 0.75rem;
+  color: var(--ab-muted);
+  text-align: right;
+}
+
+.ab-wf-cta-btn {
+  flex: none;
+}
+
+@media (max-width: 900px) {
+  .ab-wf-cta-hint {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ab-wf-stage {
+    transition: none;
+  }
 }
 
 /* Side rail grouping — existing actions, sorted by teacher intent. */

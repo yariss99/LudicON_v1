@@ -1,5 +1,7 @@
+import { Check } from "lucide-react";
 import { ASSESSMENT_SECTION_GROUPS, ASSESSMENT_SECTIONS } from "../constants";
 import { useAssessmentBuilder } from "../hooks/useAssessmentBuilder";
+import { buildWorkflowStages } from "../services/assessmentWorkflow";
 import type { AssessmentDocument, AssessmentSectionId } from "../types";
 
 const SECTION_LABELS = new Map<AssessmentSectionId, string>(
@@ -35,6 +37,7 @@ function countFor(
 export function AssessmentSectionNav() {
   const { assessment, sectionId, setSectionId, setPanel } =
     useAssessmentBuilder();
+  const stages = buildWorkflowStages(assessment, sectionId);
 
   return (
     <aside className="ab-sidebar" aria-label="Secțiuni evaluare">
@@ -42,51 +45,68 @@ export function AssessmentSectionNav() {
         Structura evaluării
       </div>
 
-      {ASSESSMENT_SECTION_GROUPS.map((group) => (
-        <nav
-          key={group.id}
-          className="ab-nav-group"
-          aria-labelledby={`ab-nav-${group.id}`}
-        >
-          <div id={`ab-nav-${group.id}`} className="ab-nav-group-title">
-            {group.label}
-          </div>
-          <div className="ab-nav">
-            {group.sectionIds.map((id) => {
-              const count = countFor(id, assessment);
-              return (
-                <button
-                  key={id}
-                  type="button"
-                  className={[
-                    "ab-nav-btn",
-                    sectionId === id ? "is-active" : "",
-                  ].join(" ")}
-                  aria-current={sectionId === id ? "true" : undefined}
-                  onClick={() => {
-                    setSectionId(id);
-                    if (id === "analytics") setPanel("analytics");
-                    else if (id === "export") setPanel("export");
-                    else setPanel("editor");
-                  }}
-                >
-                  <span>{SECTION_LABELS.get(id) ?? id}</span>
-                  {count !== null ? (
-                    <span
-                      className={[
-                        "ab-nav-count",
-                        count === 0 ? "is-empty" : "",
-                      ].join(" ")}
-                    >
-                      {count}
-                    </span>
-                  ) : null}
-                </button>
-              );
-            })}
-          </div>
-        </nav>
-      ))}
+      {ASSESSMENT_SECTION_GROUPS.map((group, index) => {
+        const stage = stages[index];
+        return (
+          <nav
+            key={group.id}
+            className="ab-nav-group"
+            aria-labelledby={`ab-nav-${group.id}`}
+          >
+            <div
+              id={`ab-nav-${group.id}`}
+              className={[
+                "ab-nav-group-title",
+                stage?.isCurrent ? "is-current" : "",
+                stage?.status === "done" ? "is-done" : "",
+              ].join(" ")}
+            >
+              <span className="ab-nav-group-step" aria-hidden>
+                {stage?.status === "done" ? (
+                  <Check size={11} strokeWidth={3} />
+                ) : (
+                  index + 1
+                )}
+              </span>
+              {group.label}
+            </div>
+            <div className="ab-nav">
+              {group.sectionIds.map((id) => {
+                const count = countFor(id, assessment);
+                return (
+                  <button
+                    key={id}
+                    type="button"
+                    className={[
+                      "ab-nav-btn",
+                      sectionId === id ? "is-active" : "",
+                    ].join(" ")}
+                    aria-current={sectionId === id ? "true" : undefined}
+                    onClick={() => {
+                      setSectionId(id);
+                      if (id === "analytics") setPanel("analytics");
+                      else if (id === "export") setPanel("export");
+                      else setPanel("editor");
+                    }}
+                  >
+                    <span>{SECTION_LABELS.get(id) ?? id}</span>
+                    {count !== null ? (
+                      <span
+                        className={[
+                          "ab-nav-count",
+                          count === 0 ? "is-empty" : "",
+                        ].join(" ")}
+                      >
+                        {count}
+                      </span>
+                    ) : null}
+                  </button>
+                );
+              })}
+            </div>
+          </nav>
+        );
+      })}
     </aside>
   );
 }

@@ -2,6 +2,7 @@ import type {
   AssessmentAiActionId,
   AssessmentKind,
   AssessmentSectionId,
+  AssessmentStageId,
   BloomLevel,
   DifficultyLevel,
   QuestionType,
@@ -92,24 +93,33 @@ export const ASSESSMENT_SECTIONS: readonly {
  * unchanged.
  */
 export const ASSESSMENT_SECTION_GROUPS: readonly {
-  id: string;
+  id: AssessmentStageId;
   label: string;
+  hint: string;
   sectionIds: readonly AssessmentSectionId[];
 }[] = [
   {
     id: "about",
     label: "Despre evaluare",
+    hint: "Definești ce evaluezi și de ce.",
     sectionIds: ["general", "objectives", "competencies", "criteria"],
   },
   {
     id: "content",
     label: "Conținutul evaluării",
+    hint: "Construiești itemii și baremele.",
     sectionIds: ["questions", "answer_key"],
   },
-  { id: "grading", label: "Notare", sectionIds: ["scoring", "rubrics"] },
+  {
+    id: "grading",
+    label: "Notare",
+    hint: "Stabilești punctajul și rubricile.",
+    sectionIds: ["scoring", "rubrics"],
+  },
   {
     id: "finish",
     label: "Finalizare",
+    hint: "Verifici, publici și exporți pentru clasă.",
     sectionIds: ["notes", "metadata", "analytics", "export"],
   },
 ] as const;
