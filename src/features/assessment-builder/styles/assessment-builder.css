@@ -479,8 +479,9 @@
 
 .ab-action-divider {
   width: 1px;
-  align-self: stretch;
-  min-height: 1.4rem;
+  align-self: center;
+  height: 1.4rem;
+  margin: 0 0.3rem;
   background: var(--ab-line);
 }
 
