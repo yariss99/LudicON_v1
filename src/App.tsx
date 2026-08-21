@@ -7,6 +7,7 @@ import { ProjectProvider } from "./context/ProjectContext";
 import {
   TeacherStudioLayout,
   StudioHomePage,
+  StudioQuickCreatePage,
   StudioProjectsPage,
   StudioLibraryPage,
   StudioActivityPage,
@@ -158,6 +159,7 @@ function App() {
             {/* Teacher Studio — primary workspace */}
             <Route element={<TeacherStudioLayout />}>
               <Route index element={<StudioHomePage />} />
+              <Route path="create" element={<StudioQuickCreatePage />} />
               <Route path="projects" element={<StudioProjectsPage />} />
               <Route path="library" element={<StudioLibraryPage />} />
               <Route path="activity" element={<StudioActivityPage />} />
@@ -265,7 +267,6 @@ function App() {
 
             {/* Compatibility redirects */}
             <Route path="/desk" element={<Navigate to="/" replace />} />
-            <Route path="/create" element={<Navigate to="/create/experience" replace />} />
             <Route path="/studio" element={<Navigate to="/projects" replace />} />
             <Route path="/studio/create" element={<Navigate to="/create/experience" replace />} />
             <Route path="/profile" element={<Navigate to="/settings" replace />} />

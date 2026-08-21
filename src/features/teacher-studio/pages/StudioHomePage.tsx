@@ -12,9 +12,12 @@ import { Link } from "react-router-dom";
 import { useProjects } from "../../../context/ProjectContext";
 import { useTeacherAssistant } from "../../teacher-assistant/hooks/useTeacherAssistant";
 import { formatRelativeTime } from "../../../utils/date";
-import type { Project } from "../../../types/project";
 import { ProjectCard } from "../components/ProjectCard";
-import { COPILOT_PROMPTS, CREATE_OPTIONS } from "../constants/navigation";
+import {
+  COPILOT_PROMPTS,
+  CREATE_OPTIONS,
+  QUICK_CREATE_PATH,
+} from "../constants/navigation";
 import {
   useStudioActivityData,
   useStudioHomeData,
@@ -50,8 +53,6 @@ export function StudioHomePage() {
   const greeting =
     hour < 12 ? "Bună dimineața" : hour < 18 ? "Bună ziua" : "Bună seara";
 
-  // Builders live inside a project, so creation targets the most recent one.
-  const targetProject = recentProjects[0] ?? null;
   const dashboardProjects = recentProjects.slice(0, 4);
 
   function askCopilot(prompt: string) {
@@ -86,11 +87,7 @@ export function StudioHomePage() {
 
         <div className="ts-create-grid">
           {CREATE_OPTIONS.map((option) => (
-            <CreateCard
-              key={option.id}
-              option={option}
-              project={targetProject}
-            />
+            <CreateCard key={option.id} option={option} />
           ))}
         </div>
       </section>
@@ -213,15 +210,12 @@ export function StudioHomePage() {
   );
 }
 
-function CreateCard({
-  option,
-  project,
-}: {
-  option: CreateOption;
-  project: Project | null;
-}) {
+function CreateCard({ option }: { option: CreateOption }) {
   const Icon = CREATE_ICONS[option.id];
-  const href = resolveHref(option, project);
+  // Every supported type now starts in Quick Create, which creates the project.
+  const href = option.builderPath
+    ? `${QUICK_CREATE_PATH}?type=${option.id}`
+    : null;
 
   const body = (
     <>
@@ -233,7 +227,9 @@ function CreateCard({
         {!href ? <span className="ts-create-badge">În curând</span> : null}
       </span>
       <span className="ts-create-desc">{option.description}</span>
-      <span className="ts-create-meta">{resolveMeta(option, project)}</span>
+      <span className="ts-create-meta">
+        {href ? "Creezi un proiect nou" : "Încă nu are un atelier dedicat"}
+      </span>
     </>
   );
 
@@ -252,17 +248,3 @@ function CreateCard({
   );
 }
 
-/** Null means there is genuinely nowhere honest to send the teacher yet. */
-function resolveHref(option: CreateOption, project: Project | null): string | null {
-  if (option.directPath) return option.directPath;
-  if (!option.builderPath) return null;
-  if (!project) return "/create/experience";
-  return `${option.builderPath}/${project.id}`;
-}
-
-function resolveMeta(option: CreateOption, project: Project | null): string {
-  if (option.directPath) return "Pornești o conversație cu PRIMA";
-  if (!option.builderPath) return "Încă nu are un atelier dedicat";
-  if (!project) return "Creezi întâi un proiect";
-  return `În „${project.title}”`;
-}

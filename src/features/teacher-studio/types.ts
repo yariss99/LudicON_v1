@@ -3,6 +3,8 @@
  * Project-first: every resource belongs to a project.
  */
 
+import type { ProjectColorId, ProjectIconId } from "../../types/project";
+
 export type StudioAreaId =
   | "home"
   | "projects"
@@ -33,10 +35,16 @@ export type CreateOption = {
   readonly label: string;
   readonly description: string;
   readonly accent: CreateAccent;
-  /** Creation flow that works without an existing project. */
-  readonly directPath: string | null;
-  /** Real builder route; needs `/:projectId` appended. */
+  /** Real builder route; needs `/:projectId` appended. Null when none exists. */
   readonly builderPath: string | null;
+  /** An existing alternative flow for this type, if the repository has one. */
+  readonly altPath: string | null;
+  readonly altLabel: string | null;
+  /** Primary action copy — says what will actually happen. */
+  readonly actionLabel: string;
+  /** Defaults applied to the created project, from the real project enums. */
+  readonly color: ProjectColorId;
+  readonly icon: ProjectIconId;
 };
 
 export type StudioNavItem = {
