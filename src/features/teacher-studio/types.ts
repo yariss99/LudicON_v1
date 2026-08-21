@@ -12,22 +12,31 @@ export type StudioAreaId =
   | "notifications"
   | "settings";
 
-export type QuickActionId =
-  | "create-lesson"
-  | "create-worksheet"
-  | "create-assessment"
-  | "create-story"
-  | "create-presentation"
-  | "create-game"
-  | "open-project";
+export type CreateOptionId =
+  | "lesson"
+  | "worksheet"
+  | "game"
+  | "story"
+  | "assessment"
+  | "presentation";
 
-export type QuickAction = {
-  readonly id: QuickActionId;
+export type CreateAccent =
+  | "blue"
+  | "teal"
+  | "amber"
+  | "coral"
+  | "green"
+  | "indigo";
+
+export type CreateOption = {
+  readonly id: CreateOptionId;
   readonly label: string;
   readonly description: string;
-  readonly href: string;
-  readonly intent?: string;
-  readonly shortcut?: string;
+  readonly accent: CreateAccent;
+  /** Creation flow that works without an existing project. */
+  readonly directPath: string | null;
+  /** Real builder route; needs `/:projectId` appended. */
+  readonly builderPath: string | null;
 };
 
 export type StudioNavItem = {

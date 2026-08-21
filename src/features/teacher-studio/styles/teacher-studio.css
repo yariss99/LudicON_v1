@@ -414,6 +414,455 @@
   justify-content: center;
 }
 
+/* Desk / dashboard — the creative command center.
+   Additive only; the shell tokens and .ts-row stay untouched. */
+
+.ts-hero {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  padding: 1.6rem 1.75rem 1.75rem;
+  border-radius: 20px;
+  border: 1px solid var(--ts-line);
+  background:
+    radial-gradient(
+      ellipse 60% 130% at 100% 0%,
+      color-mix(in srgb, var(--ts-accent) 9%, transparent) 0%,
+      transparent 60%
+    ),
+    linear-gradient(180deg, var(--ts-accent-soft) 0%, var(--ts-surface) 70%);
+}
+
+.ts-hero-kicker {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ts-accent);
+}
+
+.ts-hero-title {
+  margin-top: 0.5rem;
+  font-family: var(--ts-font-display);
+  font-size: clamp(1.9rem, 3vw, 2.4rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--ts-ink);
+}
+
+.ts-hero-lead {
+  margin-top: 0.3rem;
+  font-size: 1.0625rem;
+  color: var(--ts-muted);
+}
+
+.ts-hero-meta {
+  margin-top: 0.85rem;
+  font-size: 0.75rem;
+  color: var(--ts-faint);
+}
+
+.ts-block {
+  margin-top: 2.25rem;
+}
+
+.ts-block-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.ts-block-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ts-ink);
+}
+
+.ts-block-lead {
+  margin-top: 0.2rem;
+  font-size: 0.875rem;
+  color: var(--ts-muted);
+}
+
+.ts-block-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ts-accent);
+  text-decoration: none;
+}
+
+.ts-block-link:hover {
+  text-decoration: underline;
+}
+
+/* Creation cards — doors into creation. */
+
+.ts-create-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.85rem;
+}
+
+.ts-create-card {
+  --ts-c: var(--ts-accent);
+  --ts-c-soft: var(--ts-accent-soft);
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1.05rem 1.1rem 1.15rem;
+  border-radius: var(--ts-radius);
+  border: 1px solid var(--ts-line);
+  background: var(--ts-surface);
+  box-shadow: var(--ts-shadow);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.ts-create-card.is-blue {
+  --ts-c: #1d4ed8;
+  --ts-c-soft: #eff6ff;
+}
+.ts-create-card.is-teal {
+  --ts-c: #0f766e;
+  --ts-c-soft: #f0fdfa;
+}
+.ts-create-card.is-amber {
+  --ts-c: #b45309;
+  --ts-c-soft: #fffbeb;
+}
+.ts-create-card.is-coral {
+  --ts-c: #be3455;
+  --ts-c-soft: #fff1f2;
+}
+.ts-create-card.is-green {
+  --ts-c: #047857;
+  --ts-c-soft: #ecfdf5;
+}
+.ts-create-card.is-indigo {
+  --ts-c: #4338ca;
+  --ts-c-soft: #eef2ff;
+}
+
+.ts-create-card:hover {
+  border-color: color-mix(in srgb, var(--ts-c) 40%, var(--ts-line));
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
+  transform: translateY(-2px);
+}
+
+.ts-create-card:focus-visible {
+  outline: 2px solid var(--ts-c);
+  outline-offset: 2px;
+}
+
+.ts-create-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: 0.45rem;
+  border-radius: 12px;
+  background: var(--ts-c-soft);
+  color: var(--ts-c);
+  transition: transform 160ms ease;
+}
+
+.ts-create-card:hover .ts-create-icon {
+  transform: translateY(-1px) scale(1.04);
+}
+
+.ts-create-label {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ts-ink);
+}
+
+.ts-create-desc {
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--ts-muted);
+}
+
+.ts-create-meta {
+  margin-top: 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--ts-c);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ts-create-card.is-soon {
+  background: var(--ts-bg);
+  box-shadow: none;
+  border-style: dashed;
+}
+
+.ts-create-card.is-soon .ts-create-icon {
+  background: var(--ts-surface);
+  color: var(--ts-faint);
+}
+
+.ts-create-card.is-soon .ts-create-label {
+  color: var(--ts-muted);
+}
+
+.ts-create-card.is-soon .ts-create-meta {
+  color: var(--ts-faint);
+}
+
+/* Project cards */
+
+.ts-project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.85rem;
+}
+
+.ts-project-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1rem 1.1rem;
+  border-radius: var(--ts-radius);
+  border: 1px solid var(--ts-line);
+  background: var(--ts-surface);
+  box-shadow: var(--ts-shadow);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.ts-project-card:hover {
+  border-color: color-mix(in srgb, var(--ts-accent) 35%, var(--ts-line));
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
+  transform: translateY(-2px);
+}
+
+.ts-project-card:focus-visible {
+  outline: 2px solid var(--ts-accent);
+  outline-offset: 2px;
+}
+
+.ts-project-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.ts-project-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ts-ink);
+}
+
+.ts-project-fav {
+  flex: none;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  background: #fffbeb;
+  color: #b45309;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ts-project-meta {
+  font-size: 0.75rem;
+  color: var(--ts-muted);
+}
+
+.ts-project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-top: 0.15rem;
+  min-height: 1.15rem;
+}
+
+.ts-project-tag {
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  background: var(--ts-bg);
+  color: var(--ts-muted);
+  font-size: 0.625rem;
+  font-weight: 600;
+}
+
+.ts-project-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--ts-line);
+  font-size: 0.6875rem;
+  color: var(--ts-faint);
+}
+
+.ts-desk-empty {
+  padding: 2rem 1.5rem;
+  border-radius: var(--ts-radius);
+  border: 1px dashed var(--ts-line);
+  background: var(--ts-surface);
+  text-align: center;
+}
+
+.ts-desk-empty-title {
+  font-family: var(--ts-font-display);
+  font-size: 1.1875rem;
+  font-weight: 600;
+  color: var(--ts-ink);
+}
+
+.ts-desk-empty-text {
+  margin: 0.4rem auto 1rem;
+  max-width: 28rem;
+  font-size: 0.875rem;
+  color: var(--ts-muted);
+}
+
+/* Compact activity summary */
+
+.ts-mini-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.ts-mini-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.7rem 0.95rem;
+  border-radius: 12px;
+  border: 1px solid var(--ts-line);
+  background: var(--ts-surface);
+  text-decoration: none;
+  color: inherit;
+}
+
+.ts-mini-row:hover {
+  border-color: color-mix(in srgb, var(--ts-accent) 30%, var(--ts-line));
+}
+
+.ts-mini-row:focus-visible {
+  outline: 2px solid var(--ts-accent);
+  outline-offset: 2px;
+}
+
+.ts-mini-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.ts-mini-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.ts-mini-meta {
+  font-size: 0.75rem;
+  color: var(--ts-muted);
+}
+
+.ts-mini-time {
+  flex: none;
+  font-size: 0.6875rem;
+  color: var(--ts-faint);
+  white-space: nowrap;
+}
+
+/* Copilot entry point */
+
+.ts-copilot {
+  padding: 1.25rem 1.35rem 1.35rem;
+  border-radius: var(--ts-radius);
+  border: 1px solid color-mix(in srgb, var(--ts-accent) 18%, var(--ts-line));
+  background: linear-gradient(
+    180deg,
+    var(--ts-accent-soft) 0%,
+    var(--ts-surface) 75%
+  );
+}
+
+.ts-copilot-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.ts-copilot-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 12px;
+  background: var(--ts-surface);
+  color: var(--ts-accent);
+  border: 1px solid var(--ts-line);
+}
+
+.ts-copilot-prompts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.95rem 0 0.85rem;
+}
+
+.ts-copilot-chip {
+  border: 1px solid var(--ts-line);
+  background: var(--ts-surface);
+  border-radius: 999px;
+  padding: 0.4rem 0.8rem;
+  font: inherit;
+  font-size: 0.8125rem;
+  color: var(--ts-ink);
+  cursor: pointer;
+  transition: border-color 160ms ease, color 160ms ease;
+}
+
+.ts-copilot-chip:hover {
+  border-color: color-mix(in srgb, var(--ts-accent) 40%, var(--ts-line));
+  color: var(--ts-accent);
+}
+
+.ts-copilot-chip:focus-visible {
+  outline: 2px solid var(--ts-accent);
+  outline-offset: 2px;
+}
+
 /* Activity journal — temporal reading of recent work.
    Additive only: .ts-row and the shell tokens stay untouched. */
 
@@ -672,8 +1121,21 @@
   .ts-nav-link,
   .ts-activity,
   .ts-activity-icon,
-  .ts-activity-go {
+  .ts-activity-go,
+  .ts-create-card,
+  .ts-create-icon,
+  .ts-project-card,
+  .ts-copilot-chip {
     transition: none;
+  }
+
+  .ts-create-card:hover,
+  .ts-project-card:hover {
+    transform: none;
+  }
+
+  .ts-create-card:hover .ts-create-icon {
+    transform: none;
   }
 
   .ts-activity:hover {

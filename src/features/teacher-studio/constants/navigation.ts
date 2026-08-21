@@ -1,4 +1,4 @@
-import type { QuickAction, StudioNavItem } from "../types";
+import type { CreateOption, StudioNavItem } from "../types";
 
 export const STUDIO_NAV: readonly StudioNavItem[] = [
   { id: "home", label: "Acasă", href: "/", shortcut: "G H" },
@@ -15,59 +15,71 @@ export const STUDIO_NAV: readonly StudioNavItem[] = [
   { id: "settings", label: "Setări", href: "/settings", shortcut: "G S" },
 ] as const;
 
-export const QUICK_ACTIONS: readonly QuickAction[] = [
+/**
+ * Creation entry points on the desk.
+ *
+ * `directPath` is a flow that works without an existing project.
+ * `builderPath` is a real builder route that needs `/:projectId` appended.
+ * Both null means no builder exists yet — the card says so instead of
+ * pretending. `/create/experience` ignores query params, so no `?intent` is
+ * used here.
+ */
+export const CREATE_OPTIONS: readonly CreateOption[] = [
   {
-    id: "create-lesson",
+    id: "lesson",
     label: "Lecție",
-    description: "Planifică o lecție completă",
-    href: "/create/experience?intent=lesson",
-    intent: "lesson",
-    shortcut: "N L",
+    description: "Construiește o experiență completă de învățare.",
+    accent: "blue",
+    directPath: "/create/experience",
+    builderPath: null,
   },
   {
-    id: "create-worksheet",
-    label: "Fișă",
-    description: "Creează o fișă de lucru",
-    href: "/create/experience?intent=worksheet",
-    intent: "worksheet",
-    shortcut: "N F",
+    id: "worksheet",
+    label: "Fișă de lucru",
+    description: "Creează materiale de lucru gata pentru clasă.",
+    accent: "teal",
+    directPath: null,
+    builderPath: null,
   },
   {
-    id: "create-assessment",
-    label: "Evaluare",
-    description: "Construiește o evaluare",
-    href: "/create/experience?intent=assessment",
-    intent: "assessment",
-    shortcut: "N E",
+    id: "game",
+    label: "Joc educativ",
+    description: "Transformă exersarea într-o provocare.",
+    accent: "amber",
+    directPath: null,
+    builderPath: "/game-builder",
   },
   {
-    id: "create-story",
+    id: "story",
     label: "Poveste",
-    description: "Scrie o poveste didactică",
-    href: "/create/experience?intent=story",
-    intent: "story",
+    description:
+      "Construiește activități și parcursuri de învățare prin poveste.",
+    accent: "coral",
+    directPath: null,
+    builderPath: "/story-builder",
   },
   {
-    id: "create-presentation",
+    id: "assessment",
+    label: "Evaluare",
+    description: "Creează itemi, barem și materiale gata de folosit.",
+    accent: "green",
+    directPath: null,
+    builderPath: "/assessment-builder",
+  },
+  {
+    id: "presentation",
     label: "Prezentare",
-    description: "Pregătește diapozitive",
-    href: "/create/experience?intent=presentation",
-    intent: "presentation",
+    description: "Organizează conținutul într-un suport vizual pentru lecție.",
+    accent: "indigo",
+    directPath: null,
+    builderPath: "/presentation-builder",
   },
-  {
-    id: "create-game",
-    label: "Joc",
-    description: "Proiectează un joc educațional",
-    href: "/create/experience?intent=game",
-    intent: "game",
-  },
-  {
-    id: "open-project",
-    label: "Deschide proiect",
-    description: "Continuă un proiect existent",
-    href: "/projects",
-    shortcut: "O",
-  },
+] as const;
+
+export const COPILOT_PROMPTS: readonly string[] = [
+  "Vreau o evaluare la fracții",
+  "Creează o fișă pentru clasa a III-a",
+  "Transformă lecția într-un joc",
 ] as const;
 
 export const STUDIO_BRAND = {
