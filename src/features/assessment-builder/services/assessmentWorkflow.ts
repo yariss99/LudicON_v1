@@ -35,23 +35,33 @@ export type WorkflowNextAction = {
 
 type Counts = {
   readonly questions: number;
+  /** Items that actually carry an enunț — a blank item is not yet content. */
+  readonly prompted: number;
+  /** Items with a barem — this belongs to Notare, never to content. */
   readonly answered: number;
 };
 
 function counts(assessment: AssessmentDocument): Counts {
   let questions = 0;
+  let prompted = 0;
   let answered = 0;
   for (const group of assessment.groups) {
     for (const question of group.questions) {
       questions += 1;
+      if (question.prompt.trim()) prompted += 1;
       if (question.answerKey?.trim()) answered += 1;
     }
   }
-  return { questions, answered };
+  return { questions, prompted, answered };
 }
 
 function hasText(value: string): boolean {
   return value.trim().length > 0;
+}
+
+/** Entries can be edited down to an empty string, so count only real ones. */
+function countText(values: readonly string[]): number {
+  return values.filter(hasText).length;
 }
 
 function statusOf(
@@ -62,29 +72,37 @@ function statusOf(
   switch (stageId) {
     case "about": {
       const described = hasText(assessment.subject) && hasText(assessment.grade);
-      if (described && assessment.objectives.length > 0) return "done";
+      const objectives = countText(assessment.objectives);
+      if (described && objectives > 0) return "done";
       if (
         described ||
-        assessment.objectives.length > 0 ||
-        assessment.competencies.length > 0 ||
-        assessment.criteria.length > 0
+        objectives > 0 ||
+        countText(assessment.competencies) > 0 ||
+        countText(assessment.criteria) > 0
       ) {
         return "started";
       }
       return "todo";
     }
     case "content": {
-      if (c.questions > 0 && c.answered === c.questions) return "done";
-      if (assessment.groups.length > 0) return "started";
+      // What the student receives and answers. Deliberately independent of
+      // bareme and scoring, which belong to Notare.
+      if (c.questions > 0 && c.prompted === c.questions) return "done";
+      if (assessment.groups.length > 0 || c.questions > 0) return "started";
       return "todo";
     }
     case "grading": {
-      if (assessment.scoring.totalPoints > 0 && assessment.scoring.passingScore > 0) {
+      // How answers are evaluated: bareme for every item, plus a scoring rule.
+      if (
+        c.questions > 0 &&
+        c.answered === c.questions &&
+        assessment.scoring.totalPoints > 0 &&
+        assessment.scoring.passingScore > 0
+      ) {
         return "done";
       }
-      if (assessment.rubrics.length > 0 || assessment.scoring.passingScore > 0) {
-        return "started";
-      }
+      // passingScore ships seeded at 50, so only unambiguous teacher work counts.
+      if (c.answered > 0 || assessment.rubrics.length > 0) return "started";
       return "todo";
     }
     case "finish": {
@@ -129,7 +147,7 @@ export function buildNextAction(
     };
   }
 
-  if (assessment.objectives.length === 0) {
+  if (countText(assessment.objectives) === 0) {
     return {
       label: "Adaugă obiectivele evaluării",
       hint: "Ce trebuie să demonstreze elevii la finalul evaluării?",
@@ -150,6 +168,15 @@ export function buildNextAction(
     return {
       label: "Adaugă primul item",
       hint: "Alege un tip de item în grupul creat.",
+      sectionId: "questions",
+    };
+  }
+
+  if (c.prompted < c.questions) {
+    const remaining = c.questions - c.prompted;
+    return {
+      label: `Scrie enunțurile itemilor (${remaining})`,
+      hint: "Enunțul este ce citește elevul — fără el itemul nu există.",
       sectionId: "questions",
     };
   }
