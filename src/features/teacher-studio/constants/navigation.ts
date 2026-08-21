@@ -108,8 +108,9 @@ export const COPILOT_PROMPTS: readonly string[] = [
   "Transformă lecția într-un joc",
 ] as const;
 
+/** LudicON is the platform; PRIMA is the pedagogical copilot inside it. */
 export const STUDIO_BRAND = {
-  name: "PRIMA",
+  name: "LudicON",
   workspace: "Teacher Studio",
   workspaceRo: "Atelierul Profesorului",
 } as const;

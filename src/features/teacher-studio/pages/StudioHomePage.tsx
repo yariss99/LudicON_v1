@@ -65,12 +65,16 @@ export function StudioHomePage() {
   return (
     <div>
       <section className="ts-hero">
-        <p className="ts-hero-kicker">Atelierul tău</p>
-        <h1 className="ts-hero-title">Bun venit!</h1>
-        <p className="ts-hero-lead">Ce ai vrea să creezi astăzi?</p>
-        <p className="ts-hero-support">
-          Alege un punct de plecare și construiește ceva pentru clasa ta.
-        </p>
+        <div className="ts-hero-main">
+          <p className="ts-hero-kicker">Atelierul tău</p>
+          <h1 className="ts-hero-title">Bun venit în LudicON!</h1>
+          <p className="ts-hero-lead">Ce vrei să construiești astăzi?</p>
+          <p className="ts-hero-support">
+            Tu creezi și decizi. PRIMA îți propune idei și te ajută să le duci
+            mai departe.
+          </p>
+        </div>
+
         <p className="ts-hero-meta">
           {greeting}, {teacher.displayName} · {projects.length}{" "}
           {projects.length === 1 ? "proiect" : "proiecte"} în atelier
@@ -98,9 +102,11 @@ export function StudioHomePage() {
         <div className="ts-block-head">
           <div>
             <h2 id="projects-heading" className="ts-block-title">
-              Proiectele mele
+              Continuă de unde ai rămas
             </h2>
-            <p className="ts-block-lead">Continuă de unde ai rămas.</p>
+            <p className="ts-block-lead">
+              Proiectele tale recente, cu cel mai nou în față.
+            </p>
           </div>
           <Link to="/projects" className="ts-block-link">
             Vezi toate proiectele
@@ -181,14 +187,16 @@ export function StudioHomePage() {
             </span>
             <div>
               <h2 id="copilot-heading" className="ts-block-title">
-                PRIMA Copilot
+                Copilotul tău pedagogic
               </h2>
               <p className="ts-block-lead">
-                Spune-mi ce vrei să creezi, iar eu te ajut să pornești.
+                Îți poate propune idei și te poate ajuta să le dezvolți. Tu
+                alegi ce păstrezi.
               </p>
             </div>
           </div>
 
+          <p className="ts-copilot-kicker">Întreabă PRIMA</p>
           <div className="ts-copilot-prompts">
             {COPILOT_PROMPTS.map((prompt) => (
               <button

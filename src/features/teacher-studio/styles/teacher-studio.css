@@ -420,8 +420,13 @@
 .ts-hero {
   position: relative;
   overflow: hidden;
-  margin-bottom: 2rem;
-  padding: 1.6rem 1.75rem 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: 1.75rem;
+  padding: 1.35rem 1.6rem 1.4rem;
   border-radius: 20px;
   border: 1px solid var(--ts-line);
   background:
@@ -457,18 +462,27 @@
   color: var(--ts-muted);
 }
 
+.ts-hero-main {
+  min-width: 0;
+}
+
 .ts-hero-support {
-  margin-top: 0.5rem;
-  max-width: 34rem;
+  margin-top: 0.45rem;
+  max-width: 36rem;
   font-size: 0.875rem;
   line-height: 1.5;
   color: var(--ts-muted);
 }
 
 .ts-hero-meta {
-  margin-top: 0.75rem;
-  font-size: 0.75rem;
-  color: var(--ts-faint);
+  flex: none;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ts-surface) 70%, transparent);
+  border: 1px solid var(--ts-line);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--ts-muted);
 }
 
 .ts-block {
@@ -964,11 +978,15 @@
 
 /* Project cards */
 
-/* 240px min fits the four recent projects on one desktop row. */
 .ts-project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
   gap: 0.85rem;
+}
+
+/* The most recent project leads the row. Span clamps to 1 on narrow grids. */
+.ts-project-grid .ts-project-cell.is-featured {
+  grid-column: span 2;
 }
 
 .ts-project-cell {
@@ -1091,14 +1109,33 @@
   color: var(--ts-p);
 }
 
-/* The most recently updated project reads slightly stronger. */
+/* The most recently updated project is the primary continuation target. */
 .ts-project-cell.is-featured .ts-project-card {
-  border-color: color-mix(in srgb, var(--ts-p) 30%, var(--ts-line));
+  padding: 1.15rem 1.25rem;
+  border-color: color-mix(in srgb, var(--ts-p) 32%, var(--ts-line));
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--ts-p) 5%, var(--ts-surface)) 0%,
+    color-mix(in srgb, var(--ts-p) 7%, var(--ts-surface)) 0%,
     var(--ts-surface) 60%
   );
+}
+
+.ts-project-cell.is-featured .ts-project-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--ts-p);
+  color: #fff;
+}
+
+.ts-project-cell.is-featured .ts-project-title {
+  font-size: 1.0625rem;
+}
+
+.ts-project-cell.is-featured .ts-project-go {
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  background: var(--ts-p);
+  color: #fff;
 }
 
 /* Secondary control: a sibling of the link, never nested inside it. */
@@ -1251,11 +1288,20 @@
   border: 1px solid var(--ts-line);
 }
 
+.ts-copilot-kicker {
+  margin: 0.95rem 0 0.45rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ts-faint);
+}
+
 .ts-copilot-prompts {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
-  margin: 0.95rem 0 0.85rem;
+  margin: 0 0 0.85rem;
 }
 
 .ts-copilot-chip {
