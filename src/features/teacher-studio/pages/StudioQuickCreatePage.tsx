@@ -59,6 +59,8 @@ export function StudioQuickCreatePage() {
     [selectedId],
   );
 
+  const SelectedIcon = selected ? ICONS[selected.id] : null;
+
   const trimmedTitle = title.trim();
   const duplicate = trimmedTitle.length > 0 && isTitleTaken(trimmedTitle);
   const canSubmit = Boolean(selected) && trimmedTitle.length > 0 && !duplicate;
@@ -155,7 +157,7 @@ export function StudioQuickCreatePage() {
         </div>
       </fieldset>
 
-      {selected ? (
+      {selected && SelectedIcon ? (
         <form
           className="ts-qc-form"
           onSubmit={handleSubmit}
@@ -163,10 +165,7 @@ export function StudioQuickCreatePage() {
         >
           <div className="ts-qc-form-head">
             <span className="ts-qc-form-mark" aria-hidden>
-              {(() => {
-                const Icon = ICONS[selected.id];
-                return <Icon size={18} strokeWidth={1.75} />;
-              })()}
+              <SelectedIcon size={18} strokeWidth={1.75} />
             </span>
             <div>
               <h2 className="ts-block-title">Spune-ne doar câteva lucruri</h2>
