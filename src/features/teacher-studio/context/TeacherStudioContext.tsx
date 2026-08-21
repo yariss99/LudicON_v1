@@ -37,6 +37,9 @@ type TeacherStudioContextValue = {
   readonly notificationIdsRead: ReadonlySet<string>;
 };
 
+/** Keep in sync with the `.ts-assistant` overlay breakpoint in the stylesheet. */
+const NARROW_QUERY = "(max-width: 1100px)";
+
 const TeacherStudioContext = createContext<TeacherStudioContextValue | null>(
   null,
 );
@@ -47,10 +50,10 @@ export function TeacherStudioProvider({ children }: { children: ReactNode }) {
     const first = projects.find((p) => !p.archived);
     return first?.id ?? null;
   });
-  // Below 1100px the assistant renders as a fixed overlay, so it must not be
-  // open on arrival — the teacher opens it from the top bar instead.
+  // Mirrors the stylesheet breakpoint where .ts-assistant becomes a fixed
+  // overlay. Below it the panel must not be open unless the teacher asks.
   const [assistantOpen, setAssistantOpen] = useState(
-    () => typeof window === "undefined" || window.innerWidth > 1100,
+    () => typeof window === "undefined" || !window.matchMedia(NARROW_QUERY).matches,
   );
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -74,6 +77,19 @@ export function TeacherStudioProvider({ children }: { children: ReactNode }) {
 
   const toggleSidebar = useCallback(() => {
     setSidebarCollapsed((v) => !v);
+  }, []);
+
+  // Closing on the way down keeps the overlay from covering the workspace;
+  // going wide again leaves the teacher's own choice alone.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const media = window.matchMedia(NARROW_QUERY);
+    const sync = (event: MediaQueryList | MediaQueryListEvent) => {
+      if (event.matches) setAssistantOpen(false);
+    };
+    sync(media);
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
   }, []);
 
   const markNotificationRead = useCallback((id: string) => {
