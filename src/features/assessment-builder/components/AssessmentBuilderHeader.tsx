@@ -64,54 +64,70 @@ export function AssessmentBuilderHeader() {
         </div>
       </div>
       <div className="ab-actions">
-        <button type="button" className="ab-btn" onClick={() => saveNow()}>
-          Salvează
-        </button>
-        <button type="button" className="ab-btn" onClick={() => setPanel("ai")}>
-          AI
-        </button>
-        <button
-          type="button"
-          className="ab-btn"
-          onClick={() => setPanel("analytics")}
-        >
-          Analitică
-        </button>
-        <button type="button" className="ab-btn" onClick={runValidation}>
-          Validează
-        </button>
-        <button
-          type="button"
-          className="ab-btn ab-btn-primary"
-          onClick={() => {
-            const result = publish();
-            if (!result.ok) window.alert(result.error);
-          }}
-        >
-          Publică
-        </button>
-        <button
-          type="button"
-          className="ab-btn"
-          onClick={() => {
-            const copy = duplicate();
-            navigate(`/assessment-builder/${project.id}/${copy.id}`);
-          }}
-        >
-          Duplică
-        </button>
-        <button
-          type="button"
-          className="ab-btn ab-btn-ghost ab-btn-danger"
-          onClick={() => {
-            if (window.confirm("Arhivezi evaluarea?")) {
-              archive();
-              navigate(`/studio/${project.id}/assessments`);
-            }
-          }}
-        >
-          Arhivează
-        </button>
+        <div className="ab-action-group" role="group" aria-label="Panouri">
+          <button
+            type="button"
+            className="ab-btn"
+            onClick={() => setPanel("ai")}
+          >
+            PRIMA
+          </button>
+          <button
+            type="button"
+            className="ab-btn"
+            onClick={() => setPanel("analytics")}
+          >
+            Analitică
+          </button>
+        </div>
+
+        <span className="ab-action-divider" aria-hidden />
+
+        <div className="ab-action-group" role="group" aria-label="Document">
+          <button type="button" className="ab-btn" onClick={() => saveNow()}>
+            Salvează
+          </button>
+          <button
+            type="button"
+            className="ab-btn"
+            onClick={() => {
+              const copy = duplicate();
+              navigate(`/assessment-builder/${project.id}/${copy.id}`);
+            }}
+          >
+            Duplică
+          </button>
+          <button
+            type="button"
+            className="ab-btn ab-btn-ghost ab-btn-danger"
+            onClick={() => {
+              if (window.confirm("Arhivezi evaluarea?")) {
+                archive();
+                navigate(`/studio/${project.id}/assessments`);
+              }
+            }}
+          >
+            Arhivează
+          </button>
+        </div>
+
+        <span className="ab-action-divider" aria-hidden />
+
+        <div className="ab-action-group" role="group" aria-label="Publicare">
+          <button type="button" className="ab-btn" onClick={runValidation}>
+            Validează
+          </button>
+          <button
+            type="button"
+            className="ab-btn ab-btn-primary"
+            onClick={() => {
+              const result = publish();
+              if (!result.ok) window.alert(result.error);
+            }}
+          >
+            Publică
+          </button>
+        </div>
       </div>
     </header>
   );

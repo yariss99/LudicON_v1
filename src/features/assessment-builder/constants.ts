@@ -75,7 +75,7 @@ export const ASSESSMENT_SECTIONS: readonly {
   { id: "general", label: "Informații generale" },
   { id: "objectives", label: "Obiective" },
   { id: "competencies", label: "Competențe" },
-  { id: "criteria", label: "Criteria de evaluare" },
+  { id: "criteria", label: "Criterii de evaluare" },
   { id: "questions", label: "Grupuri de itemi" },
   { id: "scoring", label: "Punctaj" },
   { id: "rubrics", label: "Rubrici" },
@@ -84,6 +84,34 @@ export const ASSESSMENT_SECTIONS: readonly {
   { id: "metadata", label: "Metadate" },
   { id: "analytics", label: "Analitică" },
   { id: "export", label: "Export" },
+] as const;
+
+/**
+ * Reading order for the section nav. Every id in ASSESSMENT_SECTIONS appears
+ * exactly once — grouping is presentation only, the sections themselves are
+ * unchanged.
+ */
+export const ASSESSMENT_SECTION_GROUPS: readonly {
+  id: string;
+  label: string;
+  sectionIds: readonly AssessmentSectionId[];
+}[] = [
+  {
+    id: "about",
+    label: "Despre evaluare",
+    sectionIds: ["general", "objectives", "competencies", "criteria"],
+  },
+  {
+    id: "content",
+    label: "Conținutul evaluării",
+    sectionIds: ["questions", "answer_key"],
+  },
+  { id: "grading", label: "Notare", sectionIds: ["scoring", "rubrics"] },
+  {
+    id: "finish",
+    label: "Finalizare",
+    sectionIds: ["notes", "metadata", "analytics", "export"],
+  },
 ] as const;
 
 export const AI_ACTIONS: readonly {
@@ -140,6 +168,38 @@ export const AI_ACTIONS: readonly {
     id: "suggest_improvements",
     label: "Sugerează îmbunătățiri",
     description: "Recomandări de calitate didactică.",
+  },
+] as const;
+
+/** Groups the existing AI actions by what the teacher is trying to achieve. */
+export const AI_ACTION_GROUPS: readonly {
+  id: string;
+  label: string;
+  actionIds: readonly AssessmentAiActionId[];
+}[] = [
+  {
+    id: "create",
+    label: "Creează conținut",
+    actionIds: ["generate_complete", "generate_bank", "generate_variants"],
+  },
+  {
+    id: "refine",
+    label: "Îmbunătățește",
+    actionIds: [
+      "adjust_difficulty",
+      "detect_duplicates",
+      "suggest_improvements",
+    ],
+  },
+  {
+    id: "grading",
+    label: "Notare și feedback",
+    actionIds: [
+      "generate_rubrics",
+      "generate_answer_keys",
+      "generate_feedback",
+      "competency_mapping",
+    ],
   },
 ] as const;
 

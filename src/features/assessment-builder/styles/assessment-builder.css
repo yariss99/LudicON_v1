@@ -183,7 +183,26 @@
   gap: 0.2rem;
 }
 
+.ab-nav-group {
+  margin-bottom: 1.15rem;
+}
+
+.ab-nav-group-title {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ab-faint);
+  margin-bottom: 0.4rem;
+  padding: 0 0.65rem;
+}
+
 .ab-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
   text-align: left;
   border: none;
   background: transparent;
@@ -193,6 +212,30 @@
   font-size: 0.875rem;
   color: var(--ab-ink);
   cursor: pointer;
+}
+
+.ab-nav-count {
+  flex: none;
+  min-width: 1.35rem;
+  padding: 0 0.35rem;
+  border-radius: 999px;
+  background: var(--ab-bg);
+  color: var(--ab-muted);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.35rem;
+}
+
+.ab-nav-count.is-empty {
+  background: transparent;
+  color: var(--ab-faint);
+  font-weight: 500;
+}
+
+.ab-nav-btn.is-active .ab-nav-count {
+  background: var(--ab-surface);
+  color: var(--ab-accent);
 }
 
 .ab-nav-btn:hover {
@@ -371,6 +414,80 @@
   text-align: center;
   gap: 0.75rem;
   padding: 2rem;
+}
+
+/* Side rail grouping — existing actions, sorted by teacher intent. */
+
+.ab-rail-group {
+  margin-bottom: 1.1rem;
+}
+
+.ab-rail-group-title {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ab-faint);
+  margin-bottom: 0.45rem;
+}
+
+.ab-rail-subgroup-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ab-muted);
+  margin-bottom: 0.35rem;
+}
+
+.ab-rail-note {
+  margin: -0.2rem 0 0.9rem;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--ab-muted);
+}
+
+.ab-rail-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.ab-btn-rail,
+.ab-btn-add {
+  width: 100%;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.ab-btn-add {
+  background: var(--ab-accent-soft);
+  border-color: transparent;
+  color: var(--ab-accent);
+  font-weight: 600;
+}
+
+.ab-btn-add:hover {
+  border-color: color-mix(in srgb, var(--ab-accent) 45%, transparent);
+}
+
+/* Header action clusters — separates panels, document ops and release. */
+
+.ab-action-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.ab-action-divider {
+  width: 1px;
+  align-self: stretch;
+  min-height: 1.4rem;
+  background: var(--ab-line);
+}
+
+@media (max-width: 700px) {
+  .ab-action-divider {
+    display: none;
+  }
 }
 
 .ab-list-editor {
