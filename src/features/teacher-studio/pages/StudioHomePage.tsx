@@ -61,9 +61,12 @@ export function StudioHomePage() {
   return (
     <div>
       <section className="ts-hero">
-        <p className="ts-hero-kicker">Spațiul tău de creație</p>
+        <p className="ts-hero-kicker">Atelierul tău</p>
         <h1 className="ts-hero-title">Bun venit!</h1>
         <p className="ts-hero-lead">Ce ai vrea să creezi astăzi?</p>
+        <p className="ts-hero-support">
+          Alege un punct de plecare și construiește ceva pentru clasa ta.
+        </p>
         <p className="ts-hero-meta">
           {greeting}, {teacher.displayName} · {projects.length}{" "}
           {projects.length === 1 ? "proiect" : "proiecte"} în atelier
@@ -254,7 +257,10 @@ function CreateCard({
       <span className="ts-create-icon" aria-hidden>
         <Icon size={20} strokeWidth={1.75} />
       </span>
-      <span className="ts-create-label">{option.label}</span>
+      <span className="ts-create-label">
+        {option.label}
+        {!href ? <span className="ts-create-badge">În curând</span> : null}
+      </span>
       <span className="ts-create-desc">{option.description}</span>
       <span className="ts-create-meta">{resolveMeta(option, project)}</span>
     </>
@@ -262,10 +268,7 @@ function CreateCard({
 
   if (!href) {
     return (
-      <div
-        className={`ts-create-card is-${option.accent} is-soon`}
-        aria-disabled="true"
-      >
+      <div className={`ts-create-card is-${option.accent} is-soon`}>
         {body}
       </div>
     );
@@ -288,7 +291,7 @@ function resolveHref(option: CreateOption, project: Project | null): string | nu
 
 function resolveMeta(option: CreateOption, project: Project | null): string {
   if (option.directPath) return "Pornești o conversație cu PRIMA";
-  if (!option.builderPath) return "În curând";
+  if (!option.builderPath) return "Încă nu are un atelier dedicat";
   if (!project) return "Creezi întâi un proiect";
   return `În „${project.title}”`;
 }

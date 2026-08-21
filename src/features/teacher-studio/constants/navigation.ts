@@ -28,7 +28,7 @@ export const CREATE_OPTIONS: readonly CreateOption[] = [
   {
     id: "lesson",
     label: "Lecție",
-    description: "Construiește o experiență completă de învățare.",
+    description: "Construiește o experiență de învățare.",
     accent: "blue",
     directPath: "/create/experience",
     builderPath: null,
@@ -36,7 +36,7 @@ export const CREATE_OPTIONS: readonly CreateOption[] = [
   {
     id: "worksheet",
     label: "Fișă de lucru",
-    description: "Creează materiale de lucru gata pentru clasă.",
+    description: "Creează materiale gata pentru clasă.",
     accent: "teal",
     directPath: null,
     builderPath: null,
@@ -52,8 +52,7 @@ export const CREATE_OPTIONS: readonly CreateOption[] = [
   {
     id: "story",
     label: "Poveste",
-    description:
-      "Construiește activități și parcursuri de învățare prin poveste.",
+    description: "Construiește un parcurs de învățare prin poveste.",
     accent: "coral",
     directPath: null,
     builderPath: "/story-builder",
@@ -69,7 +68,7 @@ export const CREATE_OPTIONS: readonly CreateOption[] = [
   {
     id: "presentation",
     label: "Prezentare",
-    description: "Organizează conținutul într-un suport vizual pentru lecție.",
+    description: "Organizează conținutul într-un suport vizual.",
     accent: "indigo",
     directPath: null,
     builderPath: "/presentation-builder",
