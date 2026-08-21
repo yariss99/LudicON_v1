@@ -1,6 +1,6 @@
 import { Sparkles } from "lucide-react";
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useProjects } from "../../../context/ProjectContext";
 import { ProjectCard } from "../components/ProjectCard";
 import { useTeacherStudio } from "../context/TeacherStudioContext";
@@ -10,7 +10,9 @@ type ProjectFilter = "all" | "favorites" | "recent" | "archived" | "templates";
 export function StudioProjectsPage() {
   const { projects, toggleFavorite, openProject } = useProjects();
   const { setActiveProjectId } = useTeacherStudio();
-  const [query, setQuery] = useState("");
+  const [params] = useSearchParams();
+  // Seeded by the top bar search, which navigates here with `?q=`.
+  const [query, setQuery] = useState(() => params.get("q") ?? "");
   const [filter, setFilter] = useState<ProjectFilter>("all");
   const [sort, setSort] = useState<"updated" | "title">("updated");
 

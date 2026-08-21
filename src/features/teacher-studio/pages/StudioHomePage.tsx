@@ -66,18 +66,20 @@ export function StudioHomePage() {
     <div>
       <section className="ts-hero">
         <div className="ts-hero-main">
-          <p className="ts-hero-kicker">Atelierul tău</p>
-          <h1 className="ts-hero-title">Bun venit în LudicON!</h1>
-          <p className="ts-hero-lead">Ce vrei să construiești astăzi?</p>
+          <p className="ts-hero-kicker">Atelierul meu</p>
+          <h1 className="ts-hero-title">
+            {greeting}, {teacher.displayName}
+          </h1>
+          <p className="ts-hero-lead">Ce ai vrea să construim astăzi?</p>
           <p className="ts-hero-support">
-            Tu creezi și decizi. PRIMA îți propune idei și te ajută să le duci
-            mai departe.
+            Tu pornești de la idee. LudicON te ajută să o transformi într-o
+            resursă educațională, pas cu pas.
           </p>
         </div>
 
         <p className="ts-hero-meta">
-          {greeting}, {teacher.displayName} · {projects.length}{" "}
-          {projects.length === 1 ? "proiect" : "proiecte"} în atelier
+          Profesorul are controlul · {projects.length}{" "}
+          {projects.length === 1 ? "proiect" : "proiecte"}
         </p>
       </section>
 
@@ -102,11 +104,9 @@ export function StudioHomePage() {
         <div className="ts-block-head">
           <div>
             <h2 id="projects-heading" className="ts-block-title">
-              Continuă de unde ai rămas
+              Proiectele la care lucrezi
             </h2>
-            <p className="ts-block-lead">
-              Proiectele tale recente, cu cel mai nou în față.
-            </p>
+            <p className="ts-block-lead">Continuă de unde ai rămas.</p>
           </div>
           <Link to="/projects" className="ts-block-link">
             Vezi toate proiectele
@@ -187,11 +187,11 @@ export function StudioHomePage() {
             </span>
             <div>
               <h2 id="copilot-heading" className="ts-block-title">
-                Copilotul tău pedagogic
+                Lucrăm împreună
               </h2>
               <p className="ts-block-lead">
-                Îți poate propune idei și te poate ajuta să le dezvolți. Tu
-                alegi ce păstrezi.
+                Ai o idee? Începe cu ea, iar LudicON te poate ajuta să o
+                dezvolți. Tu revizuiești și decizi forma finală.
               </p>
             </div>
           </div>

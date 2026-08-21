@@ -1,5 +1,6 @@
-import { Bell, Menu, PanelRight, Sparkles } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Bell, PanelLeft, PanelRight, Search, Settings, Sparkles } from "lucide-react";
+import { useState, type FormEvent } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useTeacherStudio } from "../context/TeacherStudioContext";
 
 export function StudioTopBar() {
@@ -8,37 +9,73 @@ export function StudioTopBar() {
     assistantOpen,
     toggleAssistant,
     setMobileNavOpen,
+    toggleSidebar,
+    sidebarCollapsed,
     unreadNotifications,
   } = useTeacherStudio();
+  const navigate = useNavigate();
+  const [query, setQuery] = useState("");
+
+  /** Search reuses the Projects page filter, which reads `?q=`. */
+  function handleSearch(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const term = query.trim();
+    navigate(term ? `/projects?q=${encodeURIComponent(term)}` : "/projects");
+  }
 
   return (
     <header className="ts-topbar">
-      <div className="ts-topbar-context">
-        <p className="ts-topbar-kicker">Context curent</p>
-        <p className="ts-topbar-title">
-          {contextSnapshot.activeProjectTitle ??
-            "Niciun proiect activ — alege unul pentru a începe"}
-        </p>
-      </div>
-
-      <div className="ts-topbar-actions">
+      <div className="ts-topbar-left">
         <button
           type="button"
-          className="ts-icon-btn ts-mobile-toggle"
-          aria-label="Deschide navigarea"
-          onClick={() => setMobileNavOpen(true)}
+          className="ts-icon-btn ts-icon-only"
+          aria-label={
+            sidebarCollapsed ? "Extinde navigarea" : "Restrânge navigarea"
+          }
+          aria-pressed={sidebarCollapsed}
+          onClick={toggleSidebar}
         >
-          <Menu size={16} aria-hidden />
+          <PanelLeft size={16} aria-hidden />
         </button>
 
-        <Link to="/create/experience" className="ts-icon-btn">
+        <button
+          type="button"
+          className="ts-icon-btn ts-icon-only ts-mobile-toggle"
+          aria-label="Deschide meniul"
+          onClick={() => setMobileNavOpen(true)}
+        >
+          <PanelLeft size={16} aria-hidden />
+        </button>
+
+        <div className="ts-topbar-context">
+          <p className="ts-topbar-kicker">Context curent</p>
+          <p className="ts-topbar-title">
+            {contextSnapshot.activeProjectTitle ??
+              "Niciun proiect activ — alege unul pentru a începe"}
+          </p>
+        </div>
+      </div>
+
+      <form className="ts-topbar-search" role="search" onSubmit={handleSearch}>
+        <Search size={15} aria-hidden className="ts-topbar-search-icon" />
+        <input
+          type="search"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="Caută în proiecte…"
+          aria-label="Caută în proiecte"
+        />
+      </form>
+
+      <div className="ts-topbar-actions">
+        <Link to="/create" className="ts-icon-btn ts-icon-primary">
           <Sparkles size={15} aria-hidden />
           Creează
         </Link>
 
         <Link
           to="/notifications"
-          className="ts-icon-btn"
+          className="ts-icon-btn ts-icon-only"
           aria-label={
             unreadNotifications
               ? `Notificări, ${unreadNotifications} necitite`
@@ -51,17 +88,23 @@ export function StudioTopBar() {
           ) : null}
         </Link>
 
+        <Link
+          to="/settings"
+          className="ts-icon-btn ts-icon-only"
+          aria-label="Setări"
+        >
+          <Settings size={15} aria-hidden />
+        </Link>
+
         <button
           type="button"
-          className={["ts-icon-btn", assistantOpen ? "is-active" : ""].join(
-            " ",
-          )}
+          className={["ts-icon-btn", assistantOpen ? "is-active" : ""].join(" ")}
           aria-pressed={assistantOpen}
-          aria-label="Comută asistentul PRIMA"
+          aria-label="Comută copilotul PRIMA"
           onClick={toggleAssistant}
         >
           <PanelRight size={15} aria-hidden />
-          PRIMA
+          Copilot
         </button>
       </div>
     </header>

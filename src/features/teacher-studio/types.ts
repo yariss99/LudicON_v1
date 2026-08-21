@@ -3,6 +3,7 @@
  * Project-first: every resource belongs to a project.
  */
 
+import type { LucideIcon } from "lucide-react";
 import type { ProjectColorId, ProjectIconId } from "../../types/project";
 
 export type StudioAreaId =
@@ -41,10 +42,20 @@ export type CreateOption = {
 };
 
 export type StudioNavItem = {
-  readonly id: StudioAreaId;
+  readonly id: string;
   readonly label: string;
-  readonly href: string;
+  readonly icon: LucideIcon;
+  /** Real destination. Omitted when the area does not exist yet. */
+  readonly href?: string;
   readonly shortcut?: string;
+  /** True when there is genuinely nothing to open yet. */
+  readonly soon?: boolean;
+};
+
+export type StudioNavGroup = {
+  readonly id: string;
+  readonly label: string;
+  readonly items: readonly StudioNavItem[];
 };
 
 export type LibraryScope =

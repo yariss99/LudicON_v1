@@ -1,18 +1,134 @@
-import type { CreateOption, StudioNavItem } from "../types";
+import {
+  Activity,
+  Bell,
+  CalendarDays,
+  ClipboardCheck,
+  FileText,
+  FolderKanban,
+  Gamepad2,
+  Home,
+  Library,
+  LineChart,
+  NotebookPen,
+  Presentation,
+  ScrollText,
+  Settings,
+  Sparkles,
+  Users,
+} from "lucide-react";
+import type { CreateOption, StudioNavGroup } from "../types";
 
-export const STUDIO_NAV: readonly StudioNavItem[] = [
-  { id: "home", label: "Acasă", href: "/", shortcut: "G H" },
-  { id: "projects", label: "Proiecte", href: "/projects", shortcut: "G P" },
-  { id: "library", label: "Bibliotecă", href: "/library", shortcut: "G L" },
-  { id: "activity", label: "Activitate", href: "/activity", shortcut: "G A" },
-  { id: "calendar", label: "Calendar", href: "/calendar", shortcut: "G C" },
+/**
+ * Workspace navigation. Every `href` is a route that really exists; anything
+ * without one is flagged `soon` and rendered as non-interactive.
+ */
+export const STUDIO_NAV_GROUPS: readonly StudioNavGroup[] = [
   {
-    id: "notifications",
-    label: "Notificări",
-    href: "/notifications",
-    shortcut: "G N",
+    id: "main",
+    label: "Principal",
+    items: [
+      { id: "home", label: "Acasă", icon: Home, href: "/", shortcut: "G H" },
+      {
+        id: "projects",
+        label: "Proiectele mele",
+        icon: FolderKanban,
+        href: "/projects",
+        shortcut: "G P",
+      },
+    ],
   },
-  { id: "settings", label: "Setări", href: "/settings", shortcut: "G S" },
+  {
+    id: "create",
+    label: "Creație",
+    items: [
+      {
+        id: "copilot",
+        label: "Copilot",
+        icon: Sparkles,
+        href: "/assistant",
+      },
+      {
+        id: "lessons",
+        label: "Lecții",
+        icon: NotebookPen,
+        href: "/create?type=lesson",
+      },
+      { id: "worksheets", label: "Fișe de lucru", icon: FileText, soon: true },
+      {
+        id: "assessments",
+        label: "Evaluări",
+        icon: ClipboardCheck,
+        href: "/create?type=assessment",
+      },
+      {
+        id: "games",
+        label: "Jocuri educative",
+        icon: Gamepad2,
+        href: "/create?type=game",
+      },
+      {
+        id: "stories",
+        label: "Povești",
+        icon: ScrollText,
+        href: "/create?type=story",
+      },
+      {
+        id: "presentations",
+        label: "Prezentări",
+        icon: Presentation,
+        href: "/create?type=presentation",
+      },
+      {
+        id: "resources",
+        label: "Resurse",
+        icon: Library,
+        href: "/library",
+        shortcut: "G L",
+      },
+    ],
+  },
+  {
+    id: "workspace",
+    label: "Spațiul de lucru",
+    items: [
+      {
+        id: "activity",
+        label: "Activitate",
+        icon: Activity,
+        href: "/activity",
+        shortcut: "G A",
+      },
+      {
+        id: "calendar",
+        label: "Calendar",
+        icon: CalendarDays,
+        href: "/calendar",
+        shortcut: "G C",
+      },
+      {
+        id: "notifications",
+        label: "Notificări",
+        icon: Bell,
+        href: "/notifications",
+        shortcut: "G N",
+      },
+      { id: "classroom", label: "Clasă", icon: Users, soon: true },
+      { id: "analytics", label: "Analitică", icon: LineChart, soon: true },
+    ],
+  },
+  {
+    id: "system",
+    label: "Sistem",
+    items: [
+      {
+        id: "settings",
+        label: "Setări",
+        icon: Settings,
+        href: "/settings",
+        shortcut: "G S",
+      },
+    ],
+  },
 ] as const;
 
 /**
@@ -40,7 +156,7 @@ export const CREATE_OPTIONS: readonly CreateOption[] = [
   {
     id: "worksheet",
     label: "Fișă de lucru",
-    description: "Creează materiale gata pentru clasă.",
+    description: "Pregătește activități pentru elevii tăi.",
     hint: "Va veni în curând în atelier.",
     builderPath: null,
     altPath: null,
@@ -64,7 +180,7 @@ export const CREATE_OPTIONS: readonly CreateOption[] = [
   {
     id: "story",
     label: "Poveste",
-    description: "Construiește un parcurs de învățare prin poveste.",
+    description: "Construiește o experiență narativă de învățare.",
     hint: "Pornim cu ideea ta, apoi construiești povestea.",
     builderPath: "/story-builder",
     altPath: null,
@@ -76,7 +192,7 @@ export const CREATE_OPTIONS: readonly CreateOption[] = [
   {
     id: "assessment",
     label: "Evaluare",
-    description: "Creează itemi, barem și materiale gata de folosit.",
+    description: "Creează și ajustează evaluări pas cu pas.",
     hint: "Pregătim spațiul în care vei construi evaluarea.",
     builderPath: "/assessment-builder",
     altPath: null,
@@ -88,7 +204,7 @@ export const CREATE_OPTIONS: readonly CreateOption[] = [
   {
     id: "presentation",
     label: "Prezentare",
-    description: "Organizează conținutul într-un suport vizual.",
+    description: "Organizează ideile într-un material vizual.",
     hint: "Pregătim suportul pe care îl vei completa.",
     builderPath: "/presentation-builder",
     altPath: null,
