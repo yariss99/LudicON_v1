@@ -60,10 +60,14 @@
   --lx-assessment-soft: #ecfdf5;
   --lx-game: #b45309;
   --lx-game-soft: #fffbeb;
-  --lx-story: #be3455;
-  --lx-story-soft: #fff1f2;
+  --lx-story: #6d28d9;
+  --lx-story-soft: #f5f3ff;
   --lx-presentation: #4338ca;
   --lx-presentation-soft: #eef2ff;
+
+  /* Surface washes — how much accent bleeds into a card at rest / on hover */
+  --lx-wash: 5%;
+  --lx-wash-strong: 10%;
 
   /* Focus — one visible treatment across the platform */
   --lx-focus: #1d4ed8;

@@ -56,6 +56,7 @@ export function StudioHomePage() {
     hour < 12 ? "Bună dimineața" : hour < 18 ? "Bună ziua" : "Bună seara";
 
   const dashboardProjects = recentProjects.slice(0, 4);
+  const featuredProject = dashboardProjects[0] ?? null;
 
   function askCopilot(prompt: string) {
     sendMessage(prompt);
@@ -75,10 +76,28 @@ export function StudioHomePage() {
             Tu pornești de la idee. LudicON te ajută să o transformi într-o
             resursă educațională, pas cu pas.
           </p>
+
+          <div className="ts-hero-actions">
+            <Link to={QUICK_CREATE_PATH} className="ts-hero-cta">
+              Începe cu ideea ta
+              <ArrowRight size={16} aria-hidden />
+            </Link>
+            {featuredProject ? (
+              <Link
+                to={`/studio/${featuredProject.id}`}
+                className="ts-hero-continue"
+                onClick={() => setActiveProjectId(featuredProject.id)}
+              >
+                Continuă „{featuredProject.title}”
+                <ArrowRight size={14} aria-hidden />
+              </Link>
+            ) : null}
+          </div>
         </div>
 
         <p className="ts-hero-meta">
-          Profesorul are controlul · {projects.length}{" "}
+          <Sparkles size={12} aria-hidden />
+          Tu alegi direcția · {projects.length}{" "}
           {projects.length === 1 ? "proiect" : "proiecte"}
         </p>
       </section>

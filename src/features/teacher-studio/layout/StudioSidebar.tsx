@@ -1,3 +1,4 @@
+import { Sparkles } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { STUDIO_BRAND, STUDIO_NAV_GROUPS } from "../constants/navigation";
 import { useTeacherStudio } from "../context/TeacherStudioContext";
@@ -30,10 +31,15 @@ export function StudioSidebar({ onNavigate }: StudioSidebarProps) {
       ].join(" ")}
       aria-label="Navigare LudicON"
     >
-      <div className="ts-brand">
-        <p className="ts-brand-mark">{STUDIO_BRAND.name}</p>
-        <p className="ts-brand-meta">{STUDIO_BRAND.workspaceRo}</p>
-      </div>
+      <Link to="/" className="ts-brand" aria-label={STUDIO_BRAND.name}>
+        <span className="ts-brand-badge" aria-hidden>
+          <Sparkles size={16} strokeWidth={2.25} />
+        </span>
+        <span className="ts-brand-text">
+          <span className="ts-brand-name">{STUDIO_BRAND.name}</span>
+          <span className="ts-brand-meta">Atelierul profesorului</span>
+        </span>
+      </Link>
 
       <div className="ts-nav-scroll">
         {STUDIO_NAV_GROUPS.map((group) => (

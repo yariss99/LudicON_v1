@@ -45,29 +45,70 @@
   top: 0;
   height: 100vh;
   border-right: 1px solid var(--ts-line);
-  background: var(--ts-surface);
-  padding: 1.25rem 0.85rem;
+  background:
+    radial-gradient(
+      120% 55% at 0% 0%,
+      color-mix(in srgb, var(--lx-brand) 7%, transparent) 0%,
+      transparent 60%
+    ),
+    var(--ts-surface);
+  padding: 1rem 0.8rem 0.85rem;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
 .ts-brand {
-  padding: 0.35rem 0.65rem 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.55rem 0.9rem;
+  text-decoration: none;
+  color: inherit;
 }
 
-.ts-brand-mark {
+.ts-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 11px;
+  background: linear-gradient(
+    145deg,
+    var(--lx-brand) 0%,
+    color-mix(in srgb, var(--lx-brand) 72%, var(--lx-story)) 100%
+  );
+  color: #fff;
+  box-shadow: 0 4px 12px var(--lx-brand-ring);
+}
+
+.ts-brand-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ts-brand-name {
   font-family: var(--ts-font-display);
-  font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+  font-size: 1.28rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  color: var(--ts-ink);
 }
 
 .ts-brand-meta {
-  margin-top: 0.25rem;
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.03em;
   color: var(--ts-muted);
+}
+
+.ts-brand:focus-visible {
+  outline: 2px solid var(--lx-focus);
+  outline-offset: 3px;
+  border-radius: 12px;
 }
 
 .ts-nav-scroll {
@@ -79,9 +120,14 @@
   gap: 1.05rem;
 }
 
+.ts-nav-section + .ts-nav-section {
+  border-top: 1px solid color-mix(in srgb, var(--ts-line) 70%, transparent);
+  padding-top: 0.9rem;
+}
+
 .ts-nav-section-title {
   padding: 0 0.7rem;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.35rem;
   font-size: 0.625rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -144,10 +190,26 @@
   outline-offset: -2px;
 }
 
+.ts-nav-link {
+  position: relative;
+}
+
 .ts-nav-link.is-active {
   background: var(--ts-accent-soft);
   color: var(--ts-accent);
   font-weight: 600;
+}
+
+.ts-nav-link.is-active::before {
+  content: "";
+  position: absolute;
+  left: -0.8rem;
+  top: 50%;
+  width: 3px;
+  height: 1.15rem;
+  border-radius: 0 3px 3px 0;
+  background: var(--lx-brand);
+  transform: translateY(-50%);
 }
 
 .ts-nav-link.is-active > svg {
@@ -607,11 +669,16 @@
   border: 1px solid var(--ts-line);
   background:
     radial-gradient(
-      ellipse 60% 130% at 100% 0%,
-      color-mix(in srgb, var(--ts-accent) 9%, transparent) 0%,
+      ellipse 55% 120% at 100% 0%,
+      color-mix(in srgb, var(--lx-story) 10%, transparent) 0%,
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse 60% 130% at 0% 100%,
+      color-mix(in srgb, var(--lx-brand) 9%, transparent) 0%,
       transparent 60%
     ),
-    linear-gradient(180deg, var(--ts-accent-soft) 0%, var(--ts-surface) 70%);
+    linear-gradient(180deg, var(--ts-accent-soft) 0%, var(--ts-surface) 68%);
 }
 
 .ts-hero-kicker {
@@ -652,13 +719,80 @@
 
 .ts-hero-meta {
   flex: none;
-  padding: 0.25rem 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--ts-surface) 70%, transparent);
-  border: 1px solid var(--ts-line);
+  background: var(--ts-surface);
+  border: 1px solid color-mix(in srgb, var(--lx-brand) 20%, var(--ts-line));
   font-size: 0.6875rem;
   font-weight: 600;
-  color: var(--ts-muted);
+  color: var(--lx-brand);
+}
+
+.ts-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 1.05rem;
+}
+
+.ts-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.6rem;
+  padding: 0 1.15rem;
+  border-radius: 999px;
+  background: var(--lx-brand);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 6px 18px var(--lx-brand-ring);
+  transition: transform var(--lx-duration-base) var(--lx-ease),
+    background var(--lx-duration-base) var(--lx-ease);
+}
+
+.ts-hero-cta:hover {
+  background: var(--lx-brand-hover);
+  transform: translateY(-1px);
+}
+
+.ts-hero-cta:focus-visible {
+  outline: 2px solid var(--lx-focus);
+  outline-offset: 3px;
+}
+
+.ts-hero-continue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.6rem;
+  padding: 0 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--ts-line);
+  background: var(--ts-surface);
+  color: var(--ts-ink);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  max-width: 22rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ts-hero-continue:hover {
+  border-color: color-mix(in srgb, var(--lx-brand) 45%, var(--ts-line));
+  color: var(--lx-brand);
+}
+
+.ts-hero-continue:focus-visible {
+  outline: 2px solid var(--lx-focus);
+  outline-offset: 3px;
 }
 
 .ts-block {
@@ -714,26 +848,47 @@
 .ts-create-card {
   --ts-c: var(--ts-accent);
 
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
-  padding: 1.05rem 1.1rem 1.15rem;
-  border-radius: var(--ts-radius);
-  border: 1px solid var(--ts-line);
-  background: var(--ts-surface);
+  padding: 1.1rem 1.15rem 1.2rem;
+  border-radius: var(--lx-radius-lg);
+  border: 1px solid color-mix(in srgb, var(--ts-c) 18%, var(--ts-line));
+  background: linear-gradient(
+    170deg,
+    color-mix(in srgb, var(--ts-c) var(--lx-wash), var(--ts-surface)) 0%,
+    var(--ts-surface) 62%
+  );
   box-shadow: var(--ts-shadow);
   text-decoration: none;
   color: inherit;
   transition:
-    border-color 160ms ease,
-    box-shadow 160ms ease,
-    transform 160ms ease;
+    border-color var(--lx-duration-base) var(--lx-ease),
+    box-shadow var(--lx-duration-base) var(--lx-ease),
+    transform var(--lx-duration-base) var(--lx-ease);
+}
+
+/* A coloured spine gives each type its own identity at rest. */
+.ts-create-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--ts-c);
+  opacity: 0.85;
 }
 
 .ts-create-card:hover {
-  border-color: color-mix(in srgb, var(--ts-c) 40%, var(--ts-line));
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
-  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--ts-c) 55%, var(--ts-line));
+  background: linear-gradient(
+    170deg,
+    color-mix(in srgb, var(--ts-c) var(--lx-wash-strong), var(--ts-surface)) 0%,
+    var(--ts-surface) 70%
+  );
+  box-shadow: var(--lx-shadow-md);
+  transform: translateY(-3px);
 }
 
 .ts-create-card:focus-visible {
@@ -745,17 +900,18 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  margin-bottom: 0.45rem;
-  border-radius: 12px;
-  background: color-mix(in srgb, var(--ts-c) 12%, transparent);
-  color: var(--ts-c);
-  transition: transform 160ms ease;
+  width: 2.7rem;
+  height: 2.7rem;
+  margin-bottom: 0.55rem;
+  border-radius: 14px;
+  background: var(--ts-c);
+  color: #fff;
+  box-shadow: 0 5px 14px color-mix(in srgb, var(--ts-c) 30%, transparent);
+  transition: transform var(--lx-duration-base) var(--lx-ease);
 }
 
 .ts-create-card:hover .ts-create-icon {
-  transform: translateY(-1px) scale(1.04);
+  transform: translateY(-2px) scale(1.06) rotate(-3deg);
 }
 
 .ts-create-label {
@@ -763,9 +919,9 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 0.45rem;
-  font-size: 1rem;
+  font-size: 1.0625rem;
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
   color: var(--ts-ink);
 }
 
@@ -803,9 +959,15 @@
   border-style: dashed;
 }
 
+.ts-create-card.is-soon::before {
+  opacity: 0.28;
+}
+
 .ts-create-card.is-soon .ts-create-icon {
   background: var(--ts-surface);
   color: var(--ts-faint);
+  border: 1px dashed color-mix(in srgb, var(--ts-c) 35%, var(--ts-line));
+  box-shadow: none;
 }
 
 .ts-create-card.is-soon .ts-create-label {
@@ -1173,27 +1335,42 @@
 .ts-project-card {
   --ts-p: var(--ts-accent);
 
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex: 1;
   flex-direction: column;
   gap: 0.35rem;
   padding: 1rem 1.1rem;
-  border-radius: var(--ts-radius);
-  border: 1px solid var(--ts-line);
-  background: var(--ts-surface);
+  border-radius: var(--lx-radius-lg);
+  border: 1px solid color-mix(in srgb, var(--ts-p) 16%, var(--ts-line));
+  background: linear-gradient(
+    170deg,
+    color-mix(in srgb, var(--ts-p) 4%, var(--ts-surface)) 0%,
+    var(--ts-surface) 55%
+  );
   box-shadow: var(--ts-shadow);
   text-decoration: none;
   color: inherit;
   transition:
-    border-color 160ms ease,
-    box-shadow 160ms ease,
-    transform 160ms ease;
+    border-color var(--lx-duration-base) var(--lx-ease),
+    box-shadow var(--lx-duration-base) var(--lx-ease),
+    transform var(--lx-duration-base) var(--lx-ease);
+}
+
+.ts-project-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--ts-p);
+  opacity: 0.8;
 }
 
 .ts-project-card:hover {
-  border-color: color-mix(in srgb, var(--ts-p) 45%, var(--ts-line));
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
-  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--ts-p) 55%, var(--ts-line));
+  box-shadow: var(--lx-shadow-md);
+  transform: translateY(-3px);
 }
 
 .ts-project-card:focus-visible {
@@ -1214,10 +1391,11 @@
   align-items: center;
   justify-content: center;
   flex: none;
-  width: 2.1rem;
-  height: 2.1rem;
-  border-radius: 10px;
-  background: color-mix(in srgb, var(--ts-p) 12%, transparent);
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--ts-p) 14%, var(--ts-surface));
+  border: 1px solid color-mix(in srgb, var(--ts-p) 26%, transparent);
   color: var(--ts-p);
 }
 
@@ -1233,9 +1411,10 @@
 }
 
 .ts-project-title {
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 600;
-  line-height: 1.35;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
   color: var(--ts-ink);
 }
 
@@ -1253,8 +1432,8 @@
 
 .ts-project-tag {
   padding: 0.1rem 0.45rem;
-  border-radius: 999px;
-  background: var(--ts-bg);
+  border-radius: 6px;
+  background: var(--lx-surface-sunken);
   color: var(--ts-muted);
   font-size: 0.625rem;
   font-weight: 600;
