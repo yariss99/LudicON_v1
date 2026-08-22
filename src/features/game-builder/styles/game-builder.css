@@ -3,28 +3,28 @@
  * Scoped to .game-builder
  */
 .game-builder {
-  --gb-bg: #f4f7fb;
-  --gb-surface: #ffffff;
-  --gb-ink: #0f172a;
-  --gb-muted: #64748b;
-  --gb-faint: #94a3b8;
-  --gb-line: #e2e8f0;
-  --gb-accent: #1d4ed8;
-  --gb-accent-soft: #eff6ff;
-  --gb-ok: #047857;
-  --gb-ok-soft: #ecfdf5;
-  --gb-warn: #b45309;
-  --gb-warn-soft: #fffbeb;
-  --gb-danger: #b91c1c;
-  --gb-danger-soft: #fef2f2;
-  --gb-radius: 14px;
-  --gb-font-display: "Source Serif 4", "Iowan Old Style", Palatino, serif;
-  --gb-font-ui: "DM Sans", "Segoe UI", sans-serif;
+  --gb-bg: var(--lx-bg);
+  --gb-surface: var(--lx-surface);
+  --gb-ink: var(--lx-text);
+  --gb-muted: var(--lx-text-muted);
+  --gb-faint: var(--lx-text-subtle);
+  --gb-line: var(--lx-border);
+  --gb-accent: var(--lx-game);
+  --gb-accent-soft: var(--lx-game-soft);
+  --gb-ok: var(--lx-success);
+  --gb-ok-soft: var(--lx-success-soft);
+  --gb-warn: var(--lx-warning);
+  --gb-warn-soft: var(--lx-warning-soft);
+  --gb-danger: var(--lx-danger);
+  --gb-danger-soft: var(--lx-danger-soft);
+  --gb-radius: var(--lx-radius-md);
+  --gb-font-display: var(--lx-font-display);
+  --gb-font-ui: var(--lx-font-sans);
   --gb-sidebar: 220px;
   --gb-rail: 310px;
   min-height: 100vh;
   background:
-    radial-gradient(ellipse 70% 45% at 100% 0%, #dbeafe 0%, transparent 55%),
+    radial-gradient(ellipse 70% 45% at 100% 0%, color-mix(in srgb, var(--lx-game) 16%, transparent) 0%, transparent 55%),
     var(--gb-bg);
   color: var(--gb-ink);
   font-family: var(--gb-font-ui);
@@ -58,7 +58,7 @@
   font-weight: 500; cursor: pointer; text-decoration: none;
 }
 .gb-btn:hover { border-color: color-mix(in srgb, var(--gb-accent) 40%, var(--gb-line)); }
-.gb-btn-primary { background: var(--gb-accent); border-color: transparent; color: #fff; }
+.gb-btn-primary { background: var(--gb-accent); border-color: transparent; color: var(--lx-text-on-brand); }
 .gb-btn-ghost { background: transparent; }
 .gb-btn-danger { color: var(--gb-danger); }
 .gb-body {
@@ -136,7 +136,7 @@
   padding: .7rem .8rem; border: 1px solid var(--gb-line); border-radius: 12px; margin-bottom: .45rem;
 }
 .gb-sim {
-  border-radius: 18px; border: 1px solid var(--gb-line); background: linear-gradient(180deg,#eff6ff,#fff);
+  border-radius: 18px; border: 1px solid var(--gb-line); background: linear-gradient(180deg, var(--gb-accent-soft), var(--gb-surface));
   padding: 1.1rem 1.25rem;
 }
 .gb-sim-log { font-size: .8rem; color: var(--gb-muted); max-height: 8rem; overflow: auto; }

@@ -133,7 +133,7 @@
 .ab-btn-primary {
   background: var(--ab-accent);
   border-color: transparent;
-  color: #fff;
+  color: var(--lx-text-on-brand);
 }
 
 .ab-btn-ghost {

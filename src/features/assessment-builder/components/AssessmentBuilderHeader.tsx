@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import { ThemeToggle } from "../../../theme";
 import { formatRelativeTime } from "../../../utils/date";
 import { ASSESSMENT_KINDS } from "../constants";
 import { useAssessmentBuilder } from "../hooks/useAssessmentBuilder";
@@ -74,6 +75,8 @@ export function AssessmentBuilderHeader() {
         </div>
       </div>
       <div className="ab-actions">
+        <ThemeToggle compact />
+
         <div className="ab-action-group" role="group" aria-label="Panouri">
           <button
             type="button"

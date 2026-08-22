@@ -134,15 +134,11 @@ const DesignSystemShowcasePage = lazy(() =>
 
 function RouteFallback() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center bg-[#F7F8FA]"
-      role="status"
-      aria-label="Se încarcă"
-    >
+    <div className="lx-fallback" role="status" aria-label="Se încarcă">
       <div className="w-full max-w-md space-y-3 px-6">
-        <div className="h-4 w-32 animate-pulse rounded-full bg-slate-200" />
-        <div className="h-10 w-2/3 animate-pulse rounded-2xl bg-slate-200" />
-        <div className="h-40 animate-pulse rounded-3xl bg-slate-200/80" />
+        <div className="lx-fallback-bar h-4 w-32 animate-pulse" />
+        <div className="lx-fallback-bar h-10 w-2/3 animate-pulse" />
+        <div className="lx-fallback-block h-40 animate-pulse" />
       </div>
     </div>
   );

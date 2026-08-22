@@ -119,10 +119,10 @@ export function StudioProjectsPage() {
               onChange={(e) => setQuery(e.target.value)}
               aria-label="Caută proiecte"
             />
-            <label className="text-sm text-slate-500">
+            <label className="ts-sort-label">
               Sortare{" "}
               <select
-                className="ml-1 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm"
+                className="ts-select"
                 value={sort}
                 onChange={(e) => setSort(e.target.value as "updated" | "title")}
               >

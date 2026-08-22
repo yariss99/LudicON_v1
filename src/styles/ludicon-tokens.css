@@ -118,6 +118,74 @@
   --lx-duration-fast: 120ms;
   --lx-duration-base: 160ms;
   --lx-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Overlay for drawers / mobile nav */
+  --lx-overlay: rgba(15, 23, 42, 0.22);
+
+  color-scheme: light;
+}
+
+/**
+ * Dark mode — the same LudicON atelier, after sunset.
+ * Surfaces stay layered (canvas / card / raised), accents stay recognisable,
+ * and nothing falls back to pure black or inverted white.
+ */
+[data-theme="dark"] {
+  --lx-bg: #131720;
+  --lx-surface: #1b2130;
+  --lx-surface-raised: #242b3c;
+  --lx-surface-sunken: #10141c;
+  --lx-surface-hover: #2a3144;
+
+  --lx-text: #eef2f8;
+  --lx-text-muted: #a7b0c2;
+  --lx-text-subtle: #7d8799;
+  --lx-text-on-brand: #ffffff;
+
+  --lx-border: #2d3548;
+  --lx-border-strong: #3e4860;
+
+  --lx-brand: #6b93f0;
+  --lx-brand-hover: #8aa8f4;
+  --lx-brand-soft: #1e2b4a;
+  --lx-brand-ring: rgba(107, 147, 240, 0.34);
+
+  --lx-ai: #2dd4bf;
+  --lx-ai-hover: #5eead4;
+  --lx-ai-soft: #163533;
+
+  --lx-success: #34d399;
+  --lx-success-soft: #14352c;
+  --lx-warning: #fbbf24;
+  --lx-warning-soft: #3a2d12;
+  --lx-danger: #f87171;
+  --lx-danger-soft: #3a1b1f;
+
+  --lx-lesson: #6b93f0;
+  --lx-lesson-soft: #1e2b4a;
+  --lx-worksheet: #22d3ee;
+  --lx-worksheet-soft: #15353d;
+  --lx-assessment: #34d399;
+  --lx-assessment-soft: #14352c;
+  --lx-game: #fbbf24;
+  --lx-game-soft: #3a2d12;
+  --lx-story: #a78bfa;
+  --lx-story-soft: #2a2250;
+  --lx-presentation: #818cf8;
+  --lx-presentation-soft: #22264a;
+
+  --lx-wash: 10%;
+  --lx-wash-strong: 16%;
+
+  --lx-focus: #8aa8f4;
+
+  --lx-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --lx-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.38);
+  --lx-shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.45);
+
+  --lx-overlay: rgba(4, 6, 12, 0.58);
+
+  color-scheme: dark;
 }
 
 @media (prefers-reduced-motion: reduce) {

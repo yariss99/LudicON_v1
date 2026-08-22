@@ -49,7 +49,7 @@ export function StudioHeroArt() {
           width="66"
           height="84"
           rx="11"
-          fill="#fff"
+          fill="var(--lx-surface)"
           stroke="var(--lx-border-strong)"
         />
         <rect x="106" y="44" width="42" height="5" rx="2.5" fill="var(--lx-lesson)" opacity="0.55" />

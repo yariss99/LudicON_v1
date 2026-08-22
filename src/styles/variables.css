@@ -8,30 +8,30 @@
 :root {
   /* ===== BRAND COLORS ===== */
 
-  --primary: #2563eb;
-  --primary-dark: #1d4ed8;
-  --indigo: #4f46e5;
-  --purple: #7c3aed;
-  --emerald: #10b981;
-  --amber: #f59e0b;
+  --primary: var(--lx-brand);
+  --primary-dark: var(--lx-brand-hover);
+  --indigo: var(--lx-presentation);
+  --purple: var(--lx-story);
+  --emerald: var(--lx-assessment);
+  --amber: var(--lx-game);
 
-  --background: #ffffff;
-  --surface: #ffffff;
+  --background: var(--lx-bg);
+  --surface: var(--lx-surface);
 
-  --text: #0f172a;
-  --text-light: #64748b;
-  --text-muted: #94a3b8;
+  --text: var(--lx-text);
+  --text-light: var(--lx-text-muted);
+  --text-muted: var(--lx-text-subtle);
 
-  --border: rgba(15, 23, 42, 0.06);
+  --border: var(--lx-border);
 
-  --success: #10b981;
-  --warning: #f59e0b;
-  --danger: #ef4444;
+  --success: var(--lx-success);
+  --warning: var(--lx-warning);
+  --danger: var(--lx-danger);
 
   /* ===== RADIUS ===== */
   /* ===== SHADOW ===== */
-  --shadow-card: 0 8px 32px rgba(15, 23, 42, 0.06);
-  --shadow-header: 0 4px 24px rgba(15, 23, 42, 0.06);
+  --shadow-card: var(--lx-shadow-md);
+  --shadow-header: var(--lx-shadow-sm);
 
   /* ===== SPACING ===== */
   /* ===== TRANSITIONS ===== */

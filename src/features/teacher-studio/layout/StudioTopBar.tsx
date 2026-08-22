@@ -1,6 +1,7 @@
 import { Bell, PanelLeft, PanelRight, Search, Settings, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { ThemeToggle } from "../../../theme";
 import { useTeacherStudio } from "../context/TeacherStudioContext";
 
 export function StudioTopBar() {
@@ -106,6 +107,8 @@ export function StudioTopBar() {
             <span className="ts-badge">{unreadNotifications}</span>
           ) : null}
         </Link>
+
+        <ThemeToggle />
 
         <Link
           to="/settings"

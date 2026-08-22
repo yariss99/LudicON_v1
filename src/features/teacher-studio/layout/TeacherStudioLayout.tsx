@@ -16,7 +16,7 @@ function StudioShell() {
       {mobileNavOpen ? (
         <button
           type="button"
-          className="fixed inset-0 z-40 bg-slate-900/20 lg:hidden"
+          className="ts-nav-backdrop lg:hidden"
           aria-label="Închide meniul"
           onClick={() => setMobileNavOpen(false)}
         />
