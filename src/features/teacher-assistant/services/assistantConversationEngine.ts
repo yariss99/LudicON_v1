@@ -127,7 +127,7 @@ function buildResponseBody(input: {
     workflow_guide:
       "Te ghidez pe fluxul educațional (planificare, predare, evaluare, reflecție, portofoliu).",
     general_help:
-      "Spune-mi ce vrei să creezi sau să îmbunătățești — lucrez doar în contextul tău PRIMA.",
+      "Spune-mi cu ce parte a proiectului vrei să te ajut — tu rămâi autorul, eu propun variante.",
   };
 
   return [

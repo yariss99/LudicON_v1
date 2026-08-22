@@ -27,7 +27,7 @@ export function FloatingAssistant() {
   return (
     <div className="teacher-assistant">
       {floatingOpen ? (
-        <div className="ta-float" role="dialog" aria-label="Asistent flotant PRIMA">
+        <div className="ta-float" role="dialog" aria-label="LudicON Copilot">
           <AssistantPanel
             compact
             onClose={() => setFloatingOpen(false)}
@@ -37,12 +37,12 @@ export function FloatingAssistant() {
       <button
         type="button"
         className="ta-fab"
-        aria-label="Deschide asistentul PRIMA"
+        aria-label={floatingOpen ? "Închide Copilotul" : "Deschide Copilotul"}
         aria-expanded={floatingOpen}
         title={
           context.projectTitle
-            ? `PRIMA · ${context.projectTitle}`
-            : "PRIMA Co-pilot"
+            ? `Copilot · ${context.projectTitle}`
+            : "LudicON Copilot"
         }
         onClick={toggleFloating}
       >

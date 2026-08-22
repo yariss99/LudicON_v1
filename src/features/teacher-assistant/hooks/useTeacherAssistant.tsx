@@ -9,7 +9,6 @@ import {
 } from "react";
 import { useLocation } from "react-router-dom";
 import { useProjects } from "../../../context/ProjectContext";
-import { EXAMPLE_PROMPTS } from "../constants";
 import {
   runAssistantTurn,
   summarizeConversation,
@@ -17,6 +16,10 @@ import {
 } from "../services/assistantConversationEngine";
 import { buildAssistantContext } from "../services/assistantContextManager";
 import { buildProactiveHints } from "../services/assistantProactive";
+import {
+  buildContextualSuggestions,
+  type AssistantSuggestionGroup,
+} from "../services/assistantSuggestions";
 import { assistantRepository } from "../services/assistantRepository";
 import type {
   AssistantContextPackage,
@@ -45,6 +48,7 @@ type TeacherAssistantContextValue = {
   readonly lastPrompt: OrchestrationPromptPackage | null;
   readonly sending: boolean;
   readonly examplePrompts: readonly string[];
+  readonly suggestionGroups: readonly AssistantSuggestionGroup[];
   readonly sendMessage: (text: string) => void;
   readonly newConversation: (scope?: "global" | "project" | "lesson") => void;
   readonly selectConversation: (id: string) => void;
@@ -136,6 +140,16 @@ export function TeacherAssistantProvider({
     return buildProactiveHints({ context, project });
   }, [context, getProject]);
 
+  const suggestionGroups = useMemo(
+    () => buildContextualSuggestions(context),
+    [context],
+  );
+
+  const examplePrompts = useMemo(
+    () => suggestionGroups.flatMap((group) => group.items.map((item) => item.prompt)),
+    [suggestionGroups],
+  );
+
   useEffect(() => {
     if (!activeId) {
       const existing = assistantRepository.listConversations()[0];
@@ -179,7 +193,8 @@ export function TeacherAssistantProvider({
     memory,
     lastPrompt,
     sending,
-    examplePrompts: EXAMPLE_PROMPTS,
+    examplePrompts,
+    suggestionGroups,
     sendMessage: (text) => {
       const utterance = text.trim();
       if (!utterance || sending) return;

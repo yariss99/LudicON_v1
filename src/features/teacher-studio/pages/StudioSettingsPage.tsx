@@ -1,3 +1,4 @@
+import { ThemeToggle } from "../../../theme";
 import { useTeacherStudio } from "../context/TeacherStudioContext";
 
 export function StudioSettingsPage() {
@@ -55,6 +56,22 @@ export function StudioSettingsPage() {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className="ts-section ts-list" aria-labelledby="appearance-heading">
+        <h2 id="appearance-heading" className="ts-section-title">
+          Aspect
+        </h2>
+        <div className="ts-row">
+          <div>
+            <div className="ts-row-title">Luminos sau întunecat</div>
+            <div className="ts-row-meta">
+              Aceeași identitate LudicON, ziua sau seara. Preferința rămâne după
+              reîmprospătare.
+            </div>
+          </div>
+        </div>
+        <ThemeToggle variant="panel" />
       </section>
 
       <section className="ts-section ts-list" aria-labelledby="a11y-heading">

@@ -3,6 +3,9 @@
  * Project-first: every resource belongs to a project.
  */
 
+import type { LucideIcon } from "lucide-react";
+import type { ProjectColorId, ProjectIconId } from "../../types/project";
+
 export type StudioAreaId =
   | "home"
   | "projects"
@@ -12,29 +15,51 @@ export type StudioAreaId =
   | "notifications"
   | "settings";
 
-export type QuickActionId =
-  | "create-lesson"
-  | "create-worksheet"
-  | "create-assessment"
-  | "create-story"
-  | "create-presentation"
-  | "create-game"
-  | "open-project";
+export type CreateOptionId =
+  | "lesson"
+  | "worksheet"
+  | "game"
+  | "story"
+  | "assessment"
+  | "presentation";
 
-export type QuickAction = {
-  readonly id: QuickActionId;
+export type CreateOption = {
+  readonly id: CreateOptionId;
   readonly label: string;
+  /** Personality line — the expressive invitation under the type label. */
+  readonly tagline: string;
   readonly description: string;
-  readonly href: string;
-  readonly intent?: string;
-  readonly shortcut?: string;
+  /** Domain accent from the LudicON foundation, e.g. `--lx-lesson`. */
+  readonly accentToken: string;
+  /** Short reassurance shown once this type is chosen. */
+  readonly hint: string;
+  /** Real builder route; needs `/:projectId` appended. Null when none exists. */
+  readonly builderPath: string | null;
+  /** An existing alternative flow for this type, if the repository has one. */
+  readonly altPath: string | null;
+  readonly altLabel: string | null;
+  /** Primary action copy — says what will actually happen. */
+  readonly actionLabel: string;
+  /** Defaults applied to the created project, from the real project enums. */
+  readonly color: ProjectColorId;
+  readonly icon: ProjectIconId;
 };
 
 export type StudioNavItem = {
-  readonly id: StudioAreaId;
+  readonly id: string;
   readonly label: string;
-  readonly href: string;
+  readonly icon: LucideIcon;
+  /** Real destination. Omitted when the area does not exist yet. */
+  readonly href?: string;
   readonly shortcut?: string;
+  /** True when there is genuinely nothing to open yet. */
+  readonly soon?: boolean;
+};
+
+export type StudioNavGroup = {
+  readonly id: string;
+  readonly label: string;
+  readonly items: readonly StudioNavItem[];
 };
 
 export type LibraryScope =

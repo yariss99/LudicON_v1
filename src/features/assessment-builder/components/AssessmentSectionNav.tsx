@@ -1,34 +1,112 @@
-import { ASSESSMENT_SECTIONS } from "../constants";
+import { Check } from "lucide-react";
+import { ASSESSMENT_SECTION_GROUPS, ASSESSMENT_SECTIONS } from "../constants";
 import { useAssessmentBuilder } from "../hooks/useAssessmentBuilder";
+import { buildWorkflowStages } from "../services/assessmentWorkflow";
+import type { AssessmentDocument, AssessmentSectionId } from "../types";
+
+const SECTION_LABELS = new Map<AssessmentSectionId, string>(
+  ASSESSMENT_SECTIONS.map((section) => [section.id, section.label]),
+);
+
+/** Count of already-filled content, so the nav shows what still needs work. */
+function countFor(
+  sectionId: AssessmentSectionId,
+  assessment: AssessmentDocument,
+): number | null {
+  switch (sectionId) {
+    case "objectives":
+      return assessment.objectives.length;
+    case "competencies":
+      return assessment.competencies.length;
+    case "criteria":
+      return assessment.criteria.length;
+    case "questions":
+      return assessment.groups.reduce((sum, g) => sum + g.questions.length, 0);
+    case "answer_key":
+      return assessment.groups.reduce(
+        (sum, g) => sum + g.questions.filter((q) => q.answerKey?.trim()).length,
+        0,
+      );
+    case "rubrics":
+      return assessment.rubrics.length;
+    default:
+      return null;
+  }
+}
 
 export function AssessmentSectionNav() {
-  const { sectionId, setSectionId, setPanel } = useAssessmentBuilder();
+  const { assessment, sectionId, setSectionId, setPanel } =
+    useAssessmentBuilder();
+  const stages = buildWorkflowStages(assessment, sectionId);
 
   return (
     <aside className="ab-sidebar" aria-label="Secțiuni evaluare">
-      <div className="ab-kicker" style={{ marginBottom: "0.65rem" }}>
-        Structură
+      <div className="ab-kicker" style={{ marginBottom: "0.85rem" }}>
+        Structura evaluării
       </div>
-      <nav className="ab-nav">
-        {ASSESSMENT_SECTIONS.map((section) => (
-          <button
-            key={section.id}
-            type="button"
-            className={[
-              "ab-nav-btn",
-              sectionId === section.id ? "is-active" : "",
-            ].join(" ")}
-            onClick={() => {
-              setSectionId(section.id);
-              if (section.id === "analytics") setPanel("analytics");
-              else if (section.id === "export") setPanel("export");
-              else setPanel("editor");
-            }}
+
+      {ASSESSMENT_SECTION_GROUPS.map((group, index) => {
+        const stage = stages[index];
+        return (
+          <nav
+            key={group.id}
+            className="ab-nav-group"
+            aria-labelledby={`ab-nav-${group.id}`}
           >
-            {section.label}
-          </button>
-        ))}
-      </nav>
+            <div
+              id={`ab-nav-${group.id}`}
+              className={[
+                "ab-nav-group-title",
+                stage?.isCurrent ? "is-current" : "",
+                stage?.status === "done" ? "is-done" : "",
+              ].join(" ")}
+            >
+              <span className="ab-nav-group-step" aria-hidden>
+                {stage?.status === "done" ? (
+                  <Check size={11} strokeWidth={3} />
+                ) : (
+                  index + 1
+                )}
+              </span>
+              {group.label}
+            </div>
+            <div className="ab-nav">
+              {group.sectionIds.map((id) => {
+                const count = countFor(id, assessment);
+                return (
+                  <button
+                    key={id}
+                    type="button"
+                    className={[
+                      "ab-nav-btn",
+                      sectionId === id ? "is-active" : "",
+                    ].join(" ")}
+                    aria-current={sectionId === id ? "true" : undefined}
+                    onClick={() => {
+                      setSectionId(id);
+                      if (id === "analytics") setPanel("analytics");
+                      else if (id === "export") setPanel("export");
+                      else setPanel("editor");
+                    }}
+                  >
+                    <span>{SECTION_LABELS.get(id) ?? id}</span>
+                    {count !== null ? (
+                      <span
+                        className={[
+                          "ab-nav-count",
+                          count === 0 ? "is-empty" : "",
+                        ].join(" ")}
+                      >
+                        {count}
+                      </span>
+                    ) : null}
+                  </button>
+                );
+              })}
+            </div>
+          </nav>
+        );
+      })}
     </aside>
   );
 }
