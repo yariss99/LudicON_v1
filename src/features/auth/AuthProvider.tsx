@@ -48,9 +48,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setStatus("anonymous");
   }, []);
 
+  const requestPasswordRecovery = useCallback(async (email: string) => {
+    return provider.requestPasswordRecovery(email);
+  }, []);
+
   const value = useMemo(
-    () => ({ status, user, signIn, signUp, signOut }),
-    [status, user, signIn, signUp, signOut],
+    () => ({ status, user, signIn, signUp, signOut, requestPasswordRecovery }),
+    [status, user, signIn, signUp, signOut, requestPasswordRecovery],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

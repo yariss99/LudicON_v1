@@ -32,10 +32,22 @@ export class AuthError extends Error {
   }
 }
 
+/**
+ * Recovery never reveals whether the address exists.
+ * `channel` tells the UI whether a real mail provider ran.
+ */
+export type PasswordRecoveryChannel = "email" | "unavailable";
+
+export type PasswordRecoveryResult = {
+  readonly accepted: true;
+  readonly channel: PasswordRecoveryChannel;
+};
+
 /** Isolated port — swap the adapter without touching UI or routes. */
 export type AuthProviderPort = {
   restoreSession(): Promise<AuthUser | null>;
   signIn(email: string, password: string): Promise<AuthUser>;
   signUp(input: SignUpInput): Promise<AuthUser>;
   signOut(): Promise<void>;
+  requestPasswordRecovery(email: string): Promise<PasswordRecoveryResult>;
 };

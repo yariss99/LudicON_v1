@@ -112,5 +112,14 @@ export function createLocalAuthProvider(): AuthProviderPort {
     async signOut() {
       clearSession();
     },
+
+    /**
+     * Integration point for a hosted provider's reset-email API.
+     * The local adapter accepts any well-formed address and does not
+     * look up identities, send mail, or mint reset tokens.
+     */
+    async requestPasswordRecovery(_email) {
+      return { accepted: true as const, channel: "unavailable" as const };
+    },
   };
 }

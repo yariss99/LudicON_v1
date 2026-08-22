@@ -7,6 +7,7 @@ import {
   AuthProvider,
   AuthReady,
   GuestOnly,
+  ForgotPasswordPage,
   LoginPage,
   RegisterPage,
   RequireAuth,
@@ -174,6 +175,7 @@ function App() {
               <Route path="/welcome" element={<WelcomePage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
+              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             </Route>
 
             <Route element={<RequireAuth />}>

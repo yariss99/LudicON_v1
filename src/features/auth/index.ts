@@ -5,4 +5,5 @@ export { GuestOnly, RequireAuth } from "./components/AuthGuards";
 export { WelcomePage } from "./pages/WelcomePage";
 export { LoginPage } from "./pages/LoginPage";
 export { RegisterPage } from "./pages/RegisterPage";
+export { ForgotPasswordPage } from "./pages/ForgotPasswordPage";
 export type { AuthUser, AuthStatus } from "./types";

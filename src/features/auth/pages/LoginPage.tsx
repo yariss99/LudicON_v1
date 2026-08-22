@@ -79,6 +79,12 @@ export function LoginPage() {
           onChange={setPassword}
         />
 
+        <p className="lx-auth-forgot">
+          <Link to={`/forgot-password${location.search}`}>
+            Ai uitat parola?
+          </Link>
+        </p>
+
         {formError ? (
           <p id={formErrorId} className="lx-auth-banner" role="alert">
             {formError}

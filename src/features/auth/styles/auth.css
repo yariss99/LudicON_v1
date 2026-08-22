@@ -412,6 +412,44 @@
   border-color: var(--lx-brand);
 }
 
+.lx-auth-forgot {
+  margin: -0.25rem 0 0.15rem;
+  text-align: right;
+}
+
+.lx-auth-forgot a {
+  color: var(--lx-brand);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.lx-auth-forgot a:hover {
+  text-decoration: underline;
+}
+
+.lx-auth-forgot a:focus-visible {
+  outline: 2px solid var(--lx-focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.lx-auth-success-note {
+  margin-top: 0.85rem;
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.lx-auth-panel-title:focus {
+  outline: none;
+}
+
+.lx-auth-panel-title:focus-visible {
+  outline: 2px solid var(--lx-auth-on);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
 .lx-auth-switch {
   margin: 1.15rem 0 0;
   font-size: 0.875rem;
