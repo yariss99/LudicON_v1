@@ -158,7 +158,7 @@ export const CREATE_OPTIONS: readonly CreateOption[] = [
     id: "worksheet",
     accentToken: "--lx-worksheet",
     label: "Fișă de lucru",
-    description: "Exersează, consolidează, diferențiază.",
+    description: "Exerciții și consolidare — în pregătire.",
     hint: "Va veni în curând în atelier.",
     builderPath: null,
     altPath: null,

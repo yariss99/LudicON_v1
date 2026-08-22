@@ -118,7 +118,7 @@ export function StudioSidebar({ onNavigate }: StudioSidebarProps) {
         ))}
       </div>
 
-      <p className="ts-sidebar-foot">Tu creezi. PRIMA te ajută.</p>
+      <p className="ts-sidebar-foot">Tu conduci. Copilotul te ajută.</p>
     </aside>
   );
 }

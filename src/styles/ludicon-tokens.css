@@ -54,8 +54,8 @@
   /* Creation domain accents — harmonious, readable on light surfaces */
   --lx-lesson: #1d4ed8;
   --lx-lesson-soft: #eff5ff;
-  --lx-worksheet: #0891b2;
-  --lx-worksheet-soft: #ecfeff;
+  --lx-worksheet: #64748b;
+  --lx-worksheet-soft: #f1f5f9;
   --lx-assessment: #047857;
   --lx-assessment-soft: #ecfdf5;
   --lx-game: #b45309;
@@ -163,8 +163,8 @@
 
   --lx-lesson: #6b93f0;
   --lx-lesson-soft: #1e2b4a;
-  --lx-worksheet: #22d3ee;
-  --lx-worksheet-soft: #15353d;
+  --lx-worksheet: #94a3b8;
+  --lx-worksheet-soft: #1c2230;
   --lx-assessment: #34d399;
   --lx-assessment-soft: #14352c;
   --lx-game: #fbbf24;

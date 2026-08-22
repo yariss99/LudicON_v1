@@ -55,7 +55,7 @@ export function ProjectCard({
             <Icon size={18} strokeWidth={1.75} />
           </span>
           {featured ? (
-            <span className="ts-project-flag">Continuă de unde ai rămas</span>
+            <span className="ts-project-flag">Ultimul proiect</span>
           ) : null}
         </span>
 

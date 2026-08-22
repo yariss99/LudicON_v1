@@ -38,7 +38,7 @@ type TeacherStudioContextValue = {
 };
 
 /** Keep in sync with the `.ts-assistant` overlay breakpoint in the stylesheet. */
-const NARROW_QUERY = "(max-width: 1100px)";
+const NARROW_QUERY = "(max-width: 1279px)";
 
 const TeacherStudioContext = createContext<TeacherStudioContextValue | null>(
   null,
@@ -50,11 +50,9 @@ export function TeacherStudioProvider({ children }: { children: ReactNode }) {
     const first = projects.find((p) => !p.archived);
     return first?.id ?? null;
   });
-  // Mirrors the stylesheet breakpoint where .ts-assistant becomes a fixed
-  // overlay. Below it the panel must not be open unless the teacher asks.
-  const [assistantOpen, setAssistantOpen] = useState(
-    () => typeof window === "undefined" || !window.matchMedia(NARROW_QUERY).matches,
-  );
+  // Copilot stays off until the teacher asks. Below the overlay breakpoint
+  // it must never open on its own and cover the workspace.
+  const [assistantOpen, setAssistantOpen] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [readIds, setReadIds] = useState<Set<string>>(() => new Set());

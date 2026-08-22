@@ -74,14 +74,13 @@ export function StudioHomePage() {
             Pornește de la ideea ta și transform-o într-o experiență de
             învățare.
           </p>
-          <p className="ts-hero-note">
-            <Sparkles size={13} aria-hidden />
-            Tu conduci procesul. LudicON Copilot te sprijină când ai nevoie.
+          <p className="ts-hero-principle">
+            Tu alegi direcția. LudiCON te sprijină pe parcurs.
           </p>
 
           <div className="ts-hero-actions">
             <Link to={QUICK_CREATE_PATH} className="ts-hero-cta">
-              Începe cu ideea ta
+              Începe cu o idee
               <ArrowRight size={16} aria-hidden />
             </Link>
             {featuredProject ? (
@@ -113,7 +112,7 @@ export function StudioHomePage() {
               Ce vrei să creezi?
             </h2>
             <p className="ts-block-lead">
-              Tu alegi direcția. AI-ul te sprijină pe parcurs.
+              Alege tipul de experiență. Tu construiești, pas cu pas.
             </p>
           </div>
         </div>
@@ -214,11 +213,10 @@ export function StudioHomePage() {
             </span>
             <div>
               <h2 id="copilot-heading" className="ts-block-title">
-                Lucrăm împreună
+                Ajutor când ai nevoie
               </h2>
               <p className="ts-block-lead">
-                Ai o idee? Începe cu ea, iar LudicON te poate ajuta să o
-                dezvolți. Tu revizuiești și decizi forma finală.
+                Copilotul sugerează și accelerează. Tu revizuiești și decizi.
               </p>
             </div>
           </div>
@@ -274,7 +272,8 @@ function CreateCard({ option }: { option: CreateOption }) {
       </span>
       <span className="ts-create-desc">{option.description}</span>
       <span className="ts-create-meta">
-        {href ? "Creezi un proiect nou" : "Încă nu are un atelier dedicat"}
+        {href ? option.actionLabel : "Disponibil în curând"}
+        {href ? <ArrowRight size={13} aria-hidden /> : null}
       </span>
     </>
   );
