@@ -1,0 +1,243 @@
+/**
+ * LudicON — visual identity foundation.
+ *
+ * Semantic tokens for the whole platform. Feature stylesheets (`--ts-*` for
+ * Teacher Studio, `--ab-*` for the Assessment Builder) map their local names
+ * onto these, so the identity is defined once here and inherited everywhere.
+ *
+ * Rules
+ * - Components reference `--lx-*` or their feature alias, never raw hex.
+ * - Brand blue marks LudicON itself and the teacher's primary action.
+ * - Teal is reserved for AI assistance so it never reads as the brand.
+ * - Domain accents identify a resource type on creation surfaces; a project's
+ *   own colour comes from the project model instead (see features/projects).
+ * - Colour never carries meaning alone — always pair it with text or an icon.
+ */
+
+:root {
+  /* Surfaces — level 1 app background through level 4 active element */
+  --lx-bg: #f7f8fa;
+  --lx-surface: #ffffff;
+  --lx-surface-raised: #ffffff;
+  --lx-surface-sunken: #f1f4f8;
+  --lx-surface-hover: #f4f6fa;
+
+  /* Text */
+  --lx-text: #0f172a;
+  --lx-text-muted: #5a6579;
+  --lx-text-subtle: #8a95a8;
+  --lx-text-on-brand: #ffffff;
+
+  /* Borders */
+  --lx-border: #e5e9f0;
+  --lx-border-strong: #cfd6e2;
+
+  /* Brand — LudicON identity and the teacher's deliberate action */
+  --lx-brand: #1d4ed8;
+  --lx-brand-hover: #1a41b4;
+  --lx-brand-soft: #eff5ff;
+  --lx-brand-ring: rgba(29, 78, 216, 0.28);
+
+  /* AI / Copilot — recognisable assistance, deliberately not the brand */
+  --lx-ai: #0f766e;
+  --lx-ai-hover: #0c6058;
+  --lx-ai-soft: #f0fdfa;
+
+  /* Status */
+  --lx-success: #047857;
+  --lx-success-soft: #ecfdf5;
+  --lx-warning: #b45309;
+  --lx-warning-soft: #fffbeb;
+  --lx-danger: #b91c1c;
+  --lx-danger-soft: #fef2f2;
+
+  /* Creation domain accents — harmonious, readable on light surfaces */
+  --lx-lesson: #1d4ed8;
+  --lx-lesson-soft: #eff5ff;
+  --lx-worksheet: #0891b2;
+  --lx-worksheet-soft: #ecfeff;
+  --lx-assessment: #047857;
+  --lx-assessment-soft: #ecfdf5;
+  --lx-game: #b45309;
+  --lx-game-soft: #fffbeb;
+  --lx-story: #6d28d9;
+  --lx-story-soft: #f5f3ff;
+  --lx-presentation: #4338ca;
+  --lx-presentation-soft: #eef2ff;
+
+  /* Surface washes — how much accent bleeds into a card at rest / on hover */
+  --lx-wash: 5%;
+  --lx-wash-strong: 10%;
+
+  /* Focus — one visible treatment across the platform */
+  --lx-focus: #1d4ed8;
+
+  /* Elevation — restrained, paper-like */
+  --lx-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --lx-shadow-md: 0 6px 20px rgba(15, 23, 42, 0.06);
+  --lx-shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.09);
+
+  /* Radii */
+  --lx-radius-sm: 10px;
+  --lx-radius-md: 14px;
+  --lx-radius-lg: 18px;
+  --lx-radius-xl: 22px;
+  --lx-radius-full: 999px;
+
+  /* Spacing rhythm — 4px base */
+  --lx-space-1: 4px;
+  --lx-space-2: 8px;
+  --lx-space-3: 12px;
+  --lx-space-4: 16px;
+  --lx-space-5: 24px;
+  --lx-space-6: 32px;
+  --lx-space-7: 48px;
+  --lx-space-8: 64px;
+
+  /* Typography — both faces cover Romanian diacritics. Serif is reserved for
+     the display and page-title tiers; everything else is sans. */
+  --lx-font-sans: "DM Sans", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --lx-font-display: "Source Serif 4", "Iowan Old Style", Palatino, serif;
+
+  --lx-text-display: clamp(1.9rem, 3vw, 2.4rem);
+  --lx-text-title: clamp(1.6rem, 2.4vw, 2rem);
+  --lx-text-section: 1.125rem;
+  --lx-text-card: 1rem;
+  --lx-text-body: 0.9375rem;
+  --lx-text-meta: 0.75rem;
+  --lx-text-micro: 0.6875rem;
+
+  --lx-leading-tight: 1.15;
+  --lx-leading-snug: 1.35;
+  --lx-leading-body: 1.55;
+
+  --lx-tracking-tight: -0.02em;
+  --lx-tracking-micro: 0.12em;
+
+  /* Motion */
+  --lx-duration-fast: 120ms;
+  --lx-duration-base: 160ms;
+  --lx-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Overlay for drawers / mobile nav */
+  --lx-overlay: rgba(15, 23, 42, 0.22);
+
+  color-scheme: light;
+}
+
+/**
+ * Dark mode — the same LudicON atelier, after sunset.
+ * Surfaces stay layered (canvas / card / raised), accents stay recognisable,
+ * and nothing falls back to pure black or inverted white.
+ */
+[data-theme="dark"] {
+  --lx-bg: #131720;
+  --lx-surface: #1b2130;
+  --lx-surface-raised: #242b3c;
+  --lx-surface-sunken: #10141c;
+  --lx-surface-hover: #2a3144;
+
+  --lx-text: #eef2f8;
+  --lx-text-muted: #a7b0c2;
+  --lx-text-subtle: #7d8799;
+  --lx-text-on-brand: #ffffff;
+
+  --lx-border: #2d3548;
+  --lx-border-strong: #3e4860;
+
+  --lx-brand: #6b93f0;
+  --lx-brand-hover: #8aa8f4;
+  --lx-brand-soft: #1e2b4a;
+  --lx-brand-ring: rgba(107, 147, 240, 0.34);
+
+  --lx-ai: #2dd4bf;
+  --lx-ai-hover: #5eead4;
+  --lx-ai-soft: #163533;
+
+  --lx-success: #34d399;
+  --lx-success-soft: #14352c;
+  --lx-warning: #fbbf24;
+  --lx-warning-soft: #3a2d12;
+  --lx-danger: #f87171;
+  --lx-danger-soft: #3a1b1f;
+
+  --lx-lesson: #6b93f0;
+  --lx-lesson-soft: #1e2b4a;
+  --lx-worksheet: #22d3ee;
+  --lx-worksheet-soft: #15353d;
+  --lx-assessment: #34d399;
+  --lx-assessment-soft: #14352c;
+  --lx-game: #fbbf24;
+  --lx-game-soft: #3a2d12;
+  --lx-story: #a78bfa;
+  --lx-story-soft: #2a2250;
+  --lx-presentation: #818cf8;
+  --lx-presentation-soft: #22264a;
+
+  --lx-wash: 10%;
+  --lx-wash-strong: 16%;
+
+  --lx-focus: #8aa8f4;
+
+  --lx-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --lx-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.38);
+  --lx-shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.45);
+
+  --lx-overlay: rgba(4, 6, 12, 0.58);
+
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --lx-duration-fast: 1ms;
+    --lx-duration-base: 1ms;
+  }
+}
+
+/* Shared status badges. Only statuses that exist in the domain model. */
+.lx-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--lx-radius-full);
+  border: 1px solid transparent;
+  background: var(--lx-surface-sunken);
+  color: var(--lx-text-muted);
+  font-size: var(--lx-text-micro);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.lx-badge-draft {
+  background: var(--lx-surface-sunken);
+  color: var(--lx-text-muted);
+}
+
+.lx-badge-published {
+  background: var(--lx-success-soft);
+  color: var(--lx-success);
+}
+
+.lx-badge-validated {
+  background: var(--lx-brand-soft);
+  color: var(--lx-brand);
+}
+
+.lx-badge-archived {
+  background: var(--lx-surface-sunken);
+  color: var(--lx-text-subtle);
+}
+
+.lx-badge-ai {
+  background: var(--lx-ai-soft);
+  color: var(--lx-ai);
+}
+
+.lx-badge-soon {
+  background: var(--lx-surface);
+  border-color: var(--lx-border);
+  color: var(--lx-text-subtle);
+}

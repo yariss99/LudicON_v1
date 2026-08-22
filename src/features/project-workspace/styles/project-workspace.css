@@ -4,28 +4,27 @@
  */
 
 .project-workspace {
-  --pw-bg: #f7f8fa;
-  --pw-surface: #ffffff;
-  --pw-ink: #0f172a;
-  --pw-muted: #64748b;
-  --pw-faint: #94a3b8;
-  --pw-line: #e8ebf0;
-  --pw-accent: #1d4ed8;
-  --pw-accent-soft: #eff6ff;
-  --pw-ok: #047857;
-  --pw-ok-soft: #ecfdf5;
-  --pw-warn: #b45309;
-  --pw-warn-soft: #fffbeb;
-  --pw-radius: 16px;
-  --pw-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
-  --pw-font-display: "Source Serif 4", "Iowan Old Style", "Palatino Linotype",
-    Palatino, serif;
-  --pw-font-ui: "DM Sans", "Segoe UI", sans-serif;
+  --pw-bg: var(--lx-bg);
+  --pw-surface: var(--lx-surface);
+  --pw-ink: var(--lx-text);
+  --pw-muted: var(--lx-text-muted);
+  --pw-faint: var(--lx-text-subtle);
+  --pw-line: var(--lx-border);
+  --pw-accent: var(--lx-brand);
+  --pw-accent-soft: var(--lx-brand-soft);
+  --pw-ok: var(--lx-success);
+  --pw-ok-soft: var(--lx-success-soft);
+  --pw-warn: var(--lx-warning);
+  --pw-warn-soft: var(--lx-warning-soft);
+  --pw-radius: var(--lx-radius-lg);
+  --pw-shadow: var(--lx-shadow-sm);
+  --pw-font-display: var(--lx-font-display);
+  --pw-font-ui: var(--lx-font-sans);
 
   min-height: 100vh;
   background:
-    radial-gradient(ellipse 80% 50% at 10% -10%, #e8eef8 0%, transparent 55%),
-    radial-gradient(ellipse 60% 40% at 100% 0%, #f0f4f8 0%, transparent 45%),
+    radial-gradient(ellipse 80% 50% at 10% -10%, color-mix(in srgb, var(--lx-brand) 14%, transparent) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 40% at 100% 0%, color-mix(in srgb, var(--lx-ai) 10%, transparent) 0%, transparent 45%),
     var(--pw-bg);
   color: var(--pw-ink);
   font-family: var(--pw-font-ui);
@@ -129,7 +128,7 @@
 .pw-btn-primary {
   background: var(--pw-accent);
   border-color: transparent;
-  color: #fff;
+  color: var(--lx-text-on-brand);
 }
 
 .pw-btn-primary:hover {

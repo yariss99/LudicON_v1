@@ -4,29 +4,29 @@
  */
 
 .story-builder {
-  --sb-bg: #f7f5f2;
-  --sb-surface: #ffffff;
-  --sb-ink: #1c1917;
-  --sb-muted: #78716c;
-  --sb-faint: #a8a29e;
-  --sb-line: #e7e5e4;
-  --sb-accent: #b45309;
-  --sb-accent-soft: #fff7ed;
-  --sb-ok: #047857;
-  --sb-ok-soft: #ecfdf5;
-  --sb-warn: #b45309;
-  --sb-warn-soft: #fffbeb;
-  --sb-danger: #b91c1c;
-  --sb-danger-soft: #fef2f2;
-  --sb-radius: 14px;
-  --sb-font-display: "Source Serif 4", "Iowan Old Style", Palatino, serif;
-  --sb-font-ui: "DM Sans", "Segoe UI", sans-serif;
+  --sb-bg: var(--lx-bg);
+  --sb-surface: var(--lx-surface);
+  --sb-ink: var(--lx-text);
+  --sb-muted: var(--lx-text-muted);
+  --sb-faint: var(--lx-text-subtle);
+  --sb-line: var(--lx-border);
+  --sb-accent: var(--lx-story);
+  --sb-accent-soft: var(--lx-story-soft);
+  --sb-ok: var(--lx-success);
+  --sb-ok-soft: var(--lx-success-soft);
+  --sb-warn: var(--lx-warning);
+  --sb-warn-soft: var(--lx-warning-soft);
+  --sb-danger: var(--lx-danger);
+  --sb-danger-soft: var(--lx-danger-soft);
+  --sb-radius: var(--lx-radius-md);
+  --sb-font-display: var(--lx-font-display);
+  --sb-font-ui: var(--lx-font-sans);
   --sb-sidebar: 220px;
   --sb-rail: 310px;
 
   min-height: 100vh;
   background:
-    radial-gradient(ellipse 70% 45% at 0% 0%, #ffedd5 0%, transparent 55%),
+    radial-gradient(ellipse 70% 45% at 0% 0%, color-mix(in srgb, var(--lx-story) 16%, transparent) 0%, transparent 55%),
     var(--sb-bg);
   color: var(--sb-ink);
   font-family: var(--sb-font-ui);
@@ -67,7 +67,7 @@
   font-weight: 500; cursor: pointer; text-decoration: none;
 }
 .sb-btn:hover { border-color: color-mix(in srgb, var(--sb-accent) 40%, var(--sb-line)); }
-.sb-btn-primary { background: var(--sb-accent); border-color: transparent; color: #fff; }
+.sb-btn-primary { background: var(--sb-accent); border-color: transparent; color: var(--lx-text-on-brand); }
 .sb-btn-ghost { background: transparent; }
 .sb-btn-danger { color: var(--sb-danger); }
 
@@ -154,12 +154,12 @@
 
 .sb-preview {
   border: 1px solid var(--sb-line); border-radius: 18px; background:
-    linear-gradient(180deg, #fffaf5 0%, #fff 40%);
+    linear-gradient(180deg, var(--sb-accent-soft) 0%, var(--sb-surface) 40%);
   padding: 1.25rem 1.35rem; min-height: 280px;
 }
 .sb-preview h3 {
   font-family: var(--sb-font-display); font-size: 1.35rem; margin: .35rem 0 .75rem;
 }
 .sb-preview blockquote {
-  border-left: 3px solid #fdba74; margin: .75rem 0; padding-left: .75rem; color: #44403c;
+  border-left: 3px solid var(--sb-accent); margin: .75rem 0; padding-left: .75rem; color: var(--sb-muted);
 }

@@ -3,18 +3,18 @@
  * Scoped to .teacher-assistant
  */
 .teacher-assistant {
-  --ta-bg: #f4f7fb;
-  --ta-surface: #ffffff;
-  --ta-ink: #0f172a;
-  --ta-muted: #64748b;
-  --ta-line: #e2e8f0;
-  --ta-accent: #0f766e;
-  --ta-accent-soft: #ecfdf5;
-  --ta-warn: #b45309;
-  --ta-danger: #b91c1c;
-  --ta-radius: 14px;
-  --ta-font-display: "Source Serif 4", "Iowan Old Style", Palatino, serif;
-  --ta-font-ui: "DM Sans", "Segoe UI", sans-serif;
+  --ta-bg: var(--lx-bg);
+  --ta-surface: var(--lx-surface);
+  --ta-ink: var(--lx-text);
+  --ta-muted: var(--lx-text-muted);
+  --ta-line: var(--lx-border);
+  --ta-accent: var(--lx-ai);
+  --ta-accent-soft: var(--lx-ai-soft);
+  --ta-warn: var(--lx-warning);
+  --ta-danger: var(--lx-danger);
+  --ta-radius: var(--lx-radius-md);
+  --ta-font-display: var(--lx-font-display);
+  --ta-font-ui: var(--lx-font-sans);
   color: var(--ta-ink);
   font-family: var(--ta-font-ui);
 }
@@ -57,7 +57,7 @@
 .ta-msg-assistant {
   background: var(--ta-bg); border: 1px solid var(--ta-line); margin-right: .5rem;
 }
-.ta-msg-blocked { border-color: #fecaca; background: #fef2f2; }
+.ta-msg-blocked { border-color: var(--lx-danger); background: var(--lx-danger-soft); }
 .ta-tools { display: flex; flex-direction: column; gap: .35rem; margin-top: .55rem; }
 .ta-tool {
   display: inline-flex; align-items: center; justify-content: space-between; gap: .4rem;
@@ -80,7 +80,7 @@
   background: var(--ta-surface); color: var(--ta-ink); font: inherit; font-size: .78rem;
   font-weight: 500; cursor: pointer; text-decoration: none;
 }
-.ta-btn-primary { background: var(--ta-accent); border-color: transparent; color: #fff; }
+.ta-btn-primary { background: var(--ta-accent); border-color: transparent; color: var(--lx-text-on-brand); }
 .ta-btn-ghost { background: transparent; }
 .ta-btn-danger { color: var(--ta-danger); }
 .ta-card {
@@ -125,22 +125,23 @@
 .ta-fab {
   position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 70;
   width: 3.4rem; height: 3.4rem; border-radius: 999px; border: none;
-  background: var(--ta-accent); color: #fff; font: inherit; font-weight: 700;
+  background: var(--ta-accent); color: var(--lx-text-on-brand); font: inherit; font-weight: 700;
   font-size: .85rem; cursor: pointer;
-  box-shadow: 0 14px 30px -12px rgba(15, 118, 110, .55);
+  box-shadow: 0 14px 30px -12px var(--lx-brand-ring);
 }
 .ta-fab:hover { filter: brightness(1.05); }
 .ta-float {
   position: fixed; right: 1.25rem; bottom: 5.2rem; z-index: 70;
   width: min(400px, calc(100vw - 1.5rem)); height: min(640px, calc(100vh - 7rem));
   border-radius: 18px; border: 1px solid var(--ta-line);
-  box-shadow: 0 24px 60px -28px rgba(15, 23, 42, .45);
+  box-shadow: var(--lx-shadow-lg);
   overflow: hidden; background: var(--ta-surface);
 }
 .ta-validation { font-size: .68rem; color: var(--ta-muted); margin-top: .35rem; }
-.ta-validation.is-ok { color: #047857; }
+.ta-validation.is-ok { color: var(--lx-success); }
 .ta-validation.is-bad { color: var(--ta-danger); }
 .ta-input {
   width: 100%; border: 1px solid var(--ta-line); border-radius: 10px;
   padding: .55rem .7rem; font: inherit; margin-bottom: .55rem;
+  background: var(--ta-surface); color: var(--ta-ink);
 }

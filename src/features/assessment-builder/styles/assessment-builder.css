@@ -3,31 +3,34 @@
  * Scoped to .assessment-builder
  */
 
+/* Local names map onto the LudicON foundation; no raw hex lives here.
+   The builder now carries the brand blue like the rest of the platform, which
+   frees teal to mean AI assistance consistently. */
 .assessment-builder {
-  --ab-bg: #f5f7fa;
-  --ab-surface: #ffffff;
-  --ab-ink: #0f172a;
-  --ab-muted: #64748b;
-  --ab-faint: #94a3b8;
-  --ab-line: #e7ebf0;
-  --ab-accent: #0f766e;
-  --ab-accent-soft: #f0fdfa;
-  --ab-ok: #047857;
-  --ab-ok-soft: #ecfdf5;
-  --ab-warn: #b45309;
-  --ab-warn-soft: #fffbeb;
-  --ab-danger: #b91c1c;
-  --ab-danger-soft: #fef2f2;
-  --ab-radius: 14px;
-  --ab-font-display: "Source Serif 4", "Iowan Old Style", Palatino, serif;
-  --ab-font-ui: "DM Sans", "Segoe UI", sans-serif;
+  --ab-bg: var(--lx-bg);
+  --ab-surface: var(--lx-surface);
+  --ab-ink: var(--lx-text);
+  --ab-muted: var(--lx-text-muted);
+  --ab-faint: var(--lx-text-subtle);
+  --ab-line: var(--lx-border);
+  --ab-accent: var(--lx-brand);
+  --ab-accent-soft: var(--lx-brand-soft);
+  --ab-ai: var(--lx-ai);
+  --ab-ai-soft: var(--lx-ai-soft);
+  --ab-ok: var(--lx-success);
+  --ab-ok-soft: var(--lx-success-soft);
+  --ab-warn: var(--lx-warning);
+  --ab-warn-soft: var(--lx-warning-soft);
+  --ab-danger: var(--lx-danger);
+  --ab-danger-soft: var(--lx-danger-soft);
+  --ab-radius: var(--lx-radius-md);
+  --ab-font-display: var(--lx-font-display);
+  --ab-font-ui: var(--lx-font-sans);
   --ab-sidebar: 220px;
   --ab-rail: 310px;
 
   min-height: 100vh;
-  background:
-    radial-gradient(ellipse 70% 45% at 100% 0%, #dff5f1 0%, transparent 55%),
-    var(--ab-bg);
+  background: var(--ab-bg);
   color: var(--ab-ink);
   font-family: var(--ab-font-ui);
 }
@@ -130,7 +133,7 @@
 .ab-btn-primary {
   background: var(--ab-accent);
   border-color: transparent;
-  color: #fff;
+  color: var(--lx-text-on-brand);
 }
 
 .ab-btn-ghost {
@@ -183,7 +186,59 @@
   gap: 0.2rem;
 }
 
+.ab-nav-group {
+  margin-bottom: 1.15rem;
+}
+
+.ab-nav-group-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ab-faint);
+  margin-bottom: 0.4rem;
+  padding: 0 0.65rem;
+}
+
+.ab-nav-group-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  font-size: 0.625rem;
+  letter-spacing: 0;
+}
+
+.ab-nav-group-title.is-done {
+  color: var(--ab-ok);
+}
+
+.ab-nav-group-title.is-done .ab-nav-group-step {
+  background: var(--ab-ok-soft);
+  border-color: transparent;
+}
+
+.ab-nav-group-title.is-current {
+  color: var(--ab-accent);
+}
+
+.ab-nav-group-title.is-current .ab-nav-group-step {
+  background: var(--ab-accent-soft);
+  border-color: transparent;
+}
+
 .ab-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
   text-align: left;
   border: none;
   background: transparent;
@@ -193,6 +248,30 @@
   font-size: 0.875rem;
   color: var(--ab-ink);
   cursor: pointer;
+}
+
+.ab-nav-count {
+  flex: none;
+  min-width: 1.35rem;
+  padding: 0 0.35rem;
+  border-radius: 999px;
+  background: var(--ab-bg);
+  color: var(--ab-muted);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.35rem;
+}
+
+.ab-nav-count.is-empty {
+  background: transparent;
+  color: var(--ab-faint);
+  font-weight: 500;
+}
+
+.ab-nav-btn.is-active .ab-nav-count {
+  background: var(--ab-surface);
+  color: var(--ab-accent);
 }
 
 .ab-nav-btn:hover {
@@ -371,6 +450,256 @@
   text-align: center;
   gap: 0.75rem;
   padding: 2rem;
+}
+
+/* Workflow band — the four-stage journey, above the editor.
+   Chrome, not content: a hairline rule instead of a card. */
+
+.ab-workflow {
+  margin: -0.25rem 0 1.4rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--ab-line);
+}
+
+.ab-wf-track {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.15rem;
+  list-style: none;
+  margin: 0 0 0.9rem;
+  padding: 0;
+}
+
+.ab-wf-item {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.ab-wf-link {
+  width: 1.15rem;
+  height: 1px;
+  margin: 0 0.15rem;
+  background: var(--ab-line);
+}
+
+.ab-wf-stage {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  font: inherit;
+  font-size: 0.8125rem;
+  color: var(--ab-faint);
+  cursor: pointer;
+  transition:
+    background var(--motion-fast, 150ms) ease,
+    color var(--motion-fast, 150ms) ease,
+    border-color var(--motion-fast, 150ms) ease;
+}
+
+.ab-wf-stage:hover {
+  color: var(--ab-ink);
+  background: var(--ab-bg);
+}
+
+.ab-wf-stage.is-started {
+  color: var(--ab-muted);
+}
+
+.ab-wf-stage.is-done {
+  color: var(--ab-ok);
+}
+
+.ab-wf-stage.is-current {
+  background: var(--ab-accent-soft);
+  border-color: color-mix(in srgb, var(--ab-accent) 22%, transparent);
+  color: var(--ab-accent);
+  font-weight: 600;
+}
+
+.ab-wf-stage:focus-visible {
+  outline: 2px solid var(--ab-accent);
+  outline-offset: 2px;
+}
+
+.ab-wf-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  font-size: 0.6875rem;
+  font-weight: 600;
+}
+
+.ab-wf-stage.is-done .ab-wf-marker {
+  background: var(--ab-ok-soft);
+  border-color: transparent;
+}
+
+.ab-wf-stage.is-current .ab-wf-marker {
+  background: var(--ab-surface);
+  border-color: transparent;
+}
+
+.ab-wf-label {
+  white-space: nowrap;
+}
+
+.ab-wf-next {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.ab-wf-now {
+  margin: 0;
+  min-width: 0;
+  font-size: 0.8125rem;
+}
+
+.ab-wf-now-stage {
+  font-weight: 600;
+  color: var(--ab-ink);
+}
+
+.ab-wf-now-hint {
+  color: var(--ab-muted);
+}
+
+.ab-wf-now-stage::after {
+  content: " · ";
+  color: var(--ab-faint);
+  font-weight: 400;
+}
+
+.ab-wf-cta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.ab-wf-cta-hint {
+  font-size: 0.75rem;
+  color: var(--ab-muted);
+  text-align: right;
+}
+
+.ab-wf-cta-btn {
+  flex: none;
+}
+
+@media (max-width: 900px) {
+  .ab-wf-cta-hint {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ab-wf-stage {
+    transition: none;
+  }
+}
+
+/* Side rail grouping — existing actions, sorted by teacher intent. */
+
+.ab-rail-group {
+  margin-bottom: 1.1rem;
+}
+
+.ab-rail-group-title {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ab-faint);
+  margin-bottom: 0.45rem;
+}
+
+.ab-rail-subgroup-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ab-muted);
+  margin-bottom: 0.35rem;
+}
+
+.ab-rail-note {
+  margin: -0.2rem 0 0.9rem;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--ab-muted);
+}
+
+.ab-rail-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.ab-btn-rail,
+.ab-btn-add {
+  width: 100%;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+/* AI assistance reads as teal help, never as the teacher's primary action. */
+.ab-btn-rail {
+  border-color: color-mix(in srgb, var(--ab-ai) 22%, var(--ab-line));
+  color: var(--ab-ai);
+}
+
+.ab-btn-rail:hover {
+  border-color: var(--ab-ai);
+  background: var(--ab-ai-soft);
+}
+
+.ab-rail-subgroup-title {
+  color: var(--ab-ai);
+}
+
+.ab-btn-add {
+  background: var(--ab-accent-soft);
+  border-color: transparent;
+  color: var(--ab-accent);
+  font-weight: 600;
+}
+
+.ab-btn-add:hover {
+  border-color: color-mix(in srgb, var(--ab-accent) 45%, transparent);
+}
+
+/* Header action clusters — separates panels, document ops and release. */
+
+.ab-action-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.ab-action-divider {
+  width: 1px;
+  align-self: center;
+  height: 1.4rem;
+  margin: 0 0.3rem;
+  background: var(--ab-line);
+}
+
+@media (max-width: 700px) {
+  .ab-action-divider {
+    display: none;
+  }
 }
 
 .ab-list-editor {

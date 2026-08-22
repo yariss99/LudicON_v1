@@ -3,28 +3,28 @@
  * Scoped to .presentation-builder
  */
 .presentation-builder {
-  --pb-bg: #f4f7fb;
-  --pb-surface: #ffffff;
-  --pb-ink: #0f172a;
-  --pb-muted: #64748b;
-  --pb-faint: #94a3b8;
-  --pb-line: #e2e8f0;
-  --pb-accent: #1d4ed8;
-  --pb-accent-soft: #eff6ff;
-  --pb-ok: #047857;
-  --pb-ok-soft: #ecfdf5;
-  --pb-warn: #b45309;
-  --pb-warn-soft: #fffbeb;
-  --pb-danger: #b91c1c;
-  --pb-danger-soft: #fef2f2;
-  --pb-radius: 14px;
-  --pb-font-display: "Source Serif 4", "Iowan Old Style", Palatino, serif;
-  --pb-font-ui: "DM Sans", "Segoe UI", sans-serif;
+  --pb-bg: var(--lx-bg);
+  --pb-surface: var(--lx-surface);
+  --pb-ink: var(--lx-text);
+  --pb-muted: var(--lx-text-muted);
+  --pb-faint: var(--lx-text-subtle);
+  --pb-line: var(--lx-border);
+  --pb-accent: var(--lx-presentation);
+  --pb-accent-soft: var(--lx-presentation-soft);
+  --pb-ok: var(--lx-success);
+  --pb-ok-soft: var(--lx-success-soft);
+  --pb-warn: var(--lx-warning);
+  --pb-warn-soft: var(--lx-warning-soft);
+  --pb-danger: var(--lx-danger);
+  --pb-danger-soft: var(--lx-danger-soft);
+  --pb-radius: var(--lx-radius-md);
+  --pb-font-display: var(--lx-font-display);
+  --pb-font-ui: var(--lx-font-sans);
   --pb-sidebar: 220px;
   --pb-rail: 310px;
   min-height: 100vh;
   background:
-    radial-gradient(ellipse 70% 45% at 0% 0%, #e0e7ff 0%, transparent 55%),
+    radial-gradient(ellipse 70% 45% at 0% 0%, color-mix(in srgb, var(--lx-presentation) 16%, transparent) 0%, transparent 55%),
     var(--pb-bg);
   color: var(--pb-ink);
   font-family: var(--pb-font-ui);
@@ -58,7 +58,7 @@
   font-weight: 500; cursor: pointer; text-decoration: none;
 }
 .pb-btn:hover { border-color: color-mix(in srgb, var(--pb-accent) 40%, var(--pb-line)); }
-.pb-btn-primary { background: var(--pb-accent); border-color: transparent; color: #fff; }
+.pb-btn-primary { background: var(--pb-accent); border-color: transparent; color: var(--lx-text-on-brand); }
 .pb-btn-ghost { background: transparent; }
 .pb-btn-danger { color: var(--pb-danger); }
 .pb-body {

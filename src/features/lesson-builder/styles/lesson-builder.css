@@ -4,29 +4,29 @@
  */
 
 .lesson-builder {
-  --lb-bg: #f5f7fa;
-  --lb-surface: #ffffff;
-  --lb-ink: #0f172a;
-  --lb-muted: #64748b;
-  --lb-faint: #94a3b8;
-  --lb-line: #e7ebf0;
-  --lb-accent: #1d4ed8;
-  --lb-accent-soft: #eff6ff;
-  --lb-ok: #047857;
-  --lb-ok-soft: #ecfdf5;
-  --lb-warn: #b45309;
-  --lb-warn-soft: #fffbeb;
-  --lb-danger: #b91c1c;
-  --lb-danger-soft: #fef2f2;
-  --lb-radius: 14px;
-  --lb-font-display: "Source Serif 4", "Iowan Old Style", Palatino, serif;
-  --lb-font-ui: "DM Sans", "Segoe UI", sans-serif;
+  --lb-bg: var(--lx-bg);
+  --lb-surface: var(--lx-surface);
+  --lb-ink: var(--lx-text);
+  --lb-muted: var(--lx-text-muted);
+  --lb-faint: var(--lx-text-subtle);
+  --lb-line: var(--lx-border);
+  --lb-accent: var(--lx-brand);
+  --lb-accent-soft: var(--lx-brand-soft);
+  --lb-ok: var(--lx-success);
+  --lb-ok-soft: var(--lx-success-soft);
+  --lb-warn: var(--lx-warning);
+  --lb-warn-soft: var(--lx-warning-soft);
+  --lb-danger: var(--lx-danger);
+  --lb-danger-soft: var(--lx-danger-soft);
+  --lb-radius: var(--lx-radius-md);
+  --lb-font-display: var(--lx-font-display);
+  --lb-font-ui: var(--lx-font-sans);
   --lb-sidebar: 220px;
   --lb-rail: 300px;
 
   min-height: 100vh;
   background:
-    radial-gradient(ellipse 70% 45% at 0% 0%, #e8eef8 0%, transparent 55%),
+    radial-gradient(ellipse 70% 45% at 0% 0%, color-mix(in srgb, var(--lx-brand) 14%, transparent) 0%, transparent 55%),
     var(--lb-bg);
   color: var(--lb-ink);
   font-family: var(--lb-font-ui);
@@ -134,7 +134,7 @@
 .lb-btn-primary {
   background: var(--lb-accent);
   border-color: transparent;
-  color: #fff;
+  color: var(--lx-text-on-brand);
 }
 
 .lb-btn-ghost {
