@@ -1,6 +1,10 @@
-import { Sparkles } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { STUDIO_BRAND, STUDIO_NAV_GROUPS } from "../constants/navigation";
+import {
+  QUICK_CREATE_PATH,
+  STUDIO_BRAND,
+  STUDIO_NAV_GROUPS,
+} from "../constants/navigation";
 import { useTeacherStudio } from "../context/TeacherStudioContext";
 import type { StudioNavItem } from "../types";
 
@@ -33,12 +37,17 @@ export function StudioSidebar({ onNavigate }: StudioSidebarProps) {
     >
       <Link to="/" className="ts-brand" aria-label={STUDIO_BRAND.name}>
         <span className="ts-brand-badge" aria-hidden>
-          <Sparkles size={16} strokeWidth={2.25} />
+          L
         </span>
         <span className="ts-brand-text">
           <span className="ts-brand-name">{STUDIO_BRAND.name}</span>
           <span className="ts-brand-meta">Atelierul profesorului</span>
         </span>
+      </Link>
+
+      <Link to={QUICK_CREATE_PATH} className="ts-side-create" onClick={onNavigate}>
+        <Plus size={16} strokeWidth={2.5} aria-hidden />
+        <span className="ts-side-create-text">Creează</span>
       </Link>
 
       <div className="ts-nav-scroll">

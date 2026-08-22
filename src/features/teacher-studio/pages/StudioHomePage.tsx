@@ -14,6 +14,7 @@ import { useProjects } from "../../../context/ProjectContext";
 import { useTeacherAssistant } from "../../teacher-assistant/hooks/useTeacherAssistant";
 import { formatRelativeTime } from "../../../utils/date";
 import { ProjectCard } from "../components/ProjectCard";
+import { StudioHeroArt } from "../components/StudioHeroArt";
 import {
   COPILOT_ACTIONS,
   COPILOT_PROMPTS,
@@ -67,14 +68,15 @@ export function StudioHomePage() {
     <div>
       <section className="ts-hero">
         <div className="ts-hero-main">
-          <p className="ts-hero-kicker">Atelierul meu</p>
-          <h1 className="ts-hero-title">
-            {greeting}, {teacher.displayName}
-          </h1>
-          <p className="ts-hero-lead">Ce ai vrea să construim astăzi?</p>
+          <p className="ts-hero-kicker">Atelierul tău creativ</p>
+          <h1 className="ts-hero-title">{greeting}. Ce construim astăzi?</h1>
           <p className="ts-hero-support">
-            Tu pornești de la idee. LudicON te ajută să o transformi într-o
-            resursă educațională, pas cu pas.
+            Pornește de la ideea ta și transform-o într-o experiență de
+            învățare.
+          </p>
+          <p className="ts-hero-note">
+            <Sparkles size={13} aria-hidden />
+            Tu conduci procesul. LudicON Copilot te sprijină când ai nevoie.
           </p>
 
           <div className="ts-hero-actions">
@@ -95,20 +97,24 @@ export function StudioHomePage() {
           </div>
         </div>
 
-        <p className="ts-hero-meta">
-          <Sparkles size={12} aria-hidden />
-          Tu alegi direcția · {projects.length}{" "}
-          {projects.length === 1 ? "proiect" : "proiecte"}
-        </p>
+        <div className="ts-hero-aside">
+          <StudioHeroArt />
+          <p className="ts-hero-meta">
+            {teacher.displayName} · {projects.length}{" "}
+            {projects.length === 1 ? "proiect" : "proiecte"}
+          </p>
+        </div>
       </section>
 
       <section className="ts-block" aria-labelledby="create-heading">
         <div className="ts-block-head">
           <div>
             <h2 id="create-heading" className="ts-block-title">
-              Creează ceva nou
+              Ce vrei să creezi?
             </h2>
-            <p className="ts-block-lead">Alege de unde vrei să începi.</p>
+            <p className="ts-block-lead">
+              Tu alegi direcția. AI-ul te sprijină pe parcurs.
+            </p>
           </div>
         </div>
 
@@ -123,9 +129,11 @@ export function StudioHomePage() {
         <div className="ts-block-head">
           <div>
             <h2 id="projects-heading" className="ts-block-title">
-              Proiectele la care lucrezi
+              Continuă lucrul
             </h2>
-            <p className="ts-block-lead">Continuă de unde ai rămas.</p>
+            <p className="ts-block-lead">
+              Proiectele tale, cu cel mai recent în față.
+            </p>
           </div>
           <Link to="/projects" className="ts-block-link">
             Vezi toate proiectele
