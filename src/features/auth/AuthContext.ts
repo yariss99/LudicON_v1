@@ -1,5 +1,6 @@
 import { createContext, useContext } from "react";
 import type {
+  AuthCapabilities,
   AuthStatus,
   AuthUser,
   PasswordRecoveryResult,
@@ -9,6 +10,7 @@ import type {
 export type AuthContextValue = {
   readonly status: AuthStatus;
   readonly user: AuthUser | null;
+  readonly capabilities: AuthCapabilities;
   readonly signIn: (email: string, password: string) => Promise<AuthUser>;
   readonly signUp: (input: SignUpInput) => Promise<AuthUser>;
   readonly signOut: () => Promise<void>;

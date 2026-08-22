@@ -52,6 +52,10 @@ async function issueSession(identity: StoredIdentity): Promise<AuthUser> {
  */
 export function createLocalAuthProvider(): AuthProviderPort {
   return {
+    capabilities() {
+      return { passwordRecovery: "unavailable" };
+    },
+
     async restoreSession() {
       const session = loadSession();
       if (!session || !session.token || isExpired(session.expiresAt)) {

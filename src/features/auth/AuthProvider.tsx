@@ -52,9 +52,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return provider.requestPasswordRecovery(email);
   }, []);
 
+  const capabilities = useMemo(() => provider.capabilities(), []);
+
   const value = useMemo(
-    () => ({ status, user, signIn, signUp, signOut, requestPasswordRecovery }),
-    [status, user, signIn, signUp, signOut, requestPasswordRecovery],
+    () => ({
+      status,
+      user,
+      capabilities,
+      signIn,
+      signUp,
+      signOut,
+      requestPasswordRecovery,
+    }),
+    [status, user, capabilities, signIn, signUp, signOut, requestPasswordRecovery],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -43,8 +43,13 @@ export type PasswordRecoveryResult = {
   readonly channel: PasswordRecoveryChannel;
 };
 
+export type AuthCapabilities = {
+  readonly passwordRecovery: PasswordRecoveryChannel;
+};
+
 /** Isolated port — swap the adapter without touching UI or routes. */
 export type AuthProviderPort = {
+  capabilities(): AuthCapabilities;
   restoreSession(): Promise<AuthUser | null>;
   signIn(email: string, password: string): Promise<AuthUser>;
   signUp(input: SignUpInput): Promise<AuthUser>;

@@ -1,22 +1,21 @@
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { AuthError } from "../types";
 import { useAuth } from "../AuthContext";
 import { AuthLayout } from "../components/AuthLayout";
 import { validateEmail } from "../validation";
 
 export function ForgotPasswordPage() {
-  const { requestPasswordRecovery } = useAuth();
+  const { requestPasswordRecovery, capabilities } = useAuth();
   const location = useLocation();
   const headingRef = useRef<HTMLHeadingElement>(null);
   const formErrorId = useId();
+  const canEmail = capabilities.passwordRecovery === "email";
 
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState<string | undefined>();
   const [formError, setFormError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [deliveryAvailable, setDeliveryAvailable] = useState(false);
 
   const loginHref = `/login${location.search}`;
 
@@ -33,14 +32,15 @@ export function ForgotPasswordPage() {
     setSubmitting(true);
     try {
       const result = await requestPasswordRecovery(address);
-      setDeliveryAvailable(result.channel === "email");
+      if (result.channel !== "email") {
+        setFormError(
+          "Recuperarea prin e-mail nu este disponibilă în această versiune.",
+        );
+        return;
+      }
       setSubmitted(true);
-    } catch (caught) {
-      setFormError(
-        caught instanceof AuthError
-          ? "Nu am putut înregistra cererea. Încearcă din nou."
-          : "Nu am putut înregistra cererea. Încearcă din nou.",
-      );
+    } catch {
+      setFormError("Nu am putut trimite instrucțiunile. Încearcă din nou.");
     } finally {
       setSubmitting(false);
     }
@@ -51,33 +51,42 @@ export function ForgotPasswordPage() {
     void submitRecovery(email);
   }
 
+  if (!canEmail) {
+    return (
+      <AuthLayout>
+        <p className="lx-auth-panel-kicker">Recuperare cont</p>
+        <h2 className="lx-auth-panel-title">Recuperarea prin e-mail nu este disponibilă</h2>
+        <p className="lx-auth-panel-lead">
+          Conturile sunt păstrate pe acest dispozitiv. Nu există un serviciu
+          de e-mail conectat, deci nu putem trimite un link de resetare.
+        </p>
+        <p className="lx-auth-hint lx-auth-success-note" role="status">
+          Când un furnizor de autentificare cu e-mail va fi conectat, această
+          pagină va trimite instrucțiunile automat.
+        </p>
+        <div className="lx-auth-choices">
+          <Link to={loginHref} className="lx-auth-primary">
+            Înapoi la autentificare
+          </Link>
+        </div>
+      </AuthLayout>
+    );
+  }
+
   if (submitted) {
     return (
       <AuthLayout>
         <p className="lx-auth-panel-kicker">Recuperare cont</p>
-        <h2
-          ref={headingRef}
-          className="lx-auth-panel-title"
-          tabIndex={-1}
-        >
-          {deliveryAvailable ? "Verifică-ți e-mailul" : "Cererea a fost înregistrată"}
+        <h2 ref={headingRef} className="lx-auth-panel-title" tabIndex={-1}>
+          Verifică-ți e-mailul
         </h2>
         <p className="lx-auth-panel-lead">
           Dacă există un cont asociat acestei adrese, vei primi instrucțiuni
           pentru resetarea parolei.
         </p>
-        {deliveryAvailable ? (
-          <p className="lx-auth-hint lx-auth-success-note">
-            Verifică și folderul Spam sau Junk.
-          </p>
-        ) : (
-          <p className="lx-auth-hint lx-auth-success-note" role="status">
-            Trimiterea prin e-mail nu este încă disponibilă. Când un furnizor
-            de autentificare va fi conectat, instrucțiunile vor ajunge pe
-            e-mail.
-          </p>
-        )}
-
+        <p className="lx-auth-hint lx-auth-success-note">
+          Verifică și folderul Spam sau Junk.
+        </p>
         <div className="lx-auth-choices">
           <Link to={loginHref} className="lx-auth-primary">
             Înapoi la autentificare
