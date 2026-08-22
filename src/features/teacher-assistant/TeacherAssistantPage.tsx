@@ -22,10 +22,9 @@ export function TeacherAssistantPage() {
           </Link>
           {" · "}Teacher AI Assistant
         </p>
-        <h1 className="ta-page-title">Co-pilot educațional PRIMA</h1>
+        <h1 className="ta-page-title">LudicON Copilot</h1>
         <p className="ta-lead">
-          Conversații persistente pe proiect / lecție, memorie, unelte și
-          validare — nu un chatbot generic.
+          Sugestii, conversații și unelte — tu rămâi autorul materialului.
         </p>
         <div className="ta-meta" style={{ marginTop: "0.65rem" }}>
           <span className="ta-chip">{context.teacherName}</span>

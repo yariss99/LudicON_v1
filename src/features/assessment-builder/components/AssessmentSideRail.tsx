@@ -1,8 +1,13 @@
+import { Plus } from "lucide-react";
 import { useState } from "react";
 import { formatRelativeTime } from "../../../utils/date";
-import { AI_ACTIONS } from "../constants";
+import { AI_ACTION_GROUPS, AI_ACTIONS } from "../constants";
 import { useAssessmentBuilder } from "../hooks/useAssessmentBuilder";
-import type { AssessmentBuilderPanel } from "../types";
+import type { AssessmentAiActionId, AssessmentBuilderPanel } from "../types";
+
+const AI_ACTION_BY_ID = new Map<AssessmentAiActionId, (typeof AI_ACTIONS)[number]>(
+  AI_ACTIONS.map((action) => [action.id, action]),
+);
 
 export function AssessmentSideRail() {
   const {
@@ -15,6 +20,9 @@ export function AssessmentSideRail() {
     runAi,
     restoreVersion,
     exportFormat,
+    addGroup,
+    addRubric,
+    setSectionId,
   } = useAssessmentBuilder();
   const [compareA, setCompareA] = useState("");
   const [compareB, setCompareB] = useState("");
@@ -45,23 +53,72 @@ export function AssessmentSideRail() {
 
       {(panel === "editor" || panel === "ai") && (
         <div>
-          <div className="ab-kicker" style={{ marginBottom: "0.55rem" }}>
-            AI în context lecție + proiect
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-            {AI_ACTIONS.map((action) => (
+          <section className="ab-rail-group" aria-labelledby="ab-rail-add">
+            <div id="ab-rail-add" className="ab-rail-group-title">
+              Adaugă în evaluare
+            </div>
+            <div className="ab-rail-stack">
               <button
-                key={action.id}
                 type="button"
-                className="ab-btn"
-                style={{ justifyContent: "flex-start" }}
-                title={action.description}
-                onClick={() => runAi(action.id)}
+                className="ab-btn ab-btn-add"
+                onClick={() => {
+                  addGroup();
+                  setSectionId("questions");
+                  setPanel("editor");
+                }}
               >
-                {action.label}
+                <Plus size={14} aria-hidden />
+                Grup de itemi
               </button>
-            ))}
-          </div>
+              <button
+                type="button"
+                className="ab-btn ab-btn-add"
+                onClick={() => {
+                  addRubric();
+                  setSectionId("rubrics");
+                  setPanel("editor");
+                }}
+              >
+                <Plus size={14} aria-hidden />
+                Rubrică
+              </button>
+            </div>
+          </section>
+
+          <div className="ab-rail-group-title">Cere ajutorul PRIMA</div>
+          <p className="ab-rail-note">
+            În contextul lecției și al proiectului. PRIMA propune, tu decizi.
+          </p>
+
+          {AI_ACTION_GROUPS.map((group) => (
+            <section
+              key={group.id}
+              className="ab-rail-group"
+              aria-labelledby={`ab-rail-${group.id}`}
+            >
+              <div id={`ab-rail-${group.id}`} className="ab-rail-subgroup-title">
+                {group.label}
+              </div>
+              <div className="ab-rail-stack">
+                {group.actionIds.map((actionId) => {
+                  const action = AI_ACTION_BY_ID.get(actionId);
+                  if (!action) return null;
+                  return (
+                    <button
+                      key={action.id}
+                      type="button"
+                      className="ab-btn ab-btn-rail"
+                      title={action.description}
+                      onClick={() => runAi(action.id)}
+                    >
+                      {action.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
+          ))}
+
           {lastAiNote ? (
             <div className="ab-card" style={{ marginTop: "0.75rem" }}>
               {lastAiNote}

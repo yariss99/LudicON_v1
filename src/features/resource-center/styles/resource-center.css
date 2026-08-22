@@ -3,23 +3,23 @@
  * Scoped to .resource-center
  */
 .resource-center {
-  --rc-bg: #f3f6fb;
-  --rc-surface: #ffffff;
-  --rc-ink: #0f172a;
-  --rc-muted: #64748b;
-  --rc-line: #e2e8f0;
-  --rc-accent: #0f766e;
-  --rc-accent-soft: #ecfdf5;
-  --rc-warn: #b45309;
-  --rc-danger: #b91c1c;
-  --rc-radius: 14px;
-  --rc-font-display: "Source Serif 4", "Iowan Old Style", Palatino, serif;
-  --rc-font-ui: "DM Sans", "Segoe UI", sans-serif;
+  --rc-bg: var(--lx-bg);
+  --rc-surface: var(--lx-surface);
+  --rc-ink: var(--lx-text);
+  --rc-muted: var(--lx-text-muted);
+  --rc-line: var(--lx-border);
+  --rc-accent: var(--lx-ai);
+  --rc-accent-soft: var(--lx-ai-soft);
+  --rc-warn: var(--lx-warning);
+  --rc-danger: var(--lx-danger);
+  --rc-radius: var(--lx-radius-md);
+  --rc-font-display: var(--lx-font-display);
+  --rc-font-ui: var(--lx-font-sans);
   --rc-sidebar: 210px;
   --rc-rail: 300px;
   min-height: 100vh;
   background:
-    radial-gradient(ellipse 60% 40% at 100% 0%, #ccfbf1 0%, transparent 55%),
+    radial-gradient(ellipse 60% 40% at 100% 0%, color-mix(in srgb, var(--lx-ai) 16%, transparent) 0%, transparent 55%),
     var(--rc-bg);
   color: var(--rc-ink);
   font-family: var(--rc-font-ui);
