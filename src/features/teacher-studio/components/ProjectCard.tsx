@@ -10,7 +10,6 @@ import type { CreateOptionId } from "../types";
 const CREATIVE_KINDS: readonly ProjectResourceType[] = [
   "lesson",
   "game",
-  "story",
   "assessment",
   "presentation",
   "worksheet",
