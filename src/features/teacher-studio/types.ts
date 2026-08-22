@@ -26,6 +26,8 @@ export type CreateOptionId =
 export type CreateOption = {
   readonly id: CreateOptionId;
   readonly label: string;
+  /** Personality line — the expressive invitation under the type label. */
+  readonly tagline: string;
   readonly description: string;
   /** Domain accent from the LudicON foundation, e.g. `--lx-lesson`. */
   readonly accentToken: string;

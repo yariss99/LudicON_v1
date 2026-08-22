@@ -975,41 +975,30 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 0.28rem;
+  gap: 0.22rem;
   padding: 1.15rem 1.2rem 1.15rem;
   border-radius: var(--lx-radius-lg);
-  border: 1px solid color-mix(in srgb, var(--ts-c) 16%, var(--ts-line));
-  background: linear-gradient(
-    165deg,
-    color-mix(in srgb, var(--ts-c) var(--lx-wash), var(--ts-surface)) 0%,
-    var(--ts-surface) 70%
-  );
+  border: 1px solid color-mix(in srgb, var(--ts-c) 18%, var(--ts-line));
+  background: var(--ts-surface);
   box-shadow: var(--ts-shadow);
   text-decoration: none;
   color: inherit;
   transition:
     border-color var(--lx-duration-base) var(--lx-ease),
     box-shadow var(--lx-duration-base) var(--lx-ease),
-    transform var(--lx-duration-base) var(--lx-ease);
+    transform var(--lx-duration-base) var(--lx-ease),
+    background var(--lx-duration-base) var(--lx-ease);
 }
 
-/* A coloured spine gives each type its own identity at rest. */
+/* Family signature slot — each kind restyles this one mark. */
 .ts-create-card::before {
   content: "";
   position: absolute;
-  inset: 0 auto 0 0;
-  width: 3px;
-  background: var(--ts-c);
-  opacity: 0.85;
+  pointer-events: none;
 }
 
 .ts-create-card:hover {
-  border-color: color-mix(in srgb, var(--ts-c) 42%, var(--ts-line));
-  background: linear-gradient(
-    165deg,
-    color-mix(in srgb, var(--ts-c) var(--lx-wash-strong), var(--ts-surface)) 0%,
-    var(--ts-surface) 74%
-  );
+  border-color: color-mix(in srgb, var(--ts-c) 46%, var(--ts-line));
   box-shadow: var(--lx-shadow-md);
   transform: translateY(-2px);
 }
@@ -1025,31 +1014,42 @@
   justify-content: center;
   width: 2.55rem;
   height: 2.55rem;
-  margin-bottom: 0.6rem;
-  border-radius: 13px;
+  margin-bottom: 0.55rem;
+  border-radius: 12px;
   background: color-mix(in srgb, var(--ts-c) 14%, var(--ts-surface));
-  border: 1px solid color-mix(in srgb, var(--ts-c) 20%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ts-c) 22%, transparent);
   color: var(--ts-c);
   transition:
     transform var(--lx-duration-base) var(--lx-ease),
     background var(--lx-duration-base) var(--lx-ease),
-    color var(--lx-duration-base) var(--lx-ease);
+    color var(--lx-duration-base) var(--lx-ease),
+    box-shadow var(--lx-duration-base) var(--lx-ease);
 }
 
-.ts-create-card:hover .ts-create-icon {
+.ts-create-card:hover .ts-create-icon,
+.ts-create-card:focus-visible .ts-create-icon {
   background: var(--ts-c);
   color: var(--lx-text-on-brand);
   transform: translateY(-1px);
 }
 
-.ts-create-label {
+.ts-create-kind {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.45rem;
+  gap: 0.4rem;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ts-c);
+}
+
+.ts-create-title {
   font-size: 1.0625rem;
   font-weight: 600;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
   color: var(--ts-ink);
 }
 
@@ -1059,7 +1059,7 @@
   background: var(--ts-bg);
   border: 1px solid var(--ts-line);
   color: var(--ts-muted);
-  font-size: 0.625rem;
+  font-size: 0.5625rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -1075,16 +1075,141 @@
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  margin-top: 0.65rem;
+  margin-top: 0.7rem;
   font-size: 0.75rem;
   font-weight: 600;
   color: var(--ts-c);
+  transition: gap var(--lx-duration-base) var(--lx-ease);
+}
+
+.ts-create-card:hover .ts-create-meta,
+.ts-create-card:focus-visible .ts-create-meta {
+  gap: 0.5rem;
+}
+
+/* Lecție — organised spine, structured icon. */
+.ts-create-card[data-kind="lesson"] {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--ts-c) 8%, var(--ts-surface)) 0%,
+    var(--ts-surface) 42%
+  );
+}
+
+.ts-create-card[data-kind="lesson"]::before {
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: var(--ts-c);
+}
+
+.ts-create-card[data-kind="lesson"] .ts-create-icon {
+  border-radius: 9px;
+}
+
+/* Fișă — quiet, practical, clearly unavailable. */
+.ts-create-card[data-kind="worksheet"] .ts-create-icon {
+  border-radius: 7px;
+}
+
+/* Joc — warm energy from the far corner, rounder mark. */
+.ts-create-card[data-kind="game"] {
+  background:
+    radial-gradient(
+      120% 80% at 100% 0%,
+      color-mix(in srgb, var(--ts-c) 18%, transparent) 0%,
+      transparent 52%
+    ),
+    var(--ts-surface);
+}
+
+.ts-create-card[data-kind="game"]::before {
+  inset: 0 0 auto auto;
+  width: 3.4rem;
+  height: 3.4rem;
+  background: linear-gradient(
+    225deg,
+    color-mix(in srgb, var(--ts-c) 55%, transparent) 0%,
+    transparent 68%
+  );
+}
+
+.ts-create-card[data-kind="game"] .ts-create-icon {
+  border-radius: 16px;
+}
+
+/* Poveste — atmospheric wash, page-turn icon. */
+.ts-create-card[data-kind="story"] {
+  background:
+    radial-gradient(
+      90% 70% at 12% 0%,
+      color-mix(in srgb, var(--ts-c) 16%, transparent) 0%,
+      transparent 58%
+    ),
+    var(--ts-surface);
+}
+
+.ts-create-card[data-kind="story"]::before {
+  inset: auto 0 0 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--ts-c) 0%,
+    color-mix(in srgb, var(--ts-c) 20%, transparent) 100%
+  );
+}
+
+.ts-create-card[data-kind="story"] .ts-create-icon {
+  border-radius: 14px 14px 14px 5px;
+}
+
+/* Evaluare — precise top rule, inset icon. */
+.ts-create-card[data-kind="assessment"] {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--ts-c) 7%, var(--ts-surface)) 0%,
+    var(--ts-surface) 28%
+  );
+}
+
+.ts-create-card[data-kind="assessment"]::before {
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--ts-c);
+}
+
+.ts-create-card[data-kind="assessment"] .ts-create-icon {
+  border-radius: 7px;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ts-c) 28%, transparent);
+}
+
+/* Prezentare — stacked-slide corner, rhythmic icon. */
+.ts-create-card[data-kind="presentation"] {
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--ts-c) 10%, var(--ts-surface)) 0%,
+    var(--ts-surface) 48%
+  );
+}
+
+.ts-create-card[data-kind="presentation"]::before {
+  inset: 0.7rem 0.7rem auto auto;
+  width: 1.15rem;
+  height: 0.85rem;
+  border-radius: 3px;
+  box-shadow:
+    3px -3px 0 -1px color-mix(in srgb, var(--ts-c) 45%, transparent),
+    0 0 0 1.5px color-mix(in srgb, var(--ts-c) 55%, transparent);
+}
+
+.ts-create-card[data-kind="presentation"] .ts-create-icon {
+  border-radius: 6px 12px;
 }
 
 .ts-create-card.is-soon {
   background: var(--ts-bg);
   box-shadow: none;
   border-style: dashed;
+  cursor: default;
 }
 
 .ts-create-card.is-soon:hover {
@@ -1094,7 +1219,7 @@
 }
 
 .ts-create-card.is-soon::before {
-  opacity: 0.28;
+  opacity: 0.22;
 }
 
 .ts-create-card.is-soon .ts-create-icon {
@@ -1103,13 +1228,15 @@
   border: 1px dashed color-mix(in srgb, var(--ts-c) 28%, var(--ts-line));
 }
 
-.ts-create-card.is-soon:hover .ts-create-icon {
+.ts-create-card.is-soon:hover .ts-create-icon,
+.ts-create-card.is-soon:focus-visible .ts-create-icon {
   background: var(--ts-surface);
   color: var(--ts-faint);
   transform: none;
 }
 
-.ts-create-card.is-soon .ts-create-label {
+.ts-create-card.is-soon .ts-create-kind,
+.ts-create-card.is-soon .ts-create-title {
   color: var(--ts-muted);
 }
 
@@ -1163,20 +1290,27 @@
   --ts-c: var(--ts-accent);
 
   position: relative;
+  overflow: hidden;
   display: flex;
   align-items: flex-start;
   gap: 0.8rem;
   padding: 1rem 1.05rem 1.05rem;
   border-radius: var(--ts-radius);
-  border: 1px solid var(--ts-line);
+  border: 1px solid color-mix(in srgb, var(--ts-c) 16%, var(--ts-line));
   background: var(--ts-surface);
   box-shadow: var(--ts-shadow);
   cursor: pointer;
   transition:
-    border-color 180ms ease,
-    box-shadow 180ms ease,
-    background 180ms ease,
-    transform 180ms ease;
+    border-color var(--lx-duration-base) var(--lx-ease),
+    box-shadow var(--lx-duration-base) var(--lx-ease),
+    background var(--lx-duration-base) var(--lx-ease),
+    transform var(--lx-duration-base) var(--lx-ease);
+}
+
+.ts-qc-type::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
 }
 
 .ts-qc-type:hover {
@@ -1185,20 +1319,19 @@
   transform: translateY(-2px);
 }
 
-.ts-qc-type:hover .ts-qc-type-icon {
-  transform: translateY(-1px) scale(1.05);
+.ts-qc-type:hover:not(.is-soon) .ts-qc-type-icon,
+.ts-qc-type:has(.ts-qc-radio:focus-visible):not(.is-soon) .ts-qc-type-icon {
+  transform: translateY(-1px);
+  background: var(--ts-c);
+  color: var(--lx-text-on-brand);
 }
 
 .ts-qc-type.is-selected {
   border-color: var(--ts-c);
   box-shadow:
-    0 0 0 1px var(--ts-c) inset,
+    0 0 0 2px var(--ts-c),
     0 10px 28px color-mix(in srgb, var(--ts-c) 16%, transparent);
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--ts-c) 8%, var(--ts-surface)) 0%,
-    var(--ts-surface) 72%
-  );
+  background: color-mix(in srgb, var(--ts-c) 10%, var(--ts-surface));
 }
 
 .ts-qc-type.is-selected .ts-qc-type-icon {
@@ -1207,7 +1340,7 @@
 }
 
 .ts-qc-type.is-selected .ts-qc-type-label {
-  color: var(--ts-c);
+  color: var(--ts-ink);
 }
 
 .ts-qc-type:has(.ts-qc-radio:focus-visible) {
@@ -1215,7 +1348,8 @@
   outline-offset: 2px;
 }
 
-.ts-qc-type.is-soon {
+.ts-qc-type.is-soon,
+.ts-qc-type.is-soon[data-kind] {
   background: var(--ts-bg);
   border-style: dashed;
   box-shadow: none;
@@ -1245,11 +1379,89 @@
   height: 2.5rem;
   border-radius: 12px;
   background: color-mix(in srgb, var(--ts-c) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ts-c) 20%, transparent);
   color: var(--ts-c);
   transition:
-    background 180ms ease,
-    color 180ms ease,
-    transform 180ms ease;
+    background var(--lx-duration-base) var(--lx-ease),
+    color var(--lx-duration-base) var(--lx-ease),
+    transform var(--lx-duration-base) var(--lx-ease);
+}
+
+.ts-qc-type[data-kind="lesson"]::before {
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: var(--ts-c);
+}
+
+.ts-qc-type[data-kind="lesson"] .ts-qc-type-icon {
+  border-radius: 9px;
+}
+
+.ts-qc-type[data-kind="worksheet"] .ts-qc-type-icon {
+  border-radius: 7px;
+}
+
+.ts-qc-type[data-kind="game"] {
+  background:
+    radial-gradient(
+      110% 80% at 100% 0%,
+      color-mix(in srgb, var(--ts-c) 16%, transparent) 0%,
+      transparent 54%
+    ),
+    var(--ts-surface);
+}
+
+.ts-qc-type[data-kind="game"] .ts-qc-type-icon {
+  border-radius: 16px;
+}
+
+.ts-qc-type[data-kind="story"] {
+  background:
+    radial-gradient(
+      90% 70% at 8% 0%,
+      color-mix(in srgb, var(--ts-c) 14%, transparent) 0%,
+      transparent 56%
+    ),
+    var(--ts-surface);
+}
+
+.ts-qc-type[data-kind="story"] .ts-qc-type-icon {
+  border-radius: 14px 14px 14px 5px;
+}
+
+.ts-qc-type[data-kind="assessment"]::before {
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--ts-c);
+}
+
+.ts-qc-type[data-kind="assessment"] .ts-qc-type-icon {
+  border-radius: 7px;
+}
+
+.ts-qc-type[data-kind="presentation"]::before {
+  inset: 0.65rem 0.65rem auto auto;
+  width: 1rem;
+  height: 0.75rem;
+  border-radius: 2px;
+  box-shadow:
+    3px -3px 0 -1px color-mix(in srgb, var(--ts-c) 42%, transparent),
+    0 0 0 1.5px color-mix(in srgb, var(--ts-c) 52%, transparent);
+}
+
+.ts-qc-type[data-kind="presentation"] .ts-qc-type-icon {
+  border-radius: 6px 12px;
+}
+
+.ts-qc-type.is-selected[data-kind="game"],
+.ts-qc-type.is-selected[data-kind="story"] {
+  background:
+    radial-gradient(
+      110% 80% at 100% 0%,
+      color-mix(in srgb, var(--ts-c) 22%, transparent) 0%,
+      transparent 54%
+    ),
+    color-mix(in srgb, var(--ts-c) 10%, var(--ts-surface));
 }
 
 .ts-qc-type.is-soon .ts-qc-type-icon {
@@ -1259,6 +1471,17 @@
 
 .ts-qc-type-body {
   min-width: 0;
+  padding-right: 4.25rem;
+}
+
+.ts-qc-type-kind {
+  display: block;
+  margin-bottom: 0.12rem;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ts-c);
 }
 
 .ts-qc-type-label {
@@ -1268,6 +1491,7 @@
   gap: 0.4rem;
   font-size: 0.9375rem;
   font-weight: 600;
+  letter-spacing: -0.015em;
   color: var(--ts-ink);
 }
 
@@ -1489,23 +1713,21 @@
   padding: 1rem 1.1rem;
   border-radius: var(--lx-radius-lg);
   border: 1px solid color-mix(in srgb, var(--ts-p) 16%, var(--ts-line));
-  background: linear-gradient(
-    170deg,
-    color-mix(in srgb, var(--ts-p) 4%, var(--ts-surface)) 0%,
-    var(--ts-surface) 55%
-  );
+  background: var(--ts-surface);
   box-shadow: var(--ts-shadow);
   text-decoration: none;
   color: inherit;
   transition:
     border-color var(--lx-duration-base) var(--lx-ease),
     box-shadow var(--lx-duration-base) var(--lx-ease),
-    transform var(--lx-duration-base) var(--lx-ease);
+    transform var(--lx-duration-base) var(--lx-ease),
+    background var(--lx-duration-base) var(--lx-ease);
 }
 
 .ts-project-card::before {
   content: "";
   position: absolute;
+  pointer-events: none;
   inset: 0 auto 0 0;
   width: 3px;
   background: var(--ts-p);
@@ -1521,6 +1743,86 @@
 .ts-project-card:focus-visible {
   outline: 2px solid var(--ts-p);
   outline-offset: 2px;
+}
+
+.ts-project-card[data-kind="lesson"] {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--ts-p) 7%, var(--ts-surface)) 0%,
+    var(--ts-surface) 40%
+  );
+}
+
+.ts-project-card[data-kind="lesson"]::before {
+  width: 4px;
+  opacity: 1;
+}
+
+.ts-project-card[data-kind="game"] {
+  background:
+    radial-gradient(
+      120% 80% at 100% 0%,
+      color-mix(in srgb, var(--ts-p) 16%, transparent) 0%,
+      transparent 52%
+    ),
+    var(--ts-surface);
+}
+
+.ts-project-card[data-kind="game"]::before {
+  inset: 0 0 auto auto;
+  width: 2.8rem;
+  height: 2.8rem;
+  background: linear-gradient(
+    225deg,
+    color-mix(in srgb, var(--ts-p) 50%, transparent) 0%,
+    transparent 70%
+  );
+  opacity: 1;
+}
+
+.ts-project-card[data-kind="story"] {
+  background:
+    radial-gradient(
+      90% 70% at 12% 0%,
+      color-mix(in srgb, var(--ts-p) 14%, transparent) 0%,
+      transparent 56%
+    ),
+    var(--ts-surface);
+}
+
+.ts-project-card[data-kind="story"]::before {
+  inset: auto 0 0 0;
+  width: auto;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--ts-p) 0%,
+    color-mix(in srgb, var(--ts-p) 18%, transparent) 100%
+  );
+  opacity: 1;
+}
+
+.ts-project-card[data-kind="assessment"]::before {
+  inset: 0 0 auto 0;
+  width: auto;
+  height: 3px;
+  opacity: 1;
+}
+
+.ts-project-card[data-kind="presentation"]::before {
+  inset: 0.65rem 0.65rem auto auto;
+  width: 1rem;
+  height: 0.75rem;
+  background: transparent;
+  border-radius: 2px;
+  box-shadow:
+    3px -3px 0 -1px color-mix(in srgb, var(--ts-p) 42%, transparent),
+    0 0 0 1.5px color-mix(in srgb, var(--ts-p) 52%, transparent);
+  opacity: 1;
+}
+
+.ts-project-card[data-kind="worksheet"] {
+  background: color-mix(in srgb, var(--ts-p) 4%, var(--ts-surface));
 }
 
 .ts-project-top {
@@ -1542,15 +1844,58 @@
   background: color-mix(in srgb, var(--ts-p) 14%, var(--ts-surface));
   border: 1px solid color-mix(in srgb, var(--ts-p) 26%, transparent);
   color: var(--ts-p);
+  transition:
+    background var(--lx-duration-base) var(--lx-ease),
+    color var(--lx-duration-base) var(--lx-ease);
 }
 
+.ts-project-card[data-kind="lesson"] .ts-project-icon {
+  border-radius: 9px;
+}
+
+.ts-project-card[data-kind="game"] .ts-project-icon {
+  border-radius: 16px;
+}
+
+.ts-project-card[data-kind="story"] .ts-project-icon {
+  border-radius: 14px 14px 14px 5px;
+}
+
+.ts-project-card[data-kind="assessment"] .ts-project-icon {
+  border-radius: 7px;
+}
+
+.ts-project-card[data-kind="presentation"] .ts-project-icon {
+  border-radius: 6px 12px;
+}
+
+.ts-project-card[data-kind="worksheet"] .ts-project-icon {
+  border-radius: 7px;
+}
+
+.ts-project-card:hover .ts-project-icon,
+.ts-project-card:focus-visible .ts-project-icon {
+  background: var(--ts-p);
+  color: var(--lx-text-on-brand);
+}
+
+.ts-project-kind,
 .ts-project-flag {
   padding: 0.12rem 0.55rem;
   white-space: nowrap;
   border-radius: 999px;
   background: color-mix(in srgb, var(--ts-p) 12%, transparent);
   color: var(--ts-p);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ts-project-flag {
   font-size: 0.6875rem;
+  letter-spacing: 0.02em;
+  text-transform: none;
   font-weight: 600;
 }
 
@@ -2175,7 +2520,9 @@
     transform: none;
   }
 
-  .ts-create-card:hover .ts-create-icon {
+  .ts-create-card:hover .ts-create-icon,
+  .ts-create-card:hover .ts-create-meta,
+  .ts-project-card:hover .ts-project-icon {
     transform: none;
   }
 

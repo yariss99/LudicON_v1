@@ -1,18 +1,8 @@
-import {
-  ArrowLeft,
-  ArrowRight,
-  Check,
-  ClipboardCheck,
-  FileText,
-  Gamepad2,
-  NotebookPen,
-  Presentation,
-  ScrollText,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { useMemo, useState, type CSSProperties, type FormEvent } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useProjects } from "../../../context/ProjectContext";
-import { CREATE_OPTIONS } from "../constants/navigation";
+import { CREATE_ICONS, CREATE_OPTIONS } from "../constants/navigation";
 import { useTeacherStudio } from "../context/TeacherStudioContext";
 import type { CreateOption, CreateOptionId } from "../types";
 
@@ -21,15 +11,6 @@ import type { CreateOption, CreateOptionId } from "../types";
 function accentStyle(option: CreateOption): CSSProperties {
   return { "--ts-c": `var(${option.accentToken})` } as CSSProperties;
 }
-
-const ICONS: Record<CreateOptionId, typeof NotebookPen> = {
-  lesson: NotebookPen,
-  worksheet: FileText,
-  game: Gamepad2,
-  story: ScrollText,
-  assessment: ClipboardCheck,
-  presentation: Presentation,
-};
 
 function isSupported(option: CreateOption): boolean {
   return option.builderPath !== null;
@@ -59,7 +40,7 @@ export function StudioQuickCreatePage() {
     [selectedId],
   );
 
-  const SelectedIcon = selected ? ICONS[selected.id] : null;
+  const SelectedIcon = selected ? CREATE_ICONS[selected.id] : null;
 
   const trimmedTitle = title.trim();
   const duplicate = trimmedTitle.length > 0 && isTitleTaken(trimmedTitle);
@@ -108,7 +89,7 @@ export function StudioQuickCreatePage() {
         <legend className="ts-qc-legend">Tipul materialului</legend>
         <div className="ts-qc-type-grid">
           {CREATE_OPTIONS.map((option) => {
-            const Icon = ICONS[option.id];
+            const Icon = CREATE_ICONS[option.id];
             const supported = isSupported(option);
             const checked = selectedId === option.id;
 
@@ -120,6 +101,7 @@ export function StudioQuickCreatePage() {
                   checked ? "is-selected" : "",
                   supported ? "" : "is-soon",
                 ].join(" ")}
+                data-kind={option.id}
                 style={accentStyle(option)}
               >
                 <input
@@ -138,7 +120,8 @@ export function StudioQuickCreatePage() {
                   <Icon size={20} strokeWidth={1.75} />
                 </span>
                 <span className="ts-qc-type-body">
-                  <span className="ts-qc-type-label">{option.label}</span>
+                  <span className="ts-qc-type-kind">{option.label}</span>
+                  <span className="ts-qc-type-label">{option.tagline}</span>
                   <span className="ts-qc-type-desc">{option.description}</span>
                 </span>
 

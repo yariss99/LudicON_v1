@@ -4,7 +4,26 @@ import { Link } from "react-router-dom";
 import { getProjectColor } from "../../projects/constants";
 import { getProjectIcon } from "../../projects/iconMap";
 import { formatRelativeTime } from "../../../utils/date";
-import type { Project } from "../../../types/project";
+import type { Project, ProjectResourceType } from "../../../types/project";
+import type { CreateOptionId } from "../types";
+
+const CREATIVE_KINDS: readonly ProjectResourceType[] = [
+  "lesson",
+  "game",
+  "story",
+  "assessment",
+  "presentation",
+  "worksheet",
+];
+
+/** First real artefact the teacher is already building — never invented. */
+function projectCreativeKind(project: Project): CreateOptionId | undefined {
+  const hit = project.resources.find(
+    (resource) =>
+      resource.status !== "empty" && CREATIVE_KINDS.includes(resource.type),
+  );
+  return hit?.type as CreateOptionId | undefined;
+}
 
 /**
  * Canonical project destination. Keeping it inside the shared card is what
@@ -31,6 +50,7 @@ export function ProjectCard({
 }: ProjectCardProps) {
   const Icon = getProjectIcon(project.icon);
   const swatch = getProjectColor(project.color).swatch;
+  const kind = projectCreativeKind(project);
 
   // Only render metadata the project actually has.
   const context = [project.subject, project.grade]
@@ -42,11 +62,16 @@ export function ProjectCard({
     .filter((resource) => resource.status !== "empty")
     .slice(0, 3);
 
+  const leadTag = tags[0];
+  const shownAsKind = !featured && Boolean(leadTag);
+  const listTags = shownAsKind ? tags.slice(1) : tags;
+
   return (
     <div className={["ts-project-cell", featured ? "is-featured" : ""].join(" ")}>
       <Link
         to={projectHref(project)}
         className="ts-project-card"
+        data-kind={kind}
         onClick={onOpen}
         style={{ "--ts-p": swatch } as CSSProperties}
       >
@@ -56,6 +81,8 @@ export function ProjectCard({
           </span>
           {featured ? (
             <span className="ts-project-flag">Ultimul proiect</span>
+          ) : leadTag ? (
+            <span className="ts-project-kind">{leadTag.label}</span>
           ) : null}
         </span>
 
@@ -63,7 +90,7 @@ export function ProjectCard({
 
         {context ? <span className="ts-project-meta">{context}</span> : null}
 
-        {tags.length > 0 || project.favorite || project.archived ? (
+        {listTags.length > 0 || project.favorite || project.archived ? (
           <span className="ts-project-tags">
             {project.favorite ? (
               <span className="ts-project-tag is-fav">Favorit</span>
@@ -71,7 +98,7 @@ export function ProjectCard({
             {project.archived ? (
               <span className="ts-project-tag">Arhivat</span>
             ) : null}
-            {tags.map((resource) => (
+            {listTags.map((resource) => (
               <span key={resource.id} className="ts-project-tag">
                 {resource.label}
               </span>
@@ -84,7 +111,7 @@ export function ProjectCard({
             Actualizat {formatRelativeTime(project.updatedAt)}
           </time>
           <span className="ts-project-go">
-            {featured ? "Continuă" : null}
+            {featured ? "Continuă lucrul" : "Deschide"}
             <ArrowRight size={14} aria-hidden />
           </span>
         </span>

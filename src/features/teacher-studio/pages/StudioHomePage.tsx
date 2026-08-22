@@ -1,13 +1,4 @@
-import {
-  ArrowRight,
-  ClipboardCheck,
-  FileText,
-  Gamepad2,
-  NotebookPen,
-  Presentation,
-  ScrollText,
-  Sparkles,
-} from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import { useProjects } from "../../../context/ProjectContext";
@@ -18,6 +9,7 @@ import { StudioHeroArt } from "../components/StudioHeroArt";
 import {
   COPILOT_ACTIONS,
   COPILOT_PROMPTS,
+  CREATE_ICONS,
   CREATE_OPTIONS,
   QUICK_CREATE_PATH,
 } from "../constants/navigation";
@@ -26,16 +18,7 @@ import {
   useStudioHomeData,
   useTeacherStudio,
 } from "../context/TeacherStudioContext";
-import type { ActivityKind, CreateOption, CreateOptionId } from "../types";
-
-const CREATE_ICONS: Record<CreateOptionId, typeof NotebookPen> = {
-  lesson: NotebookPen,
-  worksheet: FileText,
-  game: Gamepad2,
-  story: ScrollText,
-  assessment: ClipboardCheck,
-  presentation: Presentation,
-};
+import type { ActivityKind, CreateOption } from "../types";
 
 const ACTIVITY_LABELS: Record<ActivityKind, string> = {
   opened: "Deschis recent",
@@ -266,13 +249,14 @@ function CreateCard({ option }: { option: CreateOption }) {
       <span className="ts-create-icon" aria-hidden>
         <Icon size={20} strokeWidth={1.75} />
       </span>
-      <span className="ts-create-label">
+      <span className="ts-create-kind">
         {option.label}
         {!href ? <span className="ts-create-badge">În curând</span> : null}
       </span>
+      <span className="ts-create-title">{option.tagline}</span>
       <span className="ts-create-desc">{option.description}</span>
       <span className="ts-create-meta">
-        {href ? option.actionLabel : "Disponibil în curând"}
+        {option.actionLabel}
         {href ? <ArrowRight size={13} aria-hidden /> : null}
       </span>
     </>
@@ -284,14 +268,24 @@ function CreateCard({ option }: { option: CreateOption }) {
 
   if (!href) {
     return (
-      <div className="ts-create-card is-soon" style={accent}>
+      <div
+        className="ts-create-card is-soon"
+        data-kind={option.id}
+        style={accent}
+        aria-disabled="true"
+      >
         {body}
       </div>
     );
   }
 
   return (
-    <Link to={href} className="ts-create-card" style={accent}>
+    <Link
+      to={href}
+      className="ts-create-card"
+      data-kind={option.id}
+      style={accent}
+    >
       {body}
     </Link>
   );
