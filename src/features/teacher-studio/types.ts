@@ -27,6 +27,8 @@ export type CreateOption = {
   readonly id: CreateOptionId;
   readonly label: string;
   readonly description: string;
+  /** Domain accent from the LudicON foundation, e.g. `--lx-lesson`. */
+  readonly accentToken: string;
   /** Short reassurance shown once this type is chosen. */
   readonly hint: string;
   /** Real builder route; needs `/:projectId` appended. Null when none exists. */

@@ -11,7 +11,6 @@ import {
 import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import { useProjects } from "../../../context/ProjectContext";
-import { getProjectColor } from "../../projects/constants";
 import { useTeacherAssistant } from "../../teacher-assistant/hooks/useTeacherAssistant";
 import { formatRelativeTime } from "../../../utils/date";
 import { ProjectCard } from "../components/ProjectCard";
@@ -254,7 +253,7 @@ function CreateCard({ option }: { option: CreateOption }) {
   );
 
   const accent = {
-    "--ts-c": getProjectColor(option.color).swatch,
+    "--ts-c": `var(${option.accentToken})`,
   } as CSSProperties;
 
   if (!href) {

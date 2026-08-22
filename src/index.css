@@ -21,6 +21,8 @@
   --color-prima-muted: #64748b;
 }
 
+/* LudicON identity foundation — the semantic layer other tokens map onto. */
+@import "./styles/ludicon-tokens.css";
 @import "./styles/prima-design-tokens.css";
 @import "./styles/variables.css";
 @import "./styles/buttons.css";

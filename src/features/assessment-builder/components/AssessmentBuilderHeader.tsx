@@ -3,6 +3,14 @@ import { formatRelativeTime } from "../../../utils/date";
 import { ASSESSMENT_KINDS } from "../constants";
 import { useAssessmentBuilder } from "../hooks/useAssessmentBuilder";
 import { lessonBuilderRepository } from "../../lesson-builder/services/lessonBuilderRepository";
+import type { AssessmentStatus } from "../types";
+
+const STATUS_LABELS: Record<AssessmentStatus, string> = {
+  draft: "Ciornă",
+  validated: "Verificat",
+  published: "Publicat",
+  archived: "Arhivat",
+};
 
 export function AssessmentBuilderHeader() {
   const {
@@ -51,7 +59,9 @@ export function AssessmentBuilderHeader() {
           <span className="ab-chip">{assessment.subject}</span>
           <span className="ab-chip">{assessment.grade}</span>
           <span className="ab-chip">v{assessment.version}</span>
-          <span className="ab-chip">{assessment.status}</span>
+          <span className={`lx-badge lx-badge-${assessment.status}`}>
+            {STATUS_LABELS[assessment.status]}
+          </span>
           <span className="ab-chip">
             {saving
               ? "Se salvează…"

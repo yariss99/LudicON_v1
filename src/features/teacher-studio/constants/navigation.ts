@@ -143,6 +143,7 @@ export const STUDIO_NAV_GROUPS: readonly StudioNavGroup[] = [
 export const CREATE_OPTIONS: readonly CreateOption[] = [
   {
     id: "lesson",
+    accentToken: "--lx-lesson",
     label: "Lecție",
     description: "Construiește o experiență de învățare.",
     hint: "Pregătim spațiul în care vei construi lecția.",
@@ -155,6 +156,7 @@ export const CREATE_OPTIONS: readonly CreateOption[] = [
   },
   {
     id: "worksheet",
+    accentToken: "--lx-worksheet",
     label: "Fișă de lucru",
     description: "Pregătește activități pentru elevii tăi.",
     hint: "Va veni în curând în atelier.",
@@ -167,6 +169,7 @@ export const CREATE_OPTIONS: readonly CreateOption[] = [
   },
   {
     id: "game",
+    accentToken: "--lx-game",
     label: "Joc educativ",
     description: "Transformă exersarea într-o provocare.",
     hint: "Alege punctul de plecare pentru jocul tău.",
@@ -179,6 +182,7 @@ export const CREATE_OPTIONS: readonly CreateOption[] = [
   },
   {
     id: "story",
+    accentToken: "--lx-story",
     label: "Poveste",
     description: "Construiește o experiență narativă de învățare.",
     hint: "Pornim cu ideea ta, apoi construiești povestea.",
@@ -191,6 +195,7 @@ export const CREATE_OPTIONS: readonly CreateOption[] = [
   },
   {
     id: "assessment",
+    accentToken: "--lx-assessment",
     label: "Evaluare",
     description: "Creează și ajustează evaluări pas cu pas.",
     hint: "Pregătim spațiul în care vei construi evaluarea.",
@@ -203,6 +208,7 @@ export const CREATE_OPTIONS: readonly CreateOption[] = [
   },
   {
     id: "presentation",
+    accentToken: "--lx-presentation",
     label: "Prezentare",
     description: "Organizează ideile într-un material vizual.",
     hint: "Pregătim suportul pe care îl vei completa.",

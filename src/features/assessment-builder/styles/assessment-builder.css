@@ -3,31 +3,34 @@
  * Scoped to .assessment-builder
  */
 
+/* Local names map onto the LudicON foundation; no raw hex lives here.
+   The builder now carries the brand blue like the rest of the platform, which
+   frees teal to mean AI assistance consistently. */
 .assessment-builder {
-  --ab-bg: #f5f7fa;
-  --ab-surface: #ffffff;
-  --ab-ink: #0f172a;
-  --ab-muted: #64748b;
-  --ab-faint: #94a3b8;
-  --ab-line: #e7ebf0;
-  --ab-accent: #0f766e;
-  --ab-accent-soft: #f0fdfa;
-  --ab-ok: #047857;
-  --ab-ok-soft: #ecfdf5;
-  --ab-warn: #b45309;
-  --ab-warn-soft: #fffbeb;
-  --ab-danger: #b91c1c;
-  --ab-danger-soft: #fef2f2;
-  --ab-radius: 14px;
-  --ab-font-display: "Source Serif 4", "Iowan Old Style", Palatino, serif;
-  --ab-font-ui: "DM Sans", "Segoe UI", sans-serif;
+  --ab-bg: var(--lx-bg);
+  --ab-surface: var(--lx-surface);
+  --ab-ink: var(--lx-text);
+  --ab-muted: var(--lx-text-muted);
+  --ab-faint: var(--lx-text-subtle);
+  --ab-line: var(--lx-border);
+  --ab-accent: var(--lx-brand);
+  --ab-accent-soft: var(--lx-brand-soft);
+  --ab-ai: var(--lx-ai);
+  --ab-ai-soft: var(--lx-ai-soft);
+  --ab-ok: var(--lx-success);
+  --ab-ok-soft: var(--lx-success-soft);
+  --ab-warn: var(--lx-warning);
+  --ab-warn-soft: var(--lx-warning-soft);
+  --ab-danger: var(--lx-danger);
+  --ab-danger-soft: var(--lx-danger-soft);
+  --ab-radius: var(--lx-radius-md);
+  --ab-font-display: var(--lx-font-display);
+  --ab-font-ui: var(--lx-font-sans);
   --ab-sidebar: 220px;
   --ab-rail: 310px;
 
   min-height: 100vh;
-  background:
-    radial-gradient(ellipse 70% 45% at 100% 0%, #dff5f1 0%, transparent 55%),
-    var(--ab-bg);
+  background: var(--ab-bg);
   color: var(--ab-ink);
   font-family: var(--ab-font-ui);
 }
@@ -649,6 +652,21 @@
   width: 100%;
   justify-content: flex-start;
   text-align: left;
+}
+
+/* AI assistance reads as teal help, never as the teacher's primary action. */
+.ab-btn-rail {
+  border-color: color-mix(in srgb, var(--ab-ai) 22%, var(--ab-line));
+  color: var(--ab-ai);
+}
+
+.ab-btn-rail:hover {
+  border-color: var(--ab-ai);
+  background: var(--ab-ai-soft);
+}
+
+.ab-rail-subgroup-title {
+  color: var(--ab-ai);
 }
 
 .ab-btn-add {

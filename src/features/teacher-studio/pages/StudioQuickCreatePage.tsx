@@ -12,14 +12,14 @@ import {
 import { useMemo, useState, type CSSProperties, type FormEvent } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useProjects } from "../../../context/ProjectContext";
-import { getProjectColor } from "../../projects/constants";
 import { CREATE_OPTIONS } from "../constants/navigation";
 import { useTeacherStudio } from "../context/TeacherStudioContext";
 import type { CreateOption, CreateOptionId } from "../types";
 
-/** Accent comes from the real project colour registry, not a parallel palette. */
+/** Accent comes from the LudicON domain tokens, so a type reads the same
+ *  everywhere it is offered. A project's own colour is a separate concern. */
 function accentStyle(option: CreateOption): CSSProperties {
-  return { "--ts-c": getProjectColor(option.color).swatch } as CSSProperties;
+  return { "--ts-c": `var(${option.accentToken})` } as CSSProperties;
 }
 
 const ICONS: Record<CreateOptionId, typeof NotebookPen> = {

@@ -3,22 +3,22 @@
  * Scoped to .teacher-studio
  */
 
+/* Local names map onto the LudicON foundation; no raw hex lives here. */
 .teacher-studio {
-  --ts-bg: #f7f8fa;
-  --ts-surface: #ffffff;
-  --ts-ink: #0f172a;
-  --ts-muted: #64748b;
-  --ts-faint: #94a3b8;
-  --ts-line: #e8ebf0;
-  --ts-accent: #1d4ed8;
-  --ts-accent-soft: #eff6ff;
+  --ts-bg: var(--lx-bg);
+  --ts-surface: var(--lx-surface);
+  --ts-ink: var(--lx-text);
+  --ts-muted: var(--lx-text-muted);
+  --ts-faint: var(--lx-text-subtle);
+  --ts-line: var(--lx-border);
+  --ts-accent: var(--lx-brand);
+  --ts-accent-soft: var(--lx-brand-soft);
   --ts-sidebar: 248px;
   --ts-assistant: 360px;
-  --ts-radius: 16px;
-  --ts-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
-  --ts-font-display: "Source Serif 4", "Iowan Old Style", "Palatino Linotype",
-    Palatino, serif;
-  --ts-font-ui: "DM Sans", "Segoe UI", sans-serif;
+  --ts-radius: var(--lx-radius-md);
+  --ts-shadow: var(--lx-shadow-sm);
+  --ts-font-display: var(--lx-font-display);
+  --ts-font-ui: var(--lx-font-sans);
 
   min-height: 100vh;
   background: var(--ts-bg);
@@ -1437,10 +1437,10 @@
 .ts-copilot {
   padding: 1.25rem 1.35rem 1.35rem;
   border-radius: var(--ts-radius);
-  border: 1px solid color-mix(in srgb, var(--ts-accent) 18%, var(--ts-line));
+  border: 1px solid color-mix(in srgb, var(--lx-ai) 18%, var(--ts-line));
   background: linear-gradient(
     180deg,
-    var(--ts-accent-soft) 0%,
+    var(--lx-ai-soft) 0%,
     var(--ts-surface) 75%
   );
 }
@@ -1460,8 +1460,8 @@
   height: 2.25rem;
   border-radius: 12px;
   background: var(--ts-surface);
-  color: var(--ts-accent);
-  border: 1px solid var(--ts-line);
+  color: var(--lx-ai);
+  border: 1px solid color-mix(in srgb, var(--lx-ai) 25%, var(--ts-line));
 }
 
 .ts-copilot-actions {
@@ -1525,12 +1525,12 @@
 }
 
 .ts-copilot-chip:hover {
-  border-color: color-mix(in srgb, var(--ts-accent) 40%, var(--ts-line));
-  color: var(--ts-accent);
+  border-color: color-mix(in srgb, var(--lx-ai) 45%, var(--ts-line));
+  color: var(--lx-ai);
 }
 
 .ts-copilot-chip:focus-visible {
-  outline: 2px solid var(--ts-accent);
+  outline: 2px solid var(--lx-ai);
   outline-offset: 2px;
 }
 
