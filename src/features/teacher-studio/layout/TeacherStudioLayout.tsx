@@ -7,7 +7,8 @@ import { StudioSidebar } from "./StudioSidebar";
 import { StudioTopBar } from "./StudioTopBar";
 
 function StudioShell() {
-  const { assistantOpen, mobileNavOpen, setMobileNavOpen } = useTeacherStudio();
+  const { assistantOpen, mobileNavOpen, setMobileNavOpen, sidebarCollapsed } =
+    useTeacherStudio();
   useStudioKeyboard();
 
   return (
@@ -25,6 +26,7 @@ function StudioShell() {
         className={[
           "ts-shell",
           assistantOpen ? "has-assistant" : "",
+          sidebarCollapsed ? "is-collapsed" : "",
         ].join(" ")}
       >
         <StudioSidebar onNavigate={() => setMobileNavOpen(false)} />

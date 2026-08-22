@@ -1,3 +1,10 @@
+/**
+ * Legacy LUDI variables kept for older stylesheets (--primary, --surface,
+ * --border, --transition). Declarations that collided with
+ * prima-design-tokens.css (--space-*, --radius-*, --shadow-soft/hover) were
+ * removed so the documented tokens win. New work should use --lx-* from
+ * ludicon-tokens.css.
+ */
 :root {
   /* ===== BRAND COLORS ===== */
 
@@ -22,27 +29,11 @@
   --danger: #ef4444;
 
   /* ===== RADIUS ===== */
-
-  --radius-sm: 12px;
-  --radius-md: 20px;
-  --radius-lg: 24px;
-
   /* ===== SHADOW ===== */
-
-  --shadow-soft: 0 4px 24px rgba(79, 70, 229, 0.08);
   --shadow-card: 0 8px 32px rgba(15, 23, 42, 0.06);
-  --shadow-hover: 0 16px 48px rgba(79, 70, 229, 0.14);
   --shadow-header: 0 4px 24px rgba(15, 23, 42, 0.06);
 
   /* ===== SPACING ===== */
-
-  --space-1: 8px;
-  --space-2: 16px;
-  --space-3: 24px;
-  --space-4: 32px;
-  --space-5: 48px;
-  --space-6: 64px;
-
   /* ===== TRANSITIONS ===== */
 
   --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);

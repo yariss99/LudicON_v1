@@ -28,12 +28,17 @@ type TeacherStudioContextValue = {
   readonly toggleAssistant: () => void;
   readonly mobileNavOpen: boolean;
   readonly setMobileNavOpen: (open: boolean) => void;
+  readonly sidebarCollapsed: boolean;
+  readonly toggleSidebar: () => void;
   readonly contextSnapshot: StudioContextSnapshot;
   readonly unreadNotifications: number;
   readonly markNotificationRead: (id: string) => void;
   readonly markAllNotificationsRead: () => void;
   readonly notificationIdsRead: ReadonlySet<string>;
 };
+
+/** Keep in sync with the `.ts-assistant` overlay breakpoint in the stylesheet. */
+const NARROW_QUERY = "(max-width: 1100px)";
 
 const TeacherStudioContext = createContext<TeacherStudioContextValue | null>(
   null,
@@ -45,8 +50,13 @@ export function TeacherStudioProvider({ children }: { children: ReactNode }) {
     const first = projects.find((p) => !p.archived);
     return first?.id ?? null;
   });
-  const [assistantOpen, setAssistantOpen] = useState(true);
+  // Mirrors the stylesheet breakpoint where .ts-assistant becomes a fixed
+  // overlay. Below it the panel must not be open unless the teacher asks.
+  const [assistantOpen, setAssistantOpen] = useState(
+    () => typeof window === "undefined" || !window.matchMedia(NARROW_QUERY).matches,
+  );
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [readIds, setReadIds] = useState<Set<string>>(() => new Set());
 
   useEffect(() => {
@@ -63,6 +73,23 @@ export function TeacherStudioProvider({ children }: { children: ReactNode }) {
 
   const toggleAssistant = useCallback(() => {
     setAssistantOpen((v) => !v);
+  }, []);
+
+  const toggleSidebar = useCallback(() => {
+    setSidebarCollapsed((v) => !v);
+  }, []);
+
+  // Closing on the way down keeps the overlay from covering the workspace;
+  // going wide again leaves the teacher's own choice alone.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const media = window.matchMedia(NARROW_QUERY);
+    const sync = (event: MediaQueryList | MediaQueryListEvent) => {
+      if (event.matches) setAssistantOpen(false);
+    };
+    sync(media);
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
   }, []);
 
   const markNotificationRead = useCallback((id: string) => {
@@ -105,6 +132,8 @@ export function TeacherStudioProvider({ children }: { children: ReactNode }) {
       toggleAssistant,
       mobileNavOpen,
       setMobileNavOpen,
+      sidebarCollapsed,
+      toggleSidebar,
       contextSnapshot,
       unreadNotifications,
       markNotificationRead,
@@ -116,6 +145,8 @@ export function TeacherStudioProvider({ children }: { children: ReactNode }) {
       assistantOpen,
       toggleAssistant,
       mobileNavOpen,
+      sidebarCollapsed,
+      toggleSidebar,
       contextSnapshot,
       unreadNotifications,
       markNotificationRead,

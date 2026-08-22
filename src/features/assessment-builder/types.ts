@@ -70,6 +70,11 @@ export type AssessmentSectionId =
   | "analytics"
   | "export";
 
+/** The four high-level stages a teacher moves through. Presentation only. */
+export type AssessmentStageId = "about" | "content" | "grading" | "finish";
+
+export type AssessmentStageStatus = "done" | "started" | "todo";
+
 export type AssessmentChoice = {
   readonly id: string;
   readonly label: string;
