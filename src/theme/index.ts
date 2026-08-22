@@ -1,4 +1,5 @@
-export { ThemeProvider, useTheme } from "./ThemeProvider";
+export { ThemeProvider } from "./ThemeProvider";
+export { useTheme } from "./ThemeContext";
 export { ThemeToggle } from "./ThemeToggle";
 export {
   applyTheme,

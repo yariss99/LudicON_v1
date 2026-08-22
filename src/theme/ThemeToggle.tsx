@@ -1,6 +1,6 @@
 import { Moon, Sun } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
-import { useTheme } from "./ThemeProvider";
+import { useTheme } from "./ThemeContext";
 import type { AppTheme } from "./theme";
 
 type ThemeToggleProps = {
