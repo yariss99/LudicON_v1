@@ -1,7 +1,8 @@
-import { Bell, PanelLeft, PanelRight, Search, Settings, Sparkles } from "lucide-react";
+import { Bell, PanelLeft, PanelRight, Search, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ThemeToggle } from "../../../theme";
+import { AccountMenu } from "../components/AccountMenu";
 import { useTeacherStudio } from "../context/TeacherStudioContext";
 
 export function StudioTopBar() {
@@ -110,13 +111,7 @@ export function StudioTopBar() {
 
         <ThemeToggle />
 
-        <Link
-          to="/settings"
-          className="ts-icon-btn ts-icon-only"
-          aria-label="Setări"
-        >
-          <Settings size={15} aria-hidden />
-        </Link>
+        <AccountMenu />
 
         <button
           type="button"

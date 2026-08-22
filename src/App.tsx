@@ -3,6 +3,16 @@ import "./App.css";
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 
+import {
+  AuthProvider,
+  AuthReady,
+  GuestOnly,
+  LoginPage,
+  RegisterPage,
+  RequireAuth,
+  WelcomePage,
+  useAuth,
+} from "./features/auth";
 import { ProjectProvider } from "./context/ProjectContext";
 import {
   TeacherStudioLayout,
@@ -144,14 +154,29 @@ function RouteFallback() {
   );
 }
 
+function AuthenticatedChrome() {
+  const { status } = useAuth();
+  if (status !== "authenticated") return null;
+  return <FloatingAssistant />;
+}
+
 function App() {
   return (
+    <AuthProvider>
     <ProjectProvider>
       <BrowserRouter>
+        <AuthReady>
         <TeacherAssistantProvider>
-          <FloatingAssistant />
+          <AuthenticatedChrome />
           <Suspense fallback={<RouteFallback />}>
             <Routes>
+            <Route element={<GuestOnly />}>
+              <Route path="/welcome" element={<WelcomePage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+            </Route>
+
+            <Route element={<RequireAuth />}>
             {/* Teacher Studio — primary workspace */}
             <Route element={<TeacherStudioLayout />}>
               <Route index element={<StudioHomePage />} />
@@ -279,11 +304,14 @@ function App() {
             <Route path="/dashboard" element={<Navigate to="/" replace />} />
             <Route path="/dashboard-legacy" element={<Navigate to="/" replace />} />
             <Route path="*" element={<Navigate to="/" replace />} />
+            </Route>
           </Routes>
           </Suspense>
         </TeacherAssistantProvider>
+        </AuthReady>
       </BrowserRouter>
     </ProjectProvider>
+    </AuthProvider>
   );
 }
 

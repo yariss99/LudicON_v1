@@ -438,6 +438,122 @@
   gap: 0.5rem;
 }
 
+.ts-account {
+  position: relative;
+}
+
+.ts-account-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.25rem;
+  padding: 0 0.55rem 0 0.2rem;
+  border-radius: 999px;
+  border: 1px solid var(--ts-line);
+  background: var(--ts-surface);
+  color: var(--ts-ink);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ts-account-btn:hover {
+  border-color: color-mix(in srgb, var(--ts-accent) 35%, var(--ts-line));
+}
+
+.ts-account-btn:focus-visible {
+  outline: 2px solid var(--ts-accent);
+  outline-offset: 2px;
+}
+
+.ts-account-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 999px;
+  background: var(--lx-brand);
+  color: var(--lx-text-on-brand);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.ts-account-name {
+  max-width: 8.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ts-account-menu {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  right: 0;
+  z-index: 50;
+  min-width: 13.5rem;
+  padding: 0.4rem;
+  border-radius: var(--lx-radius-md);
+  border: 1px solid var(--ts-line);
+  background: var(--ts-surface);
+  box-shadow: var(--lx-shadow-lg);
+}
+
+.ts-account-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin: 0;
+  padding: 0.45rem 0.6rem 0.55rem;
+}
+
+.ts-account-meta-name {
+  font-size: 0.8125rem;
+  font-weight: 650;
+}
+
+.ts-account-meta-email {
+  font-size: 0.6875rem;
+  color: var(--ts-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ts-account-item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ts-account-item:hover {
+  background: var(--lx-surface-hover);
+}
+
+.ts-account-item:focus-visible {
+  outline: 2px solid var(--ts-accent);
+  outline-offset: 1px;
+}
+
+@media (max-width: 720px) {
+  .ts-account-name {
+    display: none;
+  }
+}
+
 .ts-icon-btn {
   display: inline-flex;
   align-items: center;

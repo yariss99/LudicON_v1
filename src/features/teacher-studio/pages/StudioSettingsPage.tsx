@@ -1,9 +1,13 @@
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../auth/AuthContext";
 import { ThemeToggle } from "../../../theme";
 import { useTeacherStudio } from "../context/TeacherStudioContext";
 
 export function StudioSettingsPage() {
   const { teacher, assistantOpen, setAssistantOpen, contextSnapshot } =
     useTeacherStudio();
+  const { signOut } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -22,7 +26,7 @@ export function StudioSettingsPage() {
           <div>
             <div className="ts-row-title">{teacher.displayName}</div>
             <div className="ts-row-meta">
-              {teacher.schoolName ?? "Școală"} · {teacher.locale}
+              {teacher.email ?? teacher.schoolName ?? "Contul tău"}
             </div>
           </div>
         </div>
@@ -72,6 +76,29 @@ export function StudioSettingsPage() {
           </div>
         </div>
         <ThemeToggle variant="panel" />
+      </section>
+
+      <section className="ts-section ts-list" aria-labelledby="session-heading">
+        <h2 id="session-heading" className="ts-section-title">
+          Sesiune
+        </h2>
+        <div className="ts-row">
+          <div>
+            <div className="ts-row-title">Delogare</div>
+            <div className="ts-row-meta">
+              Închide sesiunea. Proiectele rămân pe acest dispozitiv.
+            </div>
+          </div>
+          <button
+            type="button"
+            className="ts-icon-btn"
+            onClick={() => {
+              void signOut().then(() => navigate("/welcome", { replace: true }));
+            }}
+          >
+            Delogare
+          </button>
+        </div>
       </section>
 
       <section className="ts-section ts-list" aria-labelledby="a11y-heading">

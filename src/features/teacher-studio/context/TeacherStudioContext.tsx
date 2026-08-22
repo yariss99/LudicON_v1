@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import { useProjects } from "../../../context/ProjectContext";
+import { useAuth } from "../../auth/AuthContext";
 import {
   buildActivityFromProjects,
   buildLibraryFromProjects,
@@ -17,10 +18,10 @@ import {
   buildTodaySchedule,
   STUDIO_TEACHER,
 } from "../data/studioDerivations";
-import type { StudioContextSnapshot } from "../types";
+import type { StudioContextSnapshot, StudioTeacherProfile } from "../types";
 
 type TeacherStudioContextValue = {
-  readonly teacher: typeof STUDIO_TEACHER;
+  readonly teacher: StudioTeacherProfile;
   readonly activeProjectId: string | null;
   readonly setActiveProjectId: (id: string | null) => void;
   readonly assistantOpen: boolean;
@@ -45,7 +46,18 @@ const TeacherStudioContext = createContext<TeacherStudioContextValue | null>(
 );
 
 export function TeacherStudioProvider({ children }: { children: ReactNode }) {
+  const { user } = useAuth();
   const { projects, getProject } = useProjects();
+  const teacher = useMemo<StudioTeacherProfile>(
+    () => ({
+      teacherId: user?.id ?? STUDIO_TEACHER.teacherId,
+      displayName: user?.displayName ?? STUDIO_TEACHER.displayName,
+      locale: STUDIO_TEACHER.locale,
+      schoolName: STUDIO_TEACHER.schoolName,
+      email: user?.email,
+    }),
+    [user],
+  );
   const [activeProjectId, setActiveProjectId] = useState<string | null>(() => {
     const first = projects.find((p) => !p.archived);
     return first?.id ?? null;
@@ -110,19 +122,19 @@ export function TeacherStudioProvider({ children }: { children: ReactNode }) {
 
   const contextSnapshot: StudioContextSnapshot = useMemo(
     () => ({
-      teacher: STUDIO_TEACHER,
+      teacher,
       activeProjectId,
       activeProjectTitle: activeProject?.title ?? null,
       workflowHint: activeProject
         ? "Continuă materialul din proiectul activ"
         : "Alege sau creează un proiect pentru a începe",
     }),
-    [activeProjectId, activeProject?.title],
+    [teacher, activeProjectId, activeProject?.title],
   );
 
   const value = useMemo<TeacherStudioContextValue>(
     () => ({
-      teacher: STUDIO_TEACHER,
+      teacher,
       activeProjectId,
       setActiveProjectId,
       assistantOpen,
@@ -139,6 +151,7 @@ export function TeacherStudioProvider({ children }: { children: ReactNode }) {
       notificationIdsRead: readIds,
     }),
     [
+      teacher,
       activeProjectId,
       assistantOpen,
       toggleAssistant,

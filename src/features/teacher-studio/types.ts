@@ -145,6 +145,7 @@ export type StudioTeacherProfile = {
   readonly displayName: string;
   readonly locale: string;
   readonly schoolName?: string;
+  readonly email?: string;
 };
 
 export type StudioContextSnapshot = {
