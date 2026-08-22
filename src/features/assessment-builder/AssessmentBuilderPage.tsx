@@ -13,6 +13,7 @@ import { AssessmentBuilderHeader } from "./components/AssessmentBuilderHeader";
 import { AssessmentSectionNav } from "./components/AssessmentSectionNav";
 import { AssessmentEditorPane } from "./components/AssessmentEditorPane";
 import { AssessmentSideRail } from "./components/AssessmentSideRail";
+import { AssessmentWorkflowBar } from "./components/AssessmentWorkflowBar";
 import "./styles/assessment-builder.css";
 
 function AssessmentBuilderShell() {
@@ -23,6 +24,7 @@ function AssessmentBuilderShell() {
         <div className="ab-body">
           <AssessmentSectionNav />
           <main className="ab-main">
+            <AssessmentWorkflowBar />
             <AssessmentEditorPane />
           </main>
           <AssessmentSideRail />

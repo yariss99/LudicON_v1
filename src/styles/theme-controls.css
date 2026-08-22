@@ -1,0 +1,193 @@
+/**
+ * Theme switcher — shared by the Studio header, Settings, and builders.
+ * Colours come from `--lx-*` so the control itself follows the active theme.
+ */
+
+input,
+textarea,
+select,
+button {
+  color-scheme: inherit;
+}
+
+::placeholder {
+  color: var(--lx-text-subtle);
+}
+
+.lx-theme {
+  position: relative;
+}
+
+.lx-theme-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 2.25rem;
+  min-width: 2.25rem;
+  padding: 0 0.7rem;
+  border-radius: var(--lx-radius-full);
+  border: 1px solid var(--lx-border);
+  background: var(--lx-surface);
+  color: var(--lx-text);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    border-color var(--lx-duration-base) var(--lx-ease),
+    background var(--lx-duration-base) var(--lx-ease),
+    color var(--lx-duration-base) var(--lx-ease);
+}
+
+.lx-theme-btn:hover {
+  border-color: color-mix(in srgb, var(--lx-brand) 35%, var(--lx-border));
+}
+
+.lx-theme-btn:focus-visible {
+  outline: 2px solid var(--lx-focus);
+  outline-offset: 2px;
+}
+
+.lx-theme-btn[aria-expanded="true"] {
+  background: var(--lx-brand-soft);
+  border-color: transparent;
+  color: var(--lx-brand);
+}
+
+.lx-theme-btn-label {
+  font-weight: 600;
+}
+
+.lx-theme.is-compact .lx-theme-btn-label {
+  display: none;
+}
+
+.lx-theme-menu {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  right: 0;
+  z-index: 50;
+  min-width: 11.5rem;
+  padding: 0.35rem;
+  border-radius: var(--lx-radius-md);
+  border: 1px solid var(--lx-border);
+  background: var(--lx-surface-raised);
+  box-shadow: var(--lx-shadow-lg);
+}
+
+.lx-theme-option {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: 100%;
+  min-height: 2.15rem;
+  padding: 0 0.65rem;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--lx-text);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+}
+
+.lx-theme-option:hover,
+.lx-theme-option:focus-visible {
+  background: var(--lx-surface-hover);
+  outline: none;
+}
+
+.lx-theme-option[aria-checked="true"] {
+  background: var(--lx-brand-soft);
+  color: var(--lx-brand);
+}
+
+.lx-theme-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.lx-theme-choice {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+  min-height: 5rem;
+  padding: 0.9rem 1rem;
+  border-radius: var(--lx-radius-md);
+  border: 1px solid var(--lx-border);
+  background: var(--lx-surface);
+  color: var(--lx-text);
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color var(--lx-duration-base) var(--lx-ease),
+    background var(--lx-duration-base) var(--lx-ease),
+    box-shadow var(--lx-duration-base) var(--lx-ease);
+}
+
+.lx-theme-choice[aria-pressed="true"] {
+  border-color: color-mix(in srgb, var(--lx-brand) 45%, var(--lx-border));
+  background: var(--lx-brand-soft);
+  box-shadow: 0 0 0 1px var(--lx-brand) inset;
+}
+
+.lx-theme-choice:hover {
+  border-color: color-mix(in srgb, var(--lx-brand) 30%, var(--lx-border));
+}
+
+.lx-theme-choice:focus-visible {
+  outline: 2px solid var(--lx-focus);
+  outline-offset: 2px;
+}
+
+.lx-theme-choice-label {
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.lx-theme-choice-meta {
+  font-size: 0.75rem;
+  color: var(--lx-text-muted);
+}
+
+@media (max-width: 720px) {
+  .lx-theme-btn-label {
+    display: none;
+  }
+
+  .lx-theme-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lx-fallback {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--lx-bg);
+  color: var(--lx-text);
+}
+
+.lx-fallback-bar {
+  border-radius: 999px;
+  background: var(--lx-surface-hover);
+}
+
+.lx-fallback-block {
+  border-radius: var(--lx-radius-xl);
+  background: color-mix(in srgb, var(--lx-surface-hover) 80%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lx-theme-btn,
+  .lx-theme-choice {
+    transition: none;
+  }
+}

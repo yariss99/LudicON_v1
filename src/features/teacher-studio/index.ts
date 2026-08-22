@@ -5,6 +5,7 @@
 
 export { TeacherStudioLayout } from "./layout/TeacherStudioLayout";
 export { StudioHomePage } from "./pages/StudioHomePage";
+export { StudioQuickCreatePage } from "./pages/StudioQuickCreatePage";
 export { StudioProjectsPage } from "./pages/StudioProjectsPage";
 export { StudioLibraryPage } from "./pages/StudioLibraryPage";
 export { StudioActivityPage } from "./pages/StudioActivityPage";

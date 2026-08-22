@@ -1,6 +1,8 @@
+import { Sparkles } from "lucide-react";
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useProjects } from "../../../context/ProjectContext";
+import { ProjectCard } from "../components/ProjectCard";
 import { useTeacherStudio } from "../context/TeacherStudioContext";
 
 type ProjectFilter = "all" | "favorites" | "recent" | "archived" | "templates";
@@ -8,7 +10,9 @@ type ProjectFilter = "all" | "favorites" | "recent" | "archived" | "templates";
 export function StudioProjectsPage() {
   const { projects, toggleFavorite, openProject } = useProjects();
   const { setActiveProjectId } = useTeacherStudio();
-  const [query, setQuery] = useState("");
+  const [params] = useSearchParams();
+  // Seeded by the top bar search, which navigates here with `?q=`.
+  const [query, setQuery] = useState(() => params.get("q") ?? "");
   const [filter, setFilter] = useState<ProjectFilter>("all");
   const [sort, setSort] = useState<"updated" | "title">("updated");
 
@@ -60,88 +64,111 @@ export function StudioProjectsPage() {
     { id: "templates", label: "Șabloane" },
   ];
 
+  const hasNoProjects = projects.length === 0;
+
   return (
     <div>
-      <header>
-        <h1 className="ts-page-title">Proiecte</h1>
-        <p className="ts-page-lead">
-          Fiecare material aparține unui proiect. Caută, filtrează și deschide
-          spațiul de lucru.
-        </p>
+      <header className="ts-block-head">
+        <div>
+          <h1 className="ts-page-title">Proiectele mele</h1>
+          <p className="ts-page-lead">
+            Toate evaluările și resursele la care ai lucrat.
+          </p>
+        </div>
+        <Link to="/create/experience" className="ts-icon-btn">
+          <Sparkles size={15} aria-hidden />
+          Creează ceva nou
+        </Link>
       </header>
 
-      <div className="ts-filters" role="toolbar" aria-label="Filtre proiecte">
-        {filters.map((f) => (
-          <button
-            key={f.id}
-            type="button"
-            className={["ts-filter", filter === f.id ? "is-active" : ""].join(
-              " ",
-            )}
-            onClick={() => setFilter(f.id)}
-          >
-            {f.label}
-          </button>
-        ))}
-      </div>
-
-      <div className="flex flex-wrap items-center gap-3">
-        <input
-          className="ts-search"
-          type="search"
-          placeholder="Caută proiecte…"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          aria-label="Caută proiecte"
-        />
-        <label className="text-sm text-slate-500">
-          Sortare{" "}
-          <select
-            className="ml-1 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm"
-            value={sort}
-            onChange={(e) => setSort(e.target.value as "updated" | "title")}
-          >
-            <option value="updated">Actualizate</option>
-            <option value="title">Titlu</option>
-          </select>
-        </label>
-        <Link to="/create/experience" className="ts-icon-btn">
-          Proiect nou
-        </Link>
-      </div>
-
-      <div className="ts-section ts-list">
-        {results.length === 0 ? (
-          <p className="ts-page-lead">Niciun proiect pentru filtrele curente.</p>
-        ) : (
-          results.map((project) => (
-            <div key={project.id} className="ts-row">
-              <Link
-                to={`/studio/${project.id}`}
-                className="min-w-0 flex-1"
-                onClick={() => {
-                  setActiveProjectId(project.id);
-                  openProject(project.id);
-                }}
-              >
-                <div className="ts-row-title">{project.title}</div>
-                <div className="ts-row-meta">
-                  {project.subject ?? "Fără disciplină"}
-                  {project.archived ? " · Arhivat" : ""}
-                </div>
-              </Link>
+      {hasNoProjects ? (
+        <div className="ts-desk-empty" style={{ marginTop: "2rem" }}>
+          <h2 className="ts-desk-empty-title">Încă nu ai niciun proiect.</h2>
+          <p className="ts-desk-empty-text">
+            Începe cu o idee și transform-o într-o resursă pentru clasa ta.
+          </p>
+          <Link to="/create/experience" className="ts-icon-btn">
+            <Sparkles size={15} aria-hidden />
+            Creează ceva nou
+          </Link>
+        </div>
+      ) : (
+        <>
+          <div className="ts-filters" role="toolbar" aria-label="Filtre proiecte">
+            {filters.map((f) => (
               <button
+                key={f.id}
                 type="button"
-                className="ts-icon-btn"
-                aria-pressed={Boolean(project.favorite)}
-                onClick={() => toggleFavorite(project.id)}
+                className={["ts-filter", filter === f.id ? "is-active" : ""].join(
+                  " ",
+                )}
+                aria-pressed={filter === f.id}
+                onClick={() => setFilter(f.id)}
               >
-                {project.favorite ? "★ Favorit" : "☆ Favorit"}
+                {f.label}
               </button>
-            </div>
-          ))
-        )}
-      </div>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3">
+            <input
+              className="ts-search"
+              type="search"
+              placeholder="Caută proiecte…"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              aria-label="Caută proiecte"
+            />
+            <label className="ts-sort-label">
+              Sortare{" "}
+              <select
+                className="ts-select"
+                value={sort}
+                onChange={(e) => setSort(e.target.value as "updated" | "title")}
+              >
+                <option value="updated">Actualizate</option>
+                <option value="title">Titlu</option>
+              </select>
+            </label>
+          </div>
+
+          <div className="ts-section">
+            {results.length === 0 ? (
+              <p className="ts-page-lead">
+                Niciun proiect pentru filtrele curente.
+              </p>
+            ) : (
+              <div className="ts-project-grid">
+                {results.map((project) => (
+                  <ProjectCard
+                    key={project.id}
+                    project={project}
+                    onOpen={() => {
+                      setActiveProjectId(project.id);
+                      openProject(project.id);
+                    }}
+                    action={
+                      <button
+                        type="button"
+                        className="ts-project-fav-btn"
+                        aria-pressed={Boolean(project.favorite)}
+                        aria-label={
+                          project.favorite
+                            ? `Elimină „${project.title}” de la favorite`
+                            : `Adaugă „${project.title}” la favorite`
+                        }
+                        onClick={() => toggleFavorite(project.id)}
+                      >
+                        {project.favorite ? "★" : "☆"}
+                      </button>
+                    }
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 }

@@ -1,48 +1,39 @@
+/**
+ * Legacy LUDI variables kept for older stylesheets (--primary, --surface,
+ * --border, --transition). Declarations that collided with
+ * prima-design-tokens.css (--space-*, --radius-*, --shadow-soft/hover) were
+ * removed so the documented tokens win. New work should use --lx-* from
+ * ludicon-tokens.css.
+ */
 :root {
   /* ===== BRAND COLORS ===== */
 
-  --primary: #2563eb;
-  --primary-dark: #1d4ed8;
-  --indigo: #4f46e5;
-  --purple: #7c3aed;
-  --emerald: #10b981;
-  --amber: #f59e0b;
+  --primary: var(--lx-brand);
+  --primary-dark: var(--lx-brand-hover);
+  --indigo: var(--lx-presentation);
+  --purple: var(--lx-story);
+  --emerald: var(--lx-assessment);
+  --amber: var(--lx-game);
 
-  --background: #ffffff;
-  --surface: #ffffff;
+  --background: var(--lx-bg);
+  --surface: var(--lx-surface);
 
-  --text: #0f172a;
-  --text-light: #64748b;
-  --text-muted: #94a3b8;
+  --text: var(--lx-text);
+  --text-light: var(--lx-text-muted);
+  --text-muted: var(--lx-text-subtle);
 
-  --border: rgba(15, 23, 42, 0.06);
+  --border: var(--lx-border);
 
-  --success: #10b981;
-  --warning: #f59e0b;
-  --danger: #ef4444;
+  --success: var(--lx-success);
+  --warning: var(--lx-warning);
+  --danger: var(--lx-danger);
 
   /* ===== RADIUS ===== */
-
-  --radius-sm: 12px;
-  --radius-md: 20px;
-  --radius-lg: 24px;
-
   /* ===== SHADOW ===== */
-
-  --shadow-soft: 0 4px 24px rgba(79, 70, 229, 0.08);
-  --shadow-card: 0 8px 32px rgba(15, 23, 42, 0.06);
-  --shadow-hover: 0 16px 48px rgba(79, 70, 229, 0.14);
-  --shadow-header: 0 4px 24px rgba(15, 23, 42, 0.06);
+  --shadow-card: var(--lx-shadow-md);
+  --shadow-header: var(--lx-shadow-sm);
 
   /* ===== SPACING ===== */
-
-  --space-1: 8px;
-  --space-2: 16px;
-  --space-3: 24px;
-  --space-4: 32px;
-  --space-5: 48px;
-  --space-6: 64px;
-
   /* ===== TRANSITIONS ===== */
 
   --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);

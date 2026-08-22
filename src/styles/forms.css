@@ -8,6 +8,10 @@
 
     border:1px solid var(--border);
 
+    background: var(--surface);
+
+    color: var(--text);
+
     font-size:16px;
 
 }

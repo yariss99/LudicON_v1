@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import { useProjects } from "../../../context/ProjectContext";
+import { useAuth } from "../../auth/AuthContext";
 import {
   buildActivityFromProjects,
   buildLibraryFromProjects,
@@ -17,10 +18,10 @@ import {
   buildTodaySchedule,
   STUDIO_TEACHER,
 } from "../data/studioDerivations";
-import type { StudioContextSnapshot } from "../types";
+import type { StudioContextSnapshot, StudioTeacherProfile } from "../types";
 
 type TeacherStudioContextValue = {
-  readonly teacher: typeof STUDIO_TEACHER;
+  readonly teacher: StudioTeacherProfile;
   readonly activeProjectId: string | null;
   readonly setActiveProjectId: (id: string | null) => void;
   readonly assistantOpen: boolean;
@@ -28,6 +29,8 @@ type TeacherStudioContextValue = {
   readonly toggleAssistant: () => void;
   readonly mobileNavOpen: boolean;
   readonly setMobileNavOpen: (open: boolean) => void;
+  readonly sidebarCollapsed: boolean;
+  readonly toggleSidebar: () => void;
   readonly contextSnapshot: StudioContextSnapshot;
   readonly unreadNotifications: number;
   readonly markNotificationRead: (id: string) => void;
@@ -35,18 +38,35 @@ type TeacherStudioContextValue = {
   readonly notificationIdsRead: ReadonlySet<string>;
 };
 
+/** Keep in sync with the `.ts-assistant` overlay breakpoint in the stylesheet. */
+const NARROW_QUERY = "(max-width: 1279px)";
+
 const TeacherStudioContext = createContext<TeacherStudioContextValue | null>(
   null,
 );
 
 export function TeacherStudioProvider({ children }: { children: ReactNode }) {
+  const { user } = useAuth();
   const { projects, getProject } = useProjects();
+  const teacher = useMemo<StudioTeacherProfile>(
+    () => ({
+      teacherId: user?.id ?? STUDIO_TEACHER.teacherId,
+      displayName: user?.displayName ?? STUDIO_TEACHER.displayName,
+      locale: STUDIO_TEACHER.locale,
+      schoolName: STUDIO_TEACHER.schoolName,
+      email: user?.email,
+    }),
+    [user],
+  );
   const [activeProjectId, setActiveProjectId] = useState<string | null>(() => {
     const first = projects.find((p) => !p.archived);
     return first?.id ?? null;
   });
-  const [assistantOpen, setAssistantOpen] = useState(true);
+  // Copilot stays off until the teacher asks. Below the overlay breakpoint
+  // it must never open on its own and cover the workspace.
+  const [assistantOpen, setAssistantOpen] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [readIds, setReadIds] = useState<Set<string>>(() => new Set());
 
   useEffect(() => {
@@ -63,6 +83,23 @@ export function TeacherStudioProvider({ children }: { children: ReactNode }) {
 
   const toggleAssistant = useCallback(() => {
     setAssistantOpen((v) => !v);
+  }, []);
+
+  const toggleSidebar = useCallback(() => {
+    setSidebarCollapsed((v) => !v);
+  }, []);
+
+  // Closing on the way down keeps the overlay from covering the workspace;
+  // going wide again leaves the teacher's own choice alone.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const media = window.matchMedia(NARROW_QUERY);
+    const sync = (event: MediaQueryList | MediaQueryListEvent) => {
+      if (event.matches) setAssistantOpen(false);
+    };
+    sync(media);
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
   }, []);
 
   const markNotificationRead = useCallback((id: string) => {
@@ -85,19 +122,19 @@ export function TeacherStudioProvider({ children }: { children: ReactNode }) {
 
   const contextSnapshot: StudioContextSnapshot = useMemo(
     () => ({
-      teacher: STUDIO_TEACHER,
+      teacher,
       activeProjectId,
       activeProjectTitle: activeProject?.title ?? null,
       workflowHint: activeProject
         ? "Continuă materialul din proiectul activ"
         : "Alege sau creează un proiect pentru a începe",
     }),
-    [activeProjectId, activeProject?.title],
+    [teacher, activeProjectId, activeProject?.title],
   );
 
   const value = useMemo<TeacherStudioContextValue>(
     () => ({
-      teacher: STUDIO_TEACHER,
+      teacher,
       activeProjectId,
       setActiveProjectId,
       assistantOpen,
@@ -105,6 +142,8 @@ export function TeacherStudioProvider({ children }: { children: ReactNode }) {
       toggleAssistant,
       mobileNavOpen,
       setMobileNavOpen,
+      sidebarCollapsed,
+      toggleSidebar,
       contextSnapshot,
       unreadNotifications,
       markNotificationRead,
@@ -112,10 +151,13 @@ export function TeacherStudioProvider({ children }: { children: ReactNode }) {
       notificationIdsRead: readIds,
     }),
     [
+      teacher,
       activeProjectId,
       assistantOpen,
       toggleAssistant,
       mobileNavOpen,
+      sidebarCollapsed,
+      toggleSidebar,
       contextSnapshot,
       unreadNotifications,
       markNotificationRead,
