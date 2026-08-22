@@ -1,5 +1,5 @@
 import { Bell, PanelLeft, PanelRight, Search, Settings, Sparkles } from "lucide-react";
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTeacherStudio } from "../context/TeacherStudioContext";
 
@@ -15,6 +15,20 @@ export function StudioTopBar() {
   } = useTeacherStudio();
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  // Ctrl/Cmd + K focuses the search, which is why the hint is shown at all.
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key.toLowerCase() !== "k") return;
+      if (!event.ctrlKey && !event.metaKey) return;
+      event.preventDefault();
+      searchRef.current?.focus();
+      searchRef.current?.select();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
 
   /** Search reuses the Projects page filter, which reads `?q=`. */
   function handleSearch(event: FormEvent<HTMLFormElement>) {
@@ -59,12 +73,17 @@ export function StudioTopBar() {
       <form className="ts-topbar-search" role="search" onSubmit={handleSearch}>
         <Search size={15} aria-hidden className="ts-topbar-search-icon" />
         <input
+          ref={searchRef}
           type="search"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder="Caută în proiecte…"
           aria-label="Caută în proiecte"
+          aria-keyshortcuts="Control+K"
         />
+        <kbd className="ts-topbar-search-hint" aria-hidden>
+          Ctrl K
+        </kbd>
       </form>
 
       <div className="ts-topbar-actions">

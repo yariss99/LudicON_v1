@@ -16,6 +16,7 @@ import { useTeacherAssistant } from "../../teacher-assistant/hooks/useTeacherAss
 import { formatRelativeTime } from "../../../utils/date";
 import { ProjectCard } from "../components/ProjectCard";
 import {
+  COPILOT_ACTIONS,
   COPILOT_PROMPTS,
   CREATE_OPTIONS,
   QUICK_CREATE_PATH,
@@ -196,7 +197,21 @@ export function StudioHomePage() {
             </div>
           </div>
 
-          <p className="ts-copilot-kicker">Întreabă PRIMA</p>
+          <p className="ts-copilot-kicker">Tu alegi de unde pornim</p>
+          <div className="ts-copilot-actions">
+            {COPILOT_ACTIONS.map((action) => (
+              <Link
+                key={action.label}
+                to={action.href}
+                className="ts-copilot-action"
+              >
+                {action.label}
+                <ArrowRight size={13} aria-hidden />
+              </Link>
+            ))}
+          </div>
+
+          <p className="ts-copilot-kicker">Sau întreabă PRIMA</p>
           <div className="ts-copilot-prompts">
             {COPILOT_PROMPTS.map((prompt) => (
               <button
@@ -209,11 +224,6 @@ export function StudioHomePage() {
               </button>
             ))}
           </div>
-
-          <Link to="/assistant" className="ts-block-link">
-            Deschide conversațiile
-            <ArrowRight size={14} aria-hidden />
-          </Link>
         </div>
       </section>
     </div>

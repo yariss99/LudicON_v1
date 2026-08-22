@@ -218,6 +218,17 @@ export const CREATE_OPTIONS: readonly CreateOption[] = [
 /** Quick Create lives on `/create`; the type arrives as `?type=`. */
 export const QUICK_CREATE_PATH = "/create";
 
+/**
+ * Teacher-led starting points. Each is a route that already exists, so the
+ * teacher stays the one who chooses what gets built.
+ */
+export const COPILOT_ACTIONS: readonly { label: string; href: string }[] = [
+  { label: "Începe cu o idee", href: "/create" },
+  { label: "Planifică o lecție", href: "/create?type=lesson" },
+  { label: "Găsește o activitate", href: "/library" },
+  { label: "Dezvoltă o resursă", href: "/assistant" },
+] as const;
+
 export const COPILOT_PROMPTS: readonly string[] = [
   "Vreau o evaluare la fracții",
   "Creează o fișă pentru clasa a III-a",
