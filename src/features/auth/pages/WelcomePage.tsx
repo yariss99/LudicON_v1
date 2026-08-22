@@ -5,10 +5,10 @@ import { AuthLayout } from "../components/AuthLayout";
 export function WelcomePage() {
   return (
     <AuthLayout>
-      <p className="lx-auth-panel-kicker">Bun venit</p>
-      <h2 className="lx-auth-panel-title">Pornește ideea.</h2>
+      <p className="lx-auth-panel-kicker">Intră în atelier</p>
+      <h2 className="lx-auth-panel-title">Hai să pornim.</h2>
       <p className="lx-auth-panel-lead">
-        Alege cum vrei să intri în atelier. Tu rămâi autorul.
+        Tu rămâi autorul. LudiCON te sprijină când e util.
       </p>
 
       <div className="lx-auth-choices">

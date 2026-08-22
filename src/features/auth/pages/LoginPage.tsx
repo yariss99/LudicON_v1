@@ -42,7 +42,7 @@ export function LoginPage() {
   }
 
   return (
-    <AuthLayout kicker="Intră în atelier">
+    <AuthLayout>
       <p className="lx-auth-panel-kicker">Cont existent</p>
       <h2 className="lx-auth-panel-title">Intră în cont</h2>
       <p className="lx-auth-panel-lead">

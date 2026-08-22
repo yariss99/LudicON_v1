@@ -52,11 +52,11 @@ export function RegisterPage() {
   }
 
   return (
-    <AuthLayout kicker="Deschide atelierul">
+    <AuthLayout>
       <p className="lx-auth-panel-kicker">Cont nou</p>
       <h2 className="lx-auth-panel-title">Creează un cont</h2>
       <p className="lx-auth-panel-lead">
-        Doar ce este necesar ca să începi să construiești.
+        Doar ce este necesar ca să începi. Tu rămâi autorul.
       </p>
 
       <form className="lx-auth-form" onSubmit={handleSubmit} noValidate>
