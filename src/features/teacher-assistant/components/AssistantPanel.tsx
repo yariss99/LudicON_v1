@@ -2,7 +2,21 @@ import { Link } from "react-router-dom";
 import { formatRelativeTime } from "../../../utils/date";
 import { ASSISTANT_VIEWS, WORKFLOW_STAGES } from "../constants";
 import { useTeacherAssistant } from "../hooks/useTeacherAssistant";
+import { documentKindLabel } from "../services/assistantSuggestions";
+import type { AssistantViewId } from "../types";
 import { useState } from "react";
+
+const COMPACT_VIEWS: readonly AssistantViewId[] = [
+  "chat",
+  "proactive",
+  "history",
+];
+
+const VIEW_LABELS: Partial<Record<AssistantViewId, string>> = {
+  chat: "Conversație",
+  proactive: "Ajutor",
+  history: "Istoric",
+};
 
 export function AssistantPanel({
   onClose,
@@ -23,7 +37,7 @@ export function AssistantPanel({
     memory,
     lastPrompt,
     sending,
-    examplePrompts,
+    suggestionGroups,
     sendMessage,
     newConversation,
     selectConversation,
@@ -40,14 +54,32 @@ export function AssistantPanel({
     setDraft("");
   };
 
+  const views = compact
+    ? ASSISTANT_VIEWS.filter((view) => COMPACT_VIEWS.includes(view.id))
+    : ASSISTANT_VIEWS;
+
+  const kind = documentKindLabel(context.documentKind);
+  const stage = WORKFLOW_STAGES.find((w) => w.id === context.workflowStage)
+    ?.label;
+  const contextBits = [
+    context.projectTitle,
+    context.subject,
+    context.grade,
+    kind,
+    !context.projectTitle ? stage : null,
+  ].filter(Boolean);
+
+  const hasMessages = Boolean(activeConversation?.messages.length);
+
   return (
-    <div className="teacher-assistant ta-panel" aria-label="Teacher AI Assistant">
+    <div
+      className="teacher-assistant ta-panel"
+      aria-label="LudicON Copilot"
+    >
       <div className="ta-header">
         <div>
-          <h2 className="ta-title">PRIMA Co-pilot</h2>
-          <p className="ta-kicker">
-            Nu este chatbot · context + unelte + Validation Engine
-          </p>
+          <h2 className="ta-title">LudicON Copilot</h2>
+          <p className="ta-kicker">Tu decizi. Copilotul te sprijină.</p>
         </div>
         <div className="ta-actions">
           <button
@@ -58,107 +90,125 @@ export function AssistantPanel({
             Nou
           </button>
           {onClose ? (
-            <button type="button" className="ta-btn ta-btn-ghost" onClick={onClose}>
+            <button
+              type="button"
+              className="ta-btn ta-btn-ghost"
+              aria-label="Închide copilotul"
+              onClick={onClose}
+            >
               Închide
             </button>
           ) : null}
         </div>
       </div>
 
-      <div className="ta-tabs" role="tablist">
-        {ASSISTANT_VIEWS.map((v) => (
+      <div className="ta-tabs" role="tablist" aria-label="Zonele Copilotului">
+        {views.map((v) => (
           <button
             key={v.id}
             type="button"
             role="tab"
+            aria-selected={viewId === v.id}
             className={["ta-tab", viewId === v.id ? "is-active" : ""].join(" ")}
             onClick={() => setViewId(v.id)}
           >
-            {v.label}
+            {VIEW_LABELS[v.id] ?? v.label}
           </button>
         ))}
       </div>
 
       <div className="ta-body">
-        <div className="ta-meta">
-          <span className="ta-chip">{context.teacherName}</span>
-          {context.projectTitle ? (
-            <span className="ta-chip">{context.projectTitle}</span>
-          ) : null}
-          {context.lessonTitle ? (
-            <span className="ta-chip">{context.lessonTitle}</span>
-          ) : null}
-          {context.documentKind ? (
-            <span className="ta-chip">{context.documentKind}</span>
-          ) : null}
-          <span className="ta-chip">
-            {WORKFLOW_STAGES.find((w) => w.id === context.workflowStage)?.label}
-          </span>
-          <span className="ta-chip">{context.subject}</span>
-          <span className="ta-chip">{context.grade}</span>
+        <div className="ta-context">
+          <p className="ta-context-line">
+            {contextBits.length
+              ? contextBits.join(" · ")
+              : "Niciun proiect deschis"}
+          </p>
+          <p className="ta-context-hint">
+            {context.projectTitle
+              ? "Copilotul vede la ce lucrezi acum."
+              : "Alege un proiect ca sugestiile să devină specifice."}
+          </p>
         </div>
 
         {viewId === "chat" && (
           <>
-            {!activeConversation?.messages.length ? (
+            {!hasMessages ? (
               <div>
-                <p className="ta-lead">
-                  Scrie în limbaj natural. Exemplu: „Transformă lecția în joc”.
-                </p>
-                <div className="ta-examples">
-                  {examplePrompts.slice(0, compact ? 4 : 7).map((p) => (
+                <p className="ta-lead">Cum te pot ajuta acum?</p>
+                {suggestionGroups.map((group) => (
+                  <div key={group.id} className="ta-chip-group">
+                    <p className="ta-chip-label">{group.label}</p>
+                    <div className="ta-chip-row">
+                      {group.items.map((item) => (
+                        <button
+                          key={item.id}
+                          type="button"
+                          className="ta-suggest"
+                          onClick={() => sendMessage(item.prompt)}
+                        >
+                          {item.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <>
+                <div className="ta-chip-row ta-chip-row-inline">
+                  {suggestionGroups[0]?.items.slice(0, 3).map((item) => (
                     <button
-                      key={p}
+                      key={item.id}
                       type="button"
-                      className="ta-example"
-                      onClick={() => sendMessage(p)}
+                      className="ta-suggest is-compact"
+                      onClick={() => sendMessage(item.prompt)}
                     >
-                      {p}
+                      {item.label}
                     </button>
                   ))}
                 </div>
-              </div>
-            ) : (
-              activeConversation.messages.map((m) => (
-                <div
-                  key={m.id}
-                  className={[
-                    "ta-msg",
-                    m.role === "teacher" ? "ta-msg-teacher" : "ta-msg-assistant",
-                    m.blocked ? "ta-msg-blocked" : "",
-                  ].join(" ")}
-                >
-                  {m.content}
-                  {m.toolCalls?.length ? (
-                    <div className="ta-tools">
-                      {m.toolCalls.map((t) =>
-                        t.href ? (
-                          <Link key={t.id} className="ta-tool" to={t.href}>
-                            <span>{t.label}</span>
-                            <span className="ta-chip">{t.status}</span>
-                          </Link>
-                        ) : (
-                          <div key={t.id} className="ta-tool">
-                            <span>{t.label}</span>
-                            <span className="ta-chip">{t.status}</span>
-                          </div>
-                        ),
-                      )}
-                    </div>
-                  ) : null}
-                  {m.validation ? (
-                    <div
-                      className={[
-                        "ta-validation",
-                        m.validation.passed ? "is-ok" : "is-bad",
-                      ].join(" ")}
-                    >
-                      Validation Engine · scor {m.validation.score}
-                      {m.blocked ? " · blocat" : " · livrat"}
-                    </div>
-                  ) : null}
-                </div>
-              ))
+                {activeConversation?.messages.map((m) => (
+                  <div
+                    key={m.id}
+                    className={[
+                      "ta-msg",
+                      m.role === "teacher" ? "ta-msg-teacher" : "ta-msg-assistant",
+                      m.blocked ? "ta-msg-blocked" : "",
+                    ].join(" ")}
+                  >
+                    {m.content}
+                    {m.toolCalls?.length ? (
+                      <div className="ta-tools">
+                        {m.toolCalls.map((t) =>
+                          t.href ? (
+                            <Link key={t.id} className="ta-tool" to={t.href}>
+                              <span>{t.label}</span>
+                              <span className="ta-chip">{t.status}</span>
+                            </Link>
+                          ) : (
+                            <div key={t.id} className="ta-tool">
+                              <span>{t.label}</span>
+                              <span className="ta-chip">{t.status}</span>
+                            </div>
+                          ),
+                        )}
+                      </div>
+                    ) : null}
+                    {m.validation ? (
+                      <div
+                        className={[
+                          "ta-validation",
+                          m.validation.passed ? "is-ok" : "is-bad",
+                        ].join(" ")}
+                      >
+                        Validation Engine · scor {m.validation.score}
+                        {m.blocked ? " · blocat" : " · livrat"}
+                      </div>
+                    ) : null}
+                  </div>
+                ))}
+              </>
             )}
           </>
         )}
@@ -168,6 +218,7 @@ export function AssistantPanel({
             <input
               className="ta-input"
               placeholder="Caută conversații…"
+              aria-label="Caută conversații"
               value={historyQuery}
               onChange={(e) => setHistoryQuery(e.target.value)}
             />
@@ -229,8 +280,7 @@ export function AssistantPanel({
         {viewId === "proactive" && (
           <>
             <p className="ta-lead">
-              Sugestii proactive pe baza proiectului, competențelor și
-              artefactelor.
+              Sugestii pe care le poți ignora. Nimic nu se aplică fără tine.
             </p>
             {proactive.map((h) => (
               <div key={h.id} className="ta-card">
@@ -240,7 +290,15 @@ export function AssistantPanel({
                   <Link className="ta-btn ta-btn-primary" to={h.href}>
                     Deschide
                   </Link>
-                ) : null}
+                ) : (
+                  <button
+                    type="button"
+                    className="ta-btn"
+                    onClick={() => sendMessage(h.title)}
+                  >
+                    Întreabă Copilotul
+                  </button>
+                )}
               </div>
             ))}
           </>
@@ -326,10 +384,14 @@ export function AssistantPanel({
 
       {viewId === "chat" ? (
         <div className="ta-composer">
+          <label className="ta-composer-label" htmlFor="ta-composer-input">
+            Întreabă Copilotul
+          </label>
           <textarea
+            id="ta-composer-input"
             className="ta-textarea"
             value={draft}
-            placeholder="Ex: Creează o fișă diferențiată pentru lecția curentă…"
+            placeholder="Cu ce parte a proiectului vrei să te ajut?"
             onChange={(e) => setDraft(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
@@ -352,7 +414,7 @@ export function AssistantPanel({
               className="ta-btn"
               onClick={() => setViewId("proactive")}
             >
-              Proactiv
+              Ajutor
             </button>
           </div>
         </div>

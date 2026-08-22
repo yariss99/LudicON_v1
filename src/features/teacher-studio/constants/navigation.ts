@@ -236,9 +236,9 @@ export const COPILOT_ACTIONS: readonly { label: string; href: string }[] = [
 ] as const;
 
 export const COPILOT_PROMPTS: readonly string[] = [
-  "Vreau o evaluare la fracții",
-  "Creează o fișă pentru clasa a III-a",
-  "Transformă lecția într-un joc",
+  "Ajută-mă să aleg ce să creez",
+  "Propune o idee pentru următoarea lecție",
+  "Ce pot pregăti pentru clasa mea?",
 ] as const;
 
 /** LudicON is the platform; PRIMA is the pedagogical copilot inside it. */

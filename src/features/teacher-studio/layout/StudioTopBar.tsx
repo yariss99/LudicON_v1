@@ -122,11 +122,14 @@ export function StudioTopBar() {
           type="button"
           className={["ts-icon-btn", assistantOpen ? "is-active" : ""].join(" ")}
           aria-pressed={assistantOpen}
-          aria-label="Comută copilotul PRIMA"
+          aria-expanded={assistantOpen}
+          aria-label={
+            assistantOpen ? "Închide Copilotul" : "Deschide Copilotul"
+          }
           onClick={toggleAssistant}
         >
           <PanelRight size={15} aria-hidden />
-          Copilot
+          {assistantOpen ? "Închide" : "Copilot"}
         </button>
       </div>
     </header>

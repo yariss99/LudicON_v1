@@ -235,7 +235,7 @@ export function StudioHomePage() {
             ))}
           </div>
 
-          <p className="ts-copilot-kicker">Sau întreabă PRIMA</p>
+          <p className="ts-copilot-kicker">Sau cere o idee</p>
           <div className="ts-copilot-prompts">
             {COPILOT_PROMPTS.map((prompt) => (
               <button
