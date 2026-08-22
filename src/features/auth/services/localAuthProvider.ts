@@ -1,5 +1,6 @@
 import { AuthError, type AuthProviderPort, type AuthUser } from "../types";
 import {
+  AuthStorageError,
   clearSession,
   loadIdentities,
   loadSession,
@@ -15,10 +16,10 @@ import {
   newUserId,
   timingSafeEqual,
 } from "./crypto";
-
-function normalizeEmail(email: string): string {
-  return email.trim().toLowerCase();
-}
+import {
+  INVALID_CREDENTIALS_MESSAGE,
+  normalizeEmail,
+} from "./credentials";
 
 function toUser(identity: StoredIdentity): AuthUser {
   return {
@@ -34,11 +35,21 @@ function isExpired(expiresAt: string): boolean {
 }
 
 async function issueSession(identity: StoredIdentity): Promise<AuthUser> {
-  saveSession({
-    token: newSessionToken(),
-    userId: identity.id,
-    expiresAt: new Date(Date.now() + SESSION_TTL_MS).toISOString(),
-  });
+  try {
+    saveSession({
+      token: newSessionToken(),
+      userId: identity.id,
+      expiresAt: new Date(Date.now() + SESSION_TTL_MS).toISOString(),
+    });
+  } catch (error) {
+    if (error instanceof AuthStorageError) {
+      throw new AuthError(
+        "unknown",
+        "Nu am putut deschide sesiunea. Încearcă din nou.",
+      );
+    }
+    throw error;
+  }
   return toUser(identity);
 }
 
@@ -72,19 +83,15 @@ export function createLocalAuthProvider(): AuthProviderPort {
 
     async signIn(email, password) {
       const normalized = normalizeEmail(email);
-      const identity = loadIdentities().find((row) => row.email === normalized);
+      const identity = loadIdentities().find(
+        (row) => normalizeEmail(row.email) === normalized,
+      );
       if (!identity) {
-        throw new AuthError(
-          "invalid_credentials",
-          "Emailul sau parola nu sunt corecte.",
-        );
+        throw new AuthError("invalid_credentials", INVALID_CREDENTIALS_MESSAGE);
       }
       const challenge = await hashPassword(password, identity.passwordSalt);
       if (!timingSafeEqual(challenge, identity.passwordHash)) {
-        throw new AuthError(
-          "invalid_credentials",
-          "Emailul sau parola nu sunt corecte.",
-        );
+        throw new AuthError("invalid_credentials", INVALID_CREDENTIALS_MESSAGE);
       }
       return issueSession(identity);
     },
@@ -92,7 +99,7 @@ export function createLocalAuthProvider(): AuthProviderPort {
     async signUp(input) {
       const normalized = normalizeEmail(input.email);
       const identities = loadIdentities();
-      if (identities.some((row) => row.email === normalized)) {
+      if (identities.some((row) => normalizeEmail(row.email) === normalized)) {
         throw new AuthError(
           "email_taken",
           "Există deja un cont cu acest email.",
@@ -109,7 +116,17 @@ export function createLocalAuthProvider(): AuthProviderPort {
         createdAt: new Date().toISOString(),
       };
 
-      saveIdentities([...identities, identity]);
+      try {
+        saveIdentities([...identities, identity]);
+      } catch (error) {
+        if (error instanceof AuthStorageError) {
+          throw new AuthError(
+            "unknown",
+            "Nu am putut salva contul pe acest dispozitiv.",
+          );
+        }
+        throw error;
+      }
       return issueSession(identity);
     },
 

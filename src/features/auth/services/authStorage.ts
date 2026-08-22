@@ -1,3 +1,5 @@
+import { normalizeEmail } from "./credentials";
+
 /**
  * Authentication records live on their own keys, separate from
  * `prima.projects.*` and other local development data.
@@ -6,6 +8,13 @@ export const IDENTITY_STORAGE_KEY = "ludicon.auth.identities.v1";
 export const SESSION_STORAGE_KEY = "ludicon.auth.session.v1";
 
 export const SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+
+export class AuthStorageError extends Error {
+  constructor(message = "AUTH_STORAGE_UNAVAILABLE") {
+    super(message);
+    this.name = "AuthStorageError";
+  }
+}
 
 export type StoredIdentity = {
   readonly id: string;
@@ -26,6 +35,24 @@ function canStore(): boolean {
   return typeof window !== "undefined" && typeof localStorage !== "undefined";
 }
 
+function requireStore(): void {
+  if (!canStore()) {
+    throw new AuthStorageError();
+  }
+}
+
+function persist(key: string, serialized: string): void {
+  requireStore();
+  try {
+    localStorage.setItem(key, serialized);
+  } catch {
+    throw new AuthStorageError("AUTH_STORAGE_WRITE_FAILED");
+  }
+  if (localStorage.getItem(key) !== serialized) {
+    throw new AuthStorageError("AUTH_STORAGE_VERIFY_FAILED");
+  }
+}
+
 export function loadIdentities(): StoredIdentity[] {
   if (!canStore()) return [];
   try {
@@ -33,15 +60,17 @@ export function loadIdentities(): StoredIdentity[] {
     if (!raw) return [];
     const parsed: unknown = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
-    return parsed.filter(isIdentity);
+    return parsed.filter(isIdentity).map((row) => ({
+      ...row,
+      email: normalizeEmail(row.email),
+    }));
   } catch {
     return [];
   }
 }
 
 export function saveIdentities(identities: readonly StoredIdentity[]): void {
-  if (!canStore()) return;
-  localStorage.setItem(IDENTITY_STORAGE_KEY, JSON.stringify(identities));
+  persist(IDENTITY_STORAGE_KEY, JSON.stringify(identities));
 }
 
 export function loadSession(): StoredSession | null {
@@ -57,8 +86,7 @@ export function loadSession(): StoredSession | null {
 }
 
 export function saveSession(session: StoredSession): void {
-  if (!canStore()) return;
-  localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(session));
+  persist(SESSION_STORAGE_KEY, JSON.stringify(session));
 }
 
 export function clearSession(): void {

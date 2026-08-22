@@ -6,6 +6,7 @@ type PasswordFieldProps = {
   readonly value: string;
   readonly onChange: (value: string) => void;
   readonly autoComplete: "current-password" | "new-password";
+  readonly name?: string;
   readonly error?: string;
   readonly hint?: string;
   readonly describedBy?: string;
@@ -16,6 +17,7 @@ export function PasswordField({
   value,
   onChange,
   autoComplete,
+  name,
   error,
   hint,
   describedBy,
@@ -43,6 +45,7 @@ export function PasswordField({
           id={inputId}
           className="lx-auth-input"
           type={visible ? "text" : "password"}
+          name={name}
           value={value}
           autoComplete={autoComplete}
           aria-invalid={Boolean(error)}

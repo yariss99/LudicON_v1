@@ -68,6 +68,7 @@ export function RegisterPage() {
             id="register-name"
             className="lx-auth-input"
             type="text"
+            name="name"
             autoComplete="name"
             value={displayName}
             aria-invalid={Boolean(errors.displayName)}
@@ -91,6 +92,7 @@ export function RegisterPage() {
             id="register-email"
             className="lx-auth-input"
             type="email"
+            name="email"
             autoComplete="email"
             value={email}
             aria-invalid={Boolean(errors.email)}
@@ -108,6 +110,7 @@ export function RegisterPage() {
 
         <PasswordField
           label="Parolă"
+          name="password"
           value={password}
           autoComplete="new-password"
           hint="Cel puțin 8 caractere, o literă și o cifră."
@@ -117,6 +120,7 @@ export function RegisterPage() {
 
         <PasswordField
           label="Confirmă parola"
+          name="confirm-password"
           value={confirmPassword}
           autoComplete="new-password"
           error={errors.confirmPassword}

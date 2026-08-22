@@ -58,6 +58,7 @@ export function LoginPage() {
             id="login-email"
             className="lx-auth-input"
             type="email"
+            name="email"
             autoComplete="email"
             value={email}
             aria-invalid={Boolean(errors.email)}
@@ -73,6 +74,7 @@ export function LoginPage() {
 
         <PasswordField
           label="Parolă"
+          name="password"
           value={password}
           autoComplete="current-password"
           error={errors.password}

@@ -1,3 +1,5 @@
+import { normalizeEmail } from "./services/credentials";
+
 export type FieldErrors = {
   displayName?: string;
   email?: string;
@@ -16,7 +18,7 @@ export function isStrongPassword(password: string): boolean {
 }
 
 export function validateEmail(email: string): string | undefined {
-  const value = email.trim();
+  const value = normalizeEmail(email);
   if (!value) return "Introdu adresa de email.";
   if (!EMAIL_PATTERN.test(value)) return "Introdu o adresă de email validă.";
   return undefined;
