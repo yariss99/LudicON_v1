@@ -7,6 +7,7 @@ import { ProjectProvider } from "./context/ProjectContext";
 import {
   TeacherStudioLayout,
   StudioHomePage,
+  StudioQuickCreatePage,
   StudioProjectsPage,
   StudioLibraryPage,
   StudioActivityPage,
@@ -133,15 +134,11 @@ const DesignSystemShowcasePage = lazy(() =>
 
 function RouteFallback() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center bg-[#F7F8FA]"
-      role="status"
-      aria-label="Se încarcă"
-    >
+    <div className="lx-fallback" role="status" aria-label="Se încarcă">
       <div className="w-full max-w-md space-y-3 px-6">
-        <div className="h-4 w-32 animate-pulse rounded-full bg-slate-200" />
-        <div className="h-10 w-2/3 animate-pulse rounded-2xl bg-slate-200" />
-        <div className="h-40 animate-pulse rounded-3xl bg-slate-200/80" />
+        <div className="lx-fallback-bar h-4 w-32 animate-pulse" />
+        <div className="lx-fallback-bar h-10 w-2/3 animate-pulse" />
+        <div className="lx-fallback-block h-40 animate-pulse" />
       </div>
     </div>
   );
@@ -158,6 +155,7 @@ function App() {
             {/* Teacher Studio — primary workspace */}
             <Route element={<TeacherStudioLayout />}>
               <Route index element={<StudioHomePage />} />
+              <Route path="create" element={<StudioQuickCreatePage />} />
               <Route path="projects" element={<StudioProjectsPage />} />
               <Route path="library" element={<StudioLibraryPage />} />
               <Route path="activity" element={<StudioActivityPage />} />
@@ -265,7 +263,6 @@ function App() {
 
             {/* Compatibility redirects */}
             <Route path="/desk" element={<Navigate to="/" replace />} />
-            <Route path="/create" element={<Navigate to="/create/experience" replace />} />
             <Route path="/studio" element={<Navigate to="/projects" replace />} />
             <Route path="/studio/create" element={<Navigate to="/create/experience" replace />} />
             <Route path="/profile" element={<Navigate to="/settings" replace />} />

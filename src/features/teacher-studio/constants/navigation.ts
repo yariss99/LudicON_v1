@@ -1,77 +1,249 @@
-import type { QuickAction, StudioNavItem } from "../types";
+import {
+  Activity,
+  Bell,
+  CalendarDays,
+  ClipboardCheck,
+  FileText,
+  FolderKanban,
+  Gamepad2,
+  Home,
+  Library,
+  LineChart,
+  NotebookPen,
+  Presentation,
+  ScrollText,
+  Settings,
+  Sparkles,
+  Users,
+} from "lucide-react";
+import type { CreateOption, StudioNavGroup } from "../types";
 
-export const STUDIO_NAV: readonly StudioNavItem[] = [
-  { id: "home", label: "Acasă", href: "/", shortcut: "G H" },
-  { id: "projects", label: "Proiecte", href: "/projects", shortcut: "G P" },
-  { id: "library", label: "Bibliotecă", href: "/library", shortcut: "G L" },
-  { id: "activity", label: "Activitate", href: "/activity", shortcut: "G A" },
-  { id: "calendar", label: "Calendar", href: "/calendar", shortcut: "G C" },
+/**
+ * Workspace navigation. Every `href` is a route that really exists; anything
+ * without one is flagged `soon` and rendered as non-interactive.
+ */
+export const STUDIO_NAV_GROUPS: readonly StudioNavGroup[] = [
   {
-    id: "notifications",
-    label: "Notificări",
-    href: "/notifications",
-    shortcut: "G N",
+    id: "main",
+    label: "Principal",
+    items: [
+      { id: "home", label: "Acasă", icon: Home, href: "/", shortcut: "G H" },
+      {
+        id: "projects",
+        label: "Proiectele mele",
+        icon: FolderKanban,
+        href: "/projects",
+        shortcut: "G P",
+      },
+    ],
   },
-  { id: "settings", label: "Setări", href: "/settings", shortcut: "G S" },
+  {
+    id: "create",
+    label: "Creație",
+    items: [
+      {
+        id: "copilot",
+        label: "Copilot",
+        icon: Sparkles,
+        href: "/assistant",
+      },
+      {
+        id: "lessons",
+        label: "Lecții",
+        icon: NotebookPen,
+        href: "/create?type=lesson",
+      },
+      { id: "worksheets", label: "Fișe de lucru", icon: FileText, soon: true },
+      {
+        id: "assessments",
+        label: "Evaluări",
+        icon: ClipboardCheck,
+        href: "/create?type=assessment",
+      },
+      {
+        id: "games",
+        label: "Jocuri educative",
+        icon: Gamepad2,
+        href: "/create?type=game",
+      },
+      {
+        id: "stories",
+        label: "Povești",
+        icon: ScrollText,
+        href: "/create?type=story",
+      },
+      {
+        id: "presentations",
+        label: "Prezentări",
+        icon: Presentation,
+        href: "/create?type=presentation",
+      },
+      {
+        id: "resources",
+        label: "Resurse",
+        icon: Library,
+        href: "/library",
+        shortcut: "G L",
+      },
+    ],
+  },
+  {
+    id: "workspace",
+    label: "Spațiul de lucru",
+    items: [
+      {
+        id: "activity",
+        label: "Activitate",
+        icon: Activity,
+        href: "/activity",
+        shortcut: "G A",
+      },
+      {
+        id: "calendar",
+        label: "Calendar",
+        icon: CalendarDays,
+        href: "/calendar",
+        shortcut: "G C",
+      },
+      {
+        id: "notifications",
+        label: "Notificări",
+        icon: Bell,
+        href: "/notifications",
+        shortcut: "G N",
+      },
+      { id: "classroom", label: "Clasă", icon: Users, soon: true },
+      { id: "analytics", label: "Analitică", icon: LineChart, soon: true },
+    ],
+  },
+  {
+    id: "system",
+    label: "Sistem",
+    items: [
+      {
+        id: "settings",
+        label: "Setări",
+        icon: Settings,
+        href: "/settings",
+        shortcut: "G S",
+      },
+    ],
+  },
 ] as const;
 
-export const QUICK_ACTIONS: readonly QuickAction[] = [
+/**
+ * Creation entry points on the desk.
+ *
+ * `directPath` is a flow that works without an existing project.
+ * `builderPath` is a real builder route that needs `/:projectId` appended.
+ * Both null means no builder exists yet — the card says so instead of
+ * pretending. `/create/experience` ignores query params, so no `?intent` is
+ * used here.
+ */
+export const CREATE_OPTIONS: readonly CreateOption[] = [
   {
-    id: "create-lesson",
+    id: "lesson",
+    accentToken: "--lx-lesson",
     label: "Lecție",
-    description: "Planifică o lecție completă",
-    href: "/create/experience?intent=lesson",
-    intent: "lesson",
-    shortcut: "N L",
+    description: "Construiește o experiență completă de învățare.",
+    hint: "Pregătim spațiul în care vei construi lecția.",
+    builderPath: "/lesson-builder",
+    altPath: "/create/experience",
+    altLabel: "Preferi să pornești dintr-o conversație cu PRIMA?",
+    actionLabel: "Începe lecția",
+    color: "blue",
+    icon: "book",
   },
   {
-    id: "create-worksheet",
-    label: "Fișă",
-    description: "Creează o fișă de lucru",
-    href: "/create/experience?intent=worksheet",
-    intent: "worksheet",
-    shortcut: "N F",
+    id: "worksheet",
+    accentToken: "--lx-worksheet",
+    label: "Fișă de lucru",
+    description: "Exerciții și consolidare — în pregătire.",
+    hint: "Va veni în curând în atelier.",
+    builderPath: null,
+    altPath: null,
+    altLabel: null,
+    actionLabel: "Începe fișa",
+    color: "teal",
+    icon: "pen",
   },
   {
-    id: "create-assessment",
-    label: "Evaluare",
-    description: "Construiește o evaluare",
-    href: "/create/experience?intent=assessment",
-    intent: "assessment",
-    shortcut: "N E",
+    id: "game",
+    accentToken: "--lx-game",
+    label: "Joc educativ",
+    description: "Transformă învățarea în provocare.",
+    hint: "Alege punctul de plecare pentru jocul tău.",
+    builderPath: "/game-builder",
+    altPath: null,
+    altLabel: null,
+    actionLabel: "Începe jocul",
+    color: "amber",
+    icon: "lightbulb",
   },
   {
-    id: "create-story",
+    id: "story",
+    accentToken: "--lx-story",
     label: "Poveste",
-    description: "Scrie o poveste didactică",
-    href: "/create/experience?intent=story",
-    intent: "story",
+    description: "Creează contexte care dau sens învățării.",
+    hint: "Pornim cu ideea ta, apoi construiești povestea.",
+    builderPath: "/story-builder",
+    altPath: null,
+    altLabel: null,
+    actionLabel: "Începe povestea",
+    color: "rose",
+    icon: "palette",
   },
   {
-    id: "create-presentation",
+    id: "assessment",
+    accentToken: "--lx-assessment",
+    label: "Evaluare",
+    description: "Construiește evaluări clare și bine structurate.",
+    hint: "Pregătim spațiul în care vei construi evaluarea.",
+    builderPath: "/assessment-builder",
+    altPath: null,
+    altLabel: null,
+    actionLabel: "Începe evaluarea",
+    color: "emerald",
+    icon: "pen",
+  },
+  {
+    id: "presentation",
+    accentToken: "--lx-presentation",
     label: "Prezentare",
-    description: "Pregătește diapozitive",
-    href: "/create/experience?intent=presentation",
-    intent: "presentation",
-  },
-  {
-    id: "create-game",
-    label: "Joc",
-    description: "Proiectează un joc educațional",
-    href: "/create/experience?intent=game",
-    intent: "game",
-  },
-  {
-    id: "open-project",
-    label: "Deschide proiect",
-    description: "Continuă un proiect existent",
-    href: "/projects",
-    shortcut: "O",
+    description: "Explică vizual și menține atenția.",
+    hint: "Pregătim suportul pe care îl vei completa.",
+    builderPath: "/presentation-builder",
+    altPath: null,
+    altLabel: null,
+    actionLabel: "Începe prezentarea",
+    color: "indigo",
+    icon: "globe",
   },
 ] as const;
 
+/** Quick Create lives on `/create`; the type arrives as `?type=`. */
+export const QUICK_CREATE_PATH = "/create";
+
+/**
+ * Teacher-led starting points. Each is a route that already exists, so the
+ * teacher stays the one who chooses what gets built.
+ */
+export const COPILOT_ACTIONS: readonly { label: string; href: string }[] = [
+  { label: "Începe cu o idee", href: "/create" },
+  { label: "Planifică o lecție", href: "/create?type=lesson" },
+  { label: "Găsește o activitate", href: "/library" },
+  { label: "Dezvoltă o resursă", href: "/assistant" },
+] as const;
+
+export const COPILOT_PROMPTS: readonly string[] = [
+  "Vreau o evaluare la fracții",
+  "Creează o fișă pentru clasa a III-a",
+  "Transformă lecția într-un joc",
+] as const;
+
+/** LudicON is the platform; PRIMA is the pedagogical copilot inside it. */
 export const STUDIO_BRAND = {
-  name: "PRIMA",
+  name: "LudicON",
   workspace: "Teacher Studio",
-  workspaceRo: "Atelierul Profesorului",
+  workspaceRo: "Atelierul creativ al profesorului",
 } as const;

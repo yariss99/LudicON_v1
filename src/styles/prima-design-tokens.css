@@ -4,22 +4,22 @@
  */
 
 :root {
-  /* Color */
-  --prima-primary: #2563eb;
-  --prima-primary-hover: #1d4ed8;
-  --prima-primary-soft: #eff6ff;
-  --prima-secondary: #059669;
-  --prima-secondary-soft: #ecfdf5;
-  --prima-accent: #d97706;
-  --prima-accent-soft: #fffbeb;
-  --prima-danger: #dc2626;
-  --prima-danger-soft: #fef2f2;
-  --prima-bg: #f4f5f7;
-  --prima-surface: #ffffff;
-  --prima-panel: #fafbfc;
-  --prima-text: #0f172a;
-  --prima-text-muted: #64748b;
-  --prima-border: rgba(15, 23, 42, 0.08);
+  /* Color — follow the LudicON `--lx-*` theme so Light/Dark stay one system. */
+  --prima-primary: var(--lx-brand);
+  --prima-primary-hover: var(--lx-brand-hover);
+  --prima-primary-soft: var(--lx-brand-soft);
+  --prima-secondary: var(--lx-ai);
+  --prima-secondary-soft: var(--lx-ai-soft);
+  --prima-accent: var(--lx-warning);
+  --prima-accent-soft: var(--lx-warning-soft);
+  --prima-danger: var(--lx-danger);
+  --prima-danger-soft: var(--lx-danger-soft);
+  --prima-bg: var(--lx-bg);
+  --prima-surface: var(--lx-surface);
+  --prima-panel: var(--lx-surface-sunken);
+  --prima-text: var(--lx-text);
+  --prima-text-muted: var(--lx-text-muted);
+  --prima-border: var(--lx-border);
 
   /* Space (8px grid) */
   --space-1: 4px;
@@ -38,8 +38,8 @@
   --radius-full: 999px;
 
   /* Elevation */
-  --shadow-soft: 0 8px 30px rgba(15, 23, 42, 0.04);
-  --shadow-hover: 0 12px 40px rgba(15, 23, 42, 0.08);
+  --shadow-soft: var(--lx-shadow-md);
+  --shadow-hover: var(--lx-shadow-lg);
 
   /* Type — four-size atelier scale */
   --text-hero: 1.75rem;

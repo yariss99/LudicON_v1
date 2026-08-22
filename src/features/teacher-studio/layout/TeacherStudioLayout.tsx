@@ -7,7 +7,13 @@ import { StudioSidebar } from "./StudioSidebar";
 import { StudioTopBar } from "./StudioTopBar";
 
 function StudioShell() {
-  const { assistantOpen, mobileNavOpen, setMobileNavOpen } = useTeacherStudio();
+  const {
+    assistantOpen,
+    setAssistantOpen,
+    mobileNavOpen,
+    setMobileNavOpen,
+    sidebarCollapsed,
+  } = useTeacherStudio();
   useStudioKeyboard();
 
   return (
@@ -15,9 +21,18 @@ function StudioShell() {
       {mobileNavOpen ? (
         <button
           type="button"
-          className="fixed inset-0 z-40 bg-slate-900/20 lg:hidden"
+          className="ts-nav-backdrop"
           aria-label="Închide meniul"
           onClick={() => setMobileNavOpen(false)}
+        />
+      ) : null}
+
+      {assistantOpen ? (
+        <button
+          type="button"
+          className="ts-assistant-backdrop"
+          aria-label="Închide copilotul"
+          onClick={() => setAssistantOpen(false)}
         />
       ) : null}
 
@@ -25,6 +40,7 @@ function StudioShell() {
         className={[
           "ts-shell",
           assistantOpen ? "has-assistant" : "",
+          sidebarCollapsed ? "is-collapsed" : "",
         ].join(" ")}
       >
         <StudioSidebar onNavigate={() => setMobileNavOpen(false)} />
